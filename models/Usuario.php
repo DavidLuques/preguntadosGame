@@ -12,7 +12,8 @@ class Usuario {
     }
 
     public function registrar() {
-        $query = "INSERT INTO " . $this->table . " (nombre, password) VALUES (:nombre, :password)";
+        $query = "INSERT INTO " . $this->table . " (nombre, password)
+                  VALUES (:nombre, :password)";
         $stmt = $this->conn->prepare($query);
 
         $stmt->bindParam(":nombre", $this->nombre);
@@ -22,14 +23,17 @@ class Usuario {
     }
 
     public function login() {
-        $query = "SELECT * FROM " . $this->table . " WHERE nombre = :nombre";
+        $query = "SELECT * FROM " . $this->table . " WHERE nombre = :nombre LIMIT 1";
         $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":nombre", $this->nombre);
         $stmt->execute();
 
         $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
         if ($usuario && password_verify($this->password, $usuario['password'])) {
             return $usuario;
         }
+
         return false;
     }
 }

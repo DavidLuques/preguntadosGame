@@ -16,13 +16,14 @@ class UsuarioController {
         $this->usuario->password = password_hash($password, PASSWORD_BCRYPT);
 
         if ($this->usuario->registrar()) {
-            header("Location: index.php?success=registro");
+            header("Location: ../index.php?success=registro");
         } else {
             echo "Error al registrar usuario.";
         }
     }
 
-    public function login( $password) {
+    public function login($nombre, $password) {
+        $this->usuario->nombre = $nombre;
         $this->usuario->password = $password;
 
         $usuario = $this->usuario->login();
@@ -30,9 +31,9 @@ class UsuarioController {
         if ($usuario) {
             session_start();
             $_SESSION['usuario'] = $usuario;
-            header("Location: views/home.php");
+            header("Location: ../views/home.php?bienvenido=1");
         } else {
-            header("Location: index.php?error=login");
+            header("Location: ../index.php?error=login");
         }
     }
 }
