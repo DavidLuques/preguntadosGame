@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../models/Usuario.php';
 
 class UsuarioController {
@@ -30,7 +30,7 @@ class UsuarioController {
         if ($usuario) {
             session_start();
             $_SESSION['usuario'] = $usuario;
-            header("Location: app/views/home.php");
+            header("Location: views/home.php");
         } else {
             header("Location: index.php?error=login");
         }

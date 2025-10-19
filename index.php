@@ -6,13 +6,13 @@
 </head>
 <body>
     <h2>Bienvenido</h2>
-    <a href="app/views/login.php">Iniciar sesión</a> |
-    <a href="app/views/registro.php">Registrarse</a>
+    <a href="views/login.php">Iniciar sesión</a> |
+    <a href="views/registro.php">Registrarse</a>
 </body>
 </html>
 
 <?php
-require_once 'app/controllers/UsuarioController.php';
+require_once 'controllers/UsuarioController.php';
 
 $controller = new UsuarioController();
 
