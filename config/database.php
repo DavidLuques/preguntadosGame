@@ -1,8 +1,8 @@
 <?php
 class Database {
-    private $host = "u625329211_preguntados";
+    private $host = "localhost";
     private $db_name = "u625329211_preguntados";
-    private $username = "root";
+    private $username = "u625329211_preguntados";
     private $password = "+MpWww?d$5P";
     public $conn;
 
