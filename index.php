@@ -17,11 +17,11 @@ $renderer = new Renderer();
 include_once("controllers/LoginController.php");
 $loginController = new LoginController($conexion, $renderer);
 
-include_once("controllers/jugadoresController.php");
+include_once("controllers/JugadoresController.php");
 $jugadoresController = new JugadoresController($conexion, $renderer);
 
-$controllerParam = $_GET['controller'] ?? 'jugadores';
-$methodParam = $_GET['method'] ?? 'listadoJugadores';
+$controllerParam = isset($_GET['controller']) ? $_GET['controller'] : null;
+$methodParam = isset($_GET['method']) ? $_GET['method'] : null;
 
 switch ($controllerParam) {
     case 'login':
@@ -36,6 +36,7 @@ switch ($controllerParam) {
                 $loginController->logout();
                 break;
         }
+        break;
     case 'jugadores':
         switch ($methodParam) {
             case 'listadoJugadores':

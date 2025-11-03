@@ -15,7 +15,7 @@
                         <p class="text-muted mb-0">Registrate para jugar</p>
                     </div>
 
-                    <form action="/login/registrar" method="POST" class="needs-validation" novalidate>
+                    <form action="/login/registro" method="POST" class="needs-validation" novalidate>
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Usuario</label>
                             <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre de usuario" required>

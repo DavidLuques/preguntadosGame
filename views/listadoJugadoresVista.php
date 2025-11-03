@@ -33,7 +33,7 @@
                                 <?php if (!empty($jugador['fotoPerfil'])) : ?>
                                     <img src="<?= $jugador['fotoPerfil'] ?>" alt="Foto de <?= htmlspecialchars($jugador['usuario']) ?>">
                                 <?php else : ?>
-                                    <img src="uploads/default.jpg" alt="Sin foto">
+                                    <img src="" alt="Sin foto">
                                 <?php endif; ?>
                             </td>
                             <td><?= htmlspecialchars($jugador['usuario']) ?></td>

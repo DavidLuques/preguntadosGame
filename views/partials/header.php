@@ -55,7 +55,7 @@
     <header class="bg-primary p-3 mb-4">
         <h1>Preguntados</h1>
         <nav class="navegador">
-            <a class="text-decoration-none text-white" href="/">Inicio</a> |
+            <a class="text-decoration-none text-white" href="/preguntadosGame/index.php">Inicio</a> |
             <a class="text-decoration-none text-white" href="/login">Inicio de sesión</a> |
             <a class="text-decoration-none text-white" href="/login/registro">Registro</a>
         </nav>
