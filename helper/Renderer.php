@@ -8,8 +8,9 @@ class Renderer {
 
     public function render($template, $data = []) {
         extract($data);
-        include_once("views/partials/header.php");
-        include_once("views/" . $template . "Vista.php");
-        include_once("views/partials/footer.php");
+        $basePath = __DIR__ . '/../views';
+        include_once($basePath . "/partials/header.php");
+        include_once($basePath . "/" . $template . "Vista.php");
+        include_once($basePath . "/partials/footer.php");
     }
 }

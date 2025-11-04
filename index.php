@@ -1,8 +1,22 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 0); // No mostrar errores al usuario, solo en logs
+ini_set('log_errors', 1);
+
 session_start();
 
-$config = parse_ini_file('config/config.ini');
-include_once("helper/MyConexion.php");
+// Verificar que el archivo de configuración existe
+$configPath = __DIR__ . '/config/config.ini';
+if (!file_exists($configPath)) {
+    die('Error: No se encontró el archivo de configuración. Asegúrate de crear config/config.ini con las credenciales de Hostinger.');
+}
+
+$config = parse_ini_file($configPath);
+if ($config === false) {
+    die('Error: No se pudo leer el archivo de configuración.');
+}
+
+include_once(__DIR__ . "/helper/MyConexion.php");
 
 $conexion = new MyConexion(
     $config['server'],
@@ -11,13 +25,13 @@ $conexion = new MyConexion(
     $config['db_name']
 );
 
-include_once("helper/Renderer.php");
+include_once(__DIR__ . "/helper/Renderer.php");
 $renderer = new Renderer();
 
-include_once("controllers/LoginController.php");
+include_once(__DIR__ . "/controllers/LoginController.php");
 $loginController = new LoginController($conexion, $renderer);
 
-include_once("controllers/JugadoresController.php");
+include_once(__DIR__ . "/controllers/JugadoresController.php");
 $jugadoresController = new JugadoresController($conexion, $renderer);
 
 $controllerParam = isset($_GET['controller']) ? $_GET['controller'] : null;
