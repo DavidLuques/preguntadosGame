@@ -1,8 +1,0 @@
-; Archivo de configuración de ejemplo
-; Copia este archivo como config.ini y completa con tus credenciales
-
-server = "localhost"
-username = "tu_usuario_db"
-password = "tu_contraseña_db"
-db_name = "tu_base_de_datos"
-
