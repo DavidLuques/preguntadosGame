@@ -54,8 +54,8 @@ class Renderer {
             // Convertir arrays asociativos a formato compatible con Mustache
             if (isset($data['jugadores']) && is_array($data['jugadores']) && !empty($data['jugadores'])) {
                 $data['jugadores'] = array_map(function($jugador) {
-                    // Asegurar que todos los campos existan
-                    return array_merge([
+                    // Asegurar que todos los campos existan y convertir NULL a string vacío
+                    $defaults = [
                         'id' => '',
                         'usuario' => '',
                         'nombre' => '',
@@ -73,7 +73,17 @@ class Renderer {
                         'partidasPerdidas' => '',
                         'nivelDificultad' => '',
                         'fotoPerfil' => ''
-                    ], $jugador);
+                    ];
+                    
+                    // Combinar valores, convirtiendo NULL a string vacío
+                    $result = [];
+                    foreach ($defaults as $key => $defaultValue) {
+                        $result[$key] = isset($jugador[$key]) && $jugador[$key] !== null 
+                            ? (string)$jugador[$key] 
+                            : $defaultValue;
+                    }
+                    
+                    return $result;
                 }, $data['jugadores']);
             }
             
