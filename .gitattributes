@@ -1,0 +1,6 @@
+# Configurar Git para deployment en Hostinger
+* text=auto
+
+# Configurar merge strategy para evitar conflictos en deployment
+*.php text eol=lf
+
