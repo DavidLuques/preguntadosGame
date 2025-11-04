@@ -27,13 +27,16 @@ class Renderer {
         }
         
         // Configurar Mustache
-        // Los partials se cargan desde el mismo directorio de templates
+        // Usar un solo loader para templates y partials
+        $loader = new Mustache_Loader_FilesystemLoader($this->templatePath, ['extension' => '.mustache']);
+        
         $this->mustache = new Mustache_Engine([
-            'loader' => new Mustache_Loader_FilesystemLoader($this->templatePath, ['extension' => '.mustache']),
-            'partials_loader' => new Mustache_Loader_FilesystemLoader($this->templatePath, ['extension' => '.mustache']),
+            'loader' => $loader,
+            'partials_loader' => $loader, // Mismo loader para partials
             'escape' => function($value) {
                 return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
-            }
+            },
+            'strict_callables' => false
         ]);
     }
 
@@ -77,7 +80,17 @@ class Renderer {
             // Verificar que el template existe
             $templateFile = $this->templatePath . '/' . $template . '.mustache';
             if (!file_exists($templateFile)) {
-                die('Error: Template no encontrado: ' . $template . '.mustache');
+                die('Error: Template no encontrado: ' . $template . '.mustache en ' . $this->templatePath);
+            }
+            
+            // Verificar que los partials existen
+            $headerFile = $this->templatePath . '/partials/header.mustache';
+            $footerFile = $this->templatePath . '/partials/footer.mustache';
+            if (!file_exists($headerFile)) {
+                die('Error: Partial header no encontrado en: ' . $headerFile);
+            }
+            if (!file_exists($footerFile)) {
+                die('Error: Partial footer no encontrado en: ' . $footerFile);
             }
             
             // Renderizar la plantilla
