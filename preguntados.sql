@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-11-2025 a las 01:42:33
+-- Tiempo de generación: 03-11-2025 a las 23:18:13
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -279,35 +279,35 @@ INSERT INTO `question` (`question_id`, `question_text`, `question_date`, `correc
 (8, '¿En qué continente se encuentra Egipto?', '2025-11-02 00:00:00', 29, NULL, 4, 'activa'),
 (9, '¿Quién es el creador de Mickey Mouse?', '2025-11-02 00:00:00', 33, NULL, 5, 'activa'),
 (10, '¿En qué año se estrenó la película “Titanic”?', '2025-11-02 00:00:00', 37, NULL, 5, 'activa'),
-(11, '¿Cuál es el océano más grande del mundo?', '2025-11-02 21:42:05', NULL, NULL, 3, 'active'),
-(12, '¿Quién descubrió la penicilina?', '2025-11-02 21:42:05', NULL, NULL, 1, 'active'),
-(13, '¿En qué país se encuentra la Torre de Pisa?', '2025-11-02 21:42:05', NULL, NULL, 3, 'active'),
-(14, '¿Qué deporte se juega en Wimbledon?', '2025-11-02 21:42:05', NULL, NULL, 4, 'active'),
-(15, '¿Quién escribió \"Cien años de soledad\"?', '2025-11-02 21:42:05', NULL, NULL, 5, 'active'),
-(16, '¿Cuál es el metal más ligero?', '2025-11-02 21:42:05', NULL, NULL, 1, 'active'),
-(17, '¿Qué imperio construyó el Coliseo?', '2025-11-02 21:42:05', NULL, NULL, 2, 'active'),
-(18, '¿Cuál es el continente más poblado?', '2025-11-02 21:42:05', NULL, NULL, 3, 'active'),
-(19, '¿En qué deporte se usa una raqueta y una pelota amarilla pequeña?', '2025-11-02 21:42:05', NULL, NULL, 4, 'active'),
-(21, '¿Cuál es el planeta más cercano al sol?', '2025-11-02 00:00:00', NULL, NULL, 1, 'active'),
-(22, '¿En qué año llegó Cristóbal Colón a América?', '2025-11-02 00:00:00', NULL, NULL, 2, 'active'),
-(23, '¿Cuál es la capital de Francia?', '2025-11-02 00:00:00', NULL, NULL, 3, 'active'),
-(24, '¿Cuántos jugadores tiene un equipo de fútbol en el campo?', '2025-11-02 00:00:00', NULL, NULL, 4, 'active'),
-(25, '¿Quién escribió Hamlet?', '2025-11-02 00:00:00', NULL, NULL, 5, 'active'),
-(26, '¿Cuál es el elemento químico con símbolo O?', '2025-11-02 00:00:00', NULL, NULL, 1, 'active'),
-(27, '¿Quién fue el primer presidente de Estados Unidos?', '2025-11-02 00:00:00', NULL, NULL, 2, 'active'),
-(28, '¿Qué río pasa por Londres?', '2025-11-02 00:00:00', NULL, NULL, 3, 'active'),
-(29, '¿En qué deporte se utiliza un aro y un balón grande?', '2025-11-02 00:00:00', NULL, NULL, 4, 'active'),
-(30, '¿Cuál es la saga de películas sobre un mago llamado Harry?', '2025-11-02 00:00:00', NULL, NULL, 5, 'active'),
-(31, '¿Cuál es la velocidad de la luz?', '2025-11-02 00:00:00', NULL, NULL, 1, 'active'),
-(32, '¿Qué civilización construyó las pirámides de Egipto?', '2025-11-02 00:00:00', NULL, NULL, 2, 'active'),
-(33, '¿Cuál es la montaña más alta del mundo?', '2025-11-02 00:00:00', NULL, NULL, 3, 'active'),
-(34, '¿Cuántos sets se juegan normalmente en un partido de tenis masculino?', '2025-11-02 00:00:00', NULL, NULL, 4, 'active'),
-(35, '¿Quién pintó la Mona Lisa?', '2025-11-02 00:00:00', NULL, NULL, 5, 'active'),
-(36, '¿Qué gas respiramos principalmente?', '2025-11-02 00:00:00', NULL, NULL, 1, 'active'),
-(37, '¿En qué año terminó la Segunda Guerra Mundial?', '2025-11-02 00:00:00', NULL, NULL, 2, 'active'),
-(38, '¿Cuál es el país más grande del mundo?', '2025-11-02 00:00:00', NULL, NULL, 3, 'active'),
-(39, '¿Qué instrumento se toca con baquetas y tiene parches?', '2025-11-02 00:00:00', NULL, NULL, 4, 'active'),
-(40, '¿Qué película animada tiene a un ratón llamado Mickey?', '2025-11-02 00:00:00', NULL, NULL, 5, 'active');
+(11, '¿Cuál es el océano más grande del mundo?', '2025-11-02 21:42:05', 201, NULL, 3, 'active'),
+(12, '¿Quién descubrió la penicilina?', '2025-11-02 21:42:05', 205, NULL, 1, 'active'),
+(13, '¿En qué país se encuentra la Torre de Pisa?', '2025-11-02 21:42:05', 209, NULL, 3, 'active'),
+(14, '¿Qué deporte se juega en Wimbledon?', '2025-11-02 21:42:05', 213, NULL, 4, 'active'),
+(15, '¿Quién escribió \"Cien años de soledad\"?', '2025-11-02 21:42:05', 217, NULL, 5, 'active'),
+(16, '¿Cuál es el metal más ligero?', '2025-11-02 21:42:05', 221, NULL, 1, 'active'),
+(17, '¿Qué imperio construyó el Coliseo?', '2025-11-02 21:42:05', 225, NULL, 2, 'active'),
+(18, '¿Cuál es el continente más poblado?', '2025-11-02 21:42:05', 229, NULL, 3, 'active'),
+(19, '¿En qué deporte se usa una raqueta y una pelota amarilla pequeña?', '2025-11-02 21:42:05', 233, NULL, 4, 'active'),
+(21, '¿Cuál es el planeta más cercano al sol?', '2025-11-02 00:00:00', 121, NULL, 1, 'active'),
+(22, '¿En qué año llegó Cristóbal Colón a América?', '2025-11-02 00:00:00', 125, NULL, 2, 'active'),
+(23, '¿Cuál es la capital de Francia?', '2025-11-02 00:00:00', 129, NULL, 3, 'active'),
+(24, '¿Cuántos jugadores tiene un equipo de fútbol en el campo?', '2025-11-02 00:00:00', 17, NULL, 4, 'active'),
+(25, '¿Quién escribió Hamlet?', '2025-11-02 00:00:00', 137, NULL, 5, 'active'),
+(26, '¿Cuál es el elemento químico con símbolo O?', '2025-11-02 00:00:00', 141, NULL, 1, 'active'),
+(27, '¿Quién fue el primer presidente de Estados Unidos?', '2025-11-02 00:00:00', 145, NULL, 2, 'active'),
+(28, '¿Qué río pasa por Londres?', '2025-11-02 00:00:00', 149, NULL, 3, 'active'),
+(29, '¿En qué deporte se utiliza un aro y un balón grande?', '2025-11-02 00:00:00', 153, NULL, 4, 'active'),
+(30, '¿Cuál es la saga de películas sobre un mago llamado Harry?', '2025-11-02 00:00:00', 157, NULL, 5, 'active'),
+(31, '¿Cuál es la velocidad de la luz?', '2025-11-02 00:00:00', 161, NULL, 1, 'active'),
+(32, '¿Qué civilización construyó las pirámides de Egipto?', '2025-11-02 00:00:00', 165, NULL, 2, 'active'),
+(33, '¿Cuál es la montaña más alta del mundo?', '2025-11-02 00:00:00', 169, NULL, 3, 'active'),
+(34, '¿Cuántos sets se juegan normalmente en un partido de tenis masculino?', '2025-11-02 00:00:00', 174, NULL, 4, 'active'),
+(35, '¿Quién pintó la Mona Lisa?', '2025-11-02 00:00:00', 177, NULL, 5, 'active'),
+(36, '¿Qué gas respiramos principalmente?', '2025-11-02 00:00:00', 181, NULL, 1, 'active'),
+(37, '¿En qué año terminó la Segunda Guerra Mundial?', '2025-11-02 00:00:00', 185, NULL, 2, 'active'),
+(38, '¿Cuál es el país más grande del mundo?', '2025-11-02 00:00:00', 189, NULL, 3, 'active'),
+(39, '¿Qué instrumento se toca con baquetas y tiene parches?', '2025-11-02 00:00:00', 39, NULL, 4, 'active'),
+(40, '¿Qué película animada tiene a un ratón llamado Mickey?', '2025-11-02 00:00:00', 197, NULL, 5, 'active');
 
 -- --------------------------------------------------------
 
