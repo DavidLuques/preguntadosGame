@@ -15,7 +15,7 @@
                         <p class="text-muted mb-0">Registrate para jugar</p>
                     </div>
 
-                    <form action="/login/registro" method="POST" class="needs-validation" novalidate>
+                    <form action="index.php?controller=login&method=registro" method="POST" class="needs-validation" novalidate>
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Usuario</label>
                             <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre de usuario" required>
@@ -34,7 +34,7 @@
                     </form>
 
                     <div class="text-center mt-4">
-                        <small class="text-muted">¿Ya tenés cuenta? <a href="/login/login" class="text-decoration-underline">Iniciá sesión</a></small>
+                        <small class="text-muted">¿Ya tenés cuenta? <a href="index.php?controller=login&method=login" class="text-decoration-underline">Iniciá sesión</a></small>
                     </div>
                 </div>
             </div>

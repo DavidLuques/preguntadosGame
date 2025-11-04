@@ -2,7 +2,7 @@
 
 class Renderer {
 
-    public function __constructor() {
+    public function __construct() {
         // Inicialización si es necesario
     }
 

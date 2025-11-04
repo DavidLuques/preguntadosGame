@@ -13,30 +13,42 @@ class LoginController
 
     public function login()
     {
-        if (isset($_POST["usuario"]) && isset($_POST["password"])) {
-            $usuario = $_POST["usuario"];
-            $password = $_POST["password"];
-            $sql = "SELECT * FROM usuarios WHERE usuario = '$usuario' AND password = '$password'";
-            $resultado = $this->conexion->query($sql);
-            if (sizeof($resultado) > 0) {
+        $error = null;
+        if (isset($_POST["nombre"]) && isset($_POST["password"])) {
+            $usuario = trim($_POST["nombre"]);
+            $password = trim($_POST["password"]);
+            
+            // Usar prepared statements para prevenir SQL Injection
+            $conn = $this->conexion->getConnection();
+            $stmt = $conn->prepare("SELECT * FROM user WHERE username = ? AND password = ?");
+            $stmt->bind_param("ss", $usuario, $password);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            
+            if ($result->num_rows > 0) {
                 // Inicio de sesión exitoso
                 $_SESSION["usuario"] = $usuario;
-                header("Location: /");
-                echo "<p style='color:green;'>Inicio de sesión exitoso.</p>";
+                $stmt->close();
+                header("Location: index.php");
                 exit();
             } else {
                 // Error de inicio de sesión
                 $error = "Usuario o contraseña incorrectos.";
             }
+            if ($stmt) {
+                $stmt->close();
+            }
         }
-        $this->renderer->render("login");
+        $this->renderer->render("login", ['error' => $error]);
     }
 
     public function logout()
     {
-        session_start();
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
         session_destroy();
-        header("Location: /");
+        header("Location: index.php");
         exit();
     }
 

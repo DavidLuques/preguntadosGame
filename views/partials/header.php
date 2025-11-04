@@ -55,8 +55,11 @@
     <header class="bg-primary p-3 mb-4">
         <h1>Preguntados</h1>
         <nav class="navegador">
-            <a class="text-decoration-none text-white" href="/">Inicio</a> |
-            <a class="text-decoration-none text-white" href="/login">Inicio de sesión</a> |
-            <a class="text-decoration-none text-white" href="/login/registro">Registro</a>
+            <a class="text-decoration-none text-white" href="index.php">Inicio</a> |
+            <a class="text-decoration-none text-white" href="index.php?controller=login&method=login">Inicio de sesión</a> |
+            <a class="text-decoration-none text-white" href="index.php?controller=login&method=registro">Registro</a>
+            <?php if (isset($_SESSION["usuario"])) : ?>
+                | <a class="text-decoration-none text-white" href="index.php?controller=login&method=logout">Cerrar sesión (<?= htmlspecialchars($_SESSION["usuario"]) ?>)</a>
+            <?php endif; ?>
         </nav>
-    </header>v
+    </header>
