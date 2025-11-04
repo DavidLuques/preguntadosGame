@@ -68,10 +68,7 @@ class LoginController
 
     public function registro()
     {
-        /*if (isset($_GET['success']) && $_GET['success'] === 'registro') {
-            echo "<p style='color:green;'>Usuario registrado correctamente.</p>";
-        }*/
-
-        $this->renderer->render("registro");
+        $success = isset($_GET['success']) && $_GET['success'] === 'registro';
+        $this->renderer->render("registro", ['success' => $success]);
     }
 }

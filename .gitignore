@@ -23,3 +23,7 @@ error_log
 # Git (no subir configuración local)
 .git/config
 
+# Composer
+vendor/
+composer.lock
+
