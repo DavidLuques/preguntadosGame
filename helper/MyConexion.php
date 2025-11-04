@@ -7,9 +7,11 @@ class MyConexion
     {
         $this->conexion = new mysqli($server, $user, $password, $database);
         if ($this->conexion->connect_error) {
-            die('Error de la conexión: ' . $this->conexion->connect_error);
+            throw new Exception('Error de la conexión: ' . $this->conexion->connect_error);
         }
-        $this->conexion->set_charset("utf8mb4");
+        if (!$this->conexion->set_charset("utf8mb4")) {
+            throw new Exception('Error estableciendo charset: ' . $this->conexion->error);
+        }
     }
 
     public function query($sql)
