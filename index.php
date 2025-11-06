@@ -24,6 +24,7 @@ try {
     die('Error de sesión: ' . $e->getMessage());
 }
 
+$configFactory = new ConfigFactory();
 $conexion = $configFactory->create("MyConexion");
 
 try {
