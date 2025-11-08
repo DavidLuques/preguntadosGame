@@ -9,7 +9,7 @@ Options -Indexes
 #Habilita el motor de reescritura de URLs (Modulo de reescritura)
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteBase /
+    RewriteBase /preguntadosGame/
     RewriteRule ^(images)($|/) - [L,NC]
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d

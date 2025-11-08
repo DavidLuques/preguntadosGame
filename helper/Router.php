@@ -1,0 +1,61 @@
+<?php
+
+class Router
+{
+    private $configFactory;
+    private $defaultController;
+    private $defaultMethod;
+
+    public function __construct($configFactory, $defaultController, $defaultMethod)
+    {
+
+        $this->configFactory = $configFactory;
+        $this->defaultController = $defaultController;
+        $this->defaultMethod = $defaultMethod;
+    }
+
+    public function executeController($controllerParam, $methodParam)
+    {
+        $controller = $this->getControllerFrom($controllerParam);
+        $this->executeMethodFromController($controller, $methodParam);
+    }
+
+    private function getControllerFrom($controllerName)
+    {
+        $controllerName = $this->getControllerName($controllerName);
+        $controller = $this->configFactory->get($controllerName);
+
+        if ($controller == null) {
+            header("location: /");
+            exit;
+        }
+
+        return $controller;
+    }
+
+    private function executeMethodFromController($controller, $methodName)
+    {
+        call_user_func(
+            array(
+                $controller,
+                $this->getMethodName($controller, $methodName)
+            )
+        );
+    }
+
+    public function getControllerName($controllerName)
+    {
+        return $controllerName ?
+            ucfirst($controllerName) . 'Controller' :
+            $this->defaultController;
+    }
+
+    public function getMethodName($controller, $methodName)
+    {
+        // Si el método no está definido o es null, usa el método por defecto
+        if (empty($methodName) || !method_exists($controller, $methodName)) {
+            return $this->defaultMethod;
+        }
+        return $methodName;
+    }
+}
