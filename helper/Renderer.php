@@ -41,7 +41,7 @@ class Renderer
     public function render($template, $data = [])
     {
         try {
-            // Agregar datos globales que necesitan todas las plantillas
+            // Agrego datos globales que necesitan todas las plantillas
             $data['usuario'] = isset($_SESSION["usuario"]) ? $_SESSION["usuario"] : false;
             $data['currentYear'] = date("Y");
 
@@ -74,7 +74,7 @@ class Renderer
                         'fotoPerfil' => ''
                     ];
 
-                    // Combinar valores, convirtiendo NULL a string vacío
+                    // Combino valores, convirtiendo NULL a string vacío
                     $result = [];
                     foreach ($defaults as $key => $defaultValue) {
                         $result[$key] = isset($jugador[$key]) && $jugador[$key] !== null
@@ -86,13 +86,13 @@ class Renderer
                 }, $data['jugadores']);
             }
 
-            // Verificar que el template existe
+            // Verifico que el template existe
             $templateFile = $this->templatePath . '/' . $template . '.mustache';
             if (!file_exists($templateFile)) {
                 die('Error: Template no encontrado: ' . $template . '.mustache en ' . $this->templatePath);
             }
 
-            // Verificar que los partials existen
+            // Verifico que los partials existen
             $headerFile = $this->templatePath . '/partials/header.mustache';
             $footerFile = $this->templatePath . '/partials/footer.mustache';
             if (!file_exists($headerFile)) {
@@ -102,7 +102,7 @@ class Renderer
                 die('Error: Partial footer no encontrado en: ' . $footerFile);
             }
 
-            // Renderizar la plantilla
+            // Renderizo la plantilla
             $templateContent = $this->mustache->render($template, $data);
             echo $templateContent;
         } catch (Exception $e) {

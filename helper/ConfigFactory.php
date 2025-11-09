@@ -5,11 +5,15 @@ include_once(__DIR__ . "/Renderer.php");
 include_once(__DIR__ . "/Router.php");
 include_once(__DIR__ . "/../controllers/LoginController.php");
 include_once(__DIR__ . "/../controllers/JugadoresController.php");
+include_once(__DIR__ . "/../models/LoginModel.php");
+include_once(__DIR__ . "/../models/JugadoresModel.php");
 
 class ConfigFactory
 {
     private $config;
     private $objetos;
+    private $conexion;
+    private $renderer;
 
     public function __construct()
     {
@@ -24,8 +28,12 @@ class ConfigFactory
 
         $this->objetos["Renderer"] = new Renderer();
 
+        $this->objetos["LoginModel"] = new LoginModel(
+            $this->objetos["MyConexion"]
+        );
+
         $this->objetos["LoginController"] = new LoginController(
-            $this->objetos["MyConexion"],
+            $this->objetos["LoginModel"],
             $this->objetos["Renderer"]
         );
 

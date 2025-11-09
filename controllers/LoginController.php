@@ -2,15 +2,14 @@
 include_once(__DIR__ . "/../models/LoginModel.php");
 class LoginController
 {
-    private $conexion;
-    private $renderer;
-    private $model;
 
-    public function __construct($conexion, $renderer)
+    private $model;
+    private $renderer;
+
+    public function __construct($model, $renderer)
     {
-        $this->conexion = $conexion;
+        $this->model = $model;
         $this->renderer = $renderer;
-        $this->model = new LoginModel($conexion);
     }
 
     public function base()
@@ -20,15 +19,29 @@ class LoginController
 
     public function login()
     {
-        $error = $this->model->loginUser();;
-        $this->renderer->render("login", ['error' => $error]);
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            if (!isset($_POST["nombre"]) || !isset($_POST["password"])) {
+                $this->renderer->render("login", ["error" => "Faltan datos de inicio de sesión"]);
+                return;
+            }
+
+            $resultado = $this->model->getUserWith($_POST["nombre"], $_POST["password"]);
+
+            // Si el array no está vacío, el usuario existe
+            if (!empty($resultado)) {
+                $_SESSION["usuario"] = $_POST["nombre"];
+                header("Location: /");
+                exit();
+            } else {
+                $this->renderer->render("login", ["error" => "Usuario o clave incorrecta"]);
+            }
+        } else {
+            $this->renderer->render("login");
+        }
     }
 
     public function logout()
     {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
         session_destroy();
         header("Location: /");
         exit();

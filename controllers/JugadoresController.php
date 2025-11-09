@@ -27,7 +27,7 @@ class JugadoresController
 
     public function partida()
     {
-        if(!isset($_SESSION['editor'])) {
+        if(isset($_SESSION['editor']) || !isset($_SESSION['admin'])) {
             die('Acceso no autorizado. <a href="/">Volver al inicio</a>');
         }
         $this->renderer->render("partida");

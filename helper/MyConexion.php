@@ -17,7 +17,7 @@ class MyConexion
     public function query($sql)
     {
         $result = $this->conexion->query($sql);
-        
+
         if (!$result) {
             error_log("Error en consulta SQL: " . $this->conexion->error);
             return null;
@@ -29,8 +29,9 @@ class MyConexion
 
         return [];
     }
-    
-    public function getConnection() {
+
+    public function getConnection()
+    {
         return $this->conexion;
     }
 }

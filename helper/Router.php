@@ -52,7 +52,7 @@ class Router
 
     public function getMethodName($controller, $methodName)
     {
-        // Si el método no está definido o es null, usa el método por defecto
+        // Si el método no está definido o es null, uso el método por defecto
         if (empty($methodName) || !method_exists($controller, $methodName)) {
             return $this->defaultMethod;
         }
