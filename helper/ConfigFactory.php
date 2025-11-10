@@ -5,8 +5,10 @@ include_once(__DIR__ . "/Renderer.php");
 include_once(__DIR__ . "/Router.php");
 include_once(__DIR__ . "/../controllers/LoginController.php");
 include_once(__DIR__ . "/../controllers/JugadoresController.php");
+include_once(__DIR__ . "/../controllers/PartidaController.php");
 include_once(__DIR__ . "/../models/LoginModel.php");
 include_once(__DIR__ . "/../models/JugadoresModel.php");
+include_once(__DIR__ . "/../models/PartidaModel.php");
 
 class ConfigFactory
 {
@@ -19,27 +21,31 @@ class ConfigFactory
     {
         $this->config = parse_ini_file(__DIR__ . '/../config/config.ini');
 
-        $this->objetos["MyConexion"] = new MyConexion(
+        $this->conexion = new MyConexion(
             $this->config['server'],
             $this->config['username'],
             $this->config['password'],
             $this->config['db_name']
         );
 
-        $this->objetos["Renderer"] = new Renderer();
+        $this->renderer = new Renderer();
 
-        $this->objetos["LoginModel"] = new LoginModel(
-            $this->objetos["MyConexion"]
-        );
-
+        $this->objetos["LoginModel"] = new LoginModel($this->conexion);
         $this->objetos["LoginController"] = new LoginController(
             $this->objetos["LoginModel"],
-            $this->objetos["Renderer"]
+            $this->renderer
         );
 
+        $this->objetos["JugadoresModel"] = new JugadoresModel($this->conexion);
         $this->objetos["JugadoresController"] = new JugadoresController(
-            $this->objetos["MyConexion"],
-            $this->objetos["Renderer"]
+            $this->objetos["JugadoresModel"],
+            $this->renderer
+        );
+
+        $this->objetos["PartidaModel"] = new PartidaModel($this->conexion);
+        $this->objetos["PartidaController"] = new PartidaController(
+            $this->objetos["PartidaModel"],
+            $this->renderer
         );
 
         $this->objetos["Router"] = new Router(

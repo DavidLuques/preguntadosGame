@@ -1,16 +1,15 @@
 <?php
 include_once(__DIR__ . "/../models/JugadoresModel.php");
+
 class JugadoresController
 {
-    private $conexion;
-    private $renderer;
     private $model;
+    private $renderer;
 
-    public function __construct($conexion, $renderer)
+    public function __construct($JugadorModel, $renderer)
     {
-        $this->conexion = $conexion;
+        $this->model = $JugadorModel;
         $this->renderer = $renderer;
-        $this->model = new JugadoresModel($conexion);
     }
 
     public function base()
@@ -21,15 +20,6 @@ class JugadoresController
     public function listadoJugadores()
     {
         $jugadores = $this->model->mostrarTabla();
-
-        $this->renderer->render("listadoJugadores", ['jugadores' => $jugadores ? $jugadores : []]);
-    }
-
-    public function partida()
-    {
-        if(isset($_SESSION['editor']) || !isset($_SESSION['admin'])) {
-            die('Acceso no autorizado. <a href="/">Volver al inicio</a>');
-        }
-        $this->renderer->render("partida");
+        $this->renderer->render("listadoJugadores", ['jugadores' => $jugadores ?? []]);
     }
 }
