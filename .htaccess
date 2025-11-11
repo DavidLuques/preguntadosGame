@@ -1,16 +1,21 @@
-#Carga configuraciones para el apache
+# Desactiva listado de directorios
 Options -Indexes
 
-#Esto deniega el acceso a archivos sensibles
+# Deniega acceso a archivos sensibles
 <FilesMatch ".*\.(log|ini|htaccess)$">
     deny from all
 </FilesMatch>
 
-#Habilita el motor de reescritura de URLs (Modulo de reescritura)
+# Motor de reescritura
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteBase /
-    RewriteRule ^(images)($|/) - [L,NC]
+
+    # ✅ Permite acceder directamente a assets, images, etc.
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule ^(assets|images|uploads)/ - [L,NC]
+
+    # ✅ Enrutamiento MVC
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)/(.*)/(.*)$ index.php?controller=$1&method=$2&$3 [L,QSA]
