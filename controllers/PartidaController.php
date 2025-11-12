@@ -22,6 +22,28 @@ class PartidaController
         $this->renderer->render("inicioPartida");
     }
 
+    public function mostrarPregunta()
+    {
+        if (!isset($_GET['category_id'])) {
+            die('Falta el parámetro category_id');
+        }
+
+        $categoryId = intval($_GET['category_id']);
+
+        // Pedimos una pregunta al modelo
+        $pregunta = $this->model->getRandomQuestionByCategory($categoryId);
+
+        if (!$pregunta) {
+            die('No se encontró ninguna pregunta para esa categoría');
+        }
+
+        // Renderizamos la vista con los datos
+        $this->renderer->render("mostrarPregunta", [
+            'category_id' => $pregunta['category_id'],
+            'question_text' => $pregunta['question_text']
+        ]);
+    }
+
     public function partida()
     {
         if (isset($_SESSION['editor'])) {

@@ -1,5 +1,6 @@
 .roulette-container {
     position: relative;
+    margin-top: 2em;
 }
 
 .roulette-container #selector {
@@ -18,6 +19,11 @@
     -moz-transform: translateX(-50%);
     -ms-transform: translateX(-50%);
     -o-transform: translateX(-50%);
+}
+
+.roulette-border {
+    display: flex;
+    justify-content: center;
 }
 
 #roulette {
@@ -53,15 +59,11 @@
     height: 200%;
     text-align: center;
     padding-top: 60px;
-    transform: skewY(60deg) rotate(15deg);
-    -webkit-transform: skewY(60deg) rotate(15deg);
-    -moz-transform: skewY(60deg) rotate(15deg);
-    -ms-transform: skewY(60deg) rotate(15deg);
-    -o-transform: skewY(60deg) rotate(15deg);
+    transform: skewY(18deg) rotate(36deg);
 }
 
 #roulette .roulette-section .roulette-section-container p {
-    margin-top: 30px;
+    margin-top: 15px;
     transform: rotate(90deg);
     -webkit-transform: rotate(90deg);
     -moz-transform: rotate(90deg);
