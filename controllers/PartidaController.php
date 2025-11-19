@@ -30,14 +30,15 @@ class PartidaController
 
         $categoryId = intval($_GET['category_id']);
 
-        // Pedimos una pregunta al modelo
         $pregunta = $this->model->getRandomQuestionByCategory($categoryId);
 
         if (!$pregunta) {
             die('No se encontró ninguna pregunta para esa categoría');
         }
 
-        // Renderizamos la vista con los datos
+        // Tomar la primera pregunta devuelta
+        $pregunta = $pregunta[0];
+
         $this->renderer->render("mostrarPregunta", [
             'category_id' => $pregunta['category_id'],
             'question_text' => $pregunta['question_text']
