@@ -1,62 +1,60 @@
 {{>partials/header}}
 
-<div class="container mt-5">
+<section class="container">
     <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body text-center">
-                    <h2 class="card-title mb-4">¡A empezado la partida!</h2>
-                    <p class="card-text">Gira la ruleta para conocer que categoria te tocará.</p>
-                    <section class="roulette-container">
+        <div class="col-12 col-lg-8">
+            <div class="app-card roulette-card p-5 text-center">
+                <p class="text-uppercase text-warning fw-semibold mb-2">Modo desafío</p>
+                <h2 class="display-6 fw-bold mb-3 text-white">¡La ruleta está lista para girar!</h2>
+                <p class="lead text-white-50 mb-5">Cada color representa una categoría distinta. Tocá «Girar» para descubrir la pregunta que decidirá tu puntaje.</p>
 
-                        <div id="selector"></div>
+                <section class="roulette-container d-flex flex-column align-items-center gap-4">
+                    <div id="selector"></div>
 
-                        <div class="roulette-border">
-                            <div id="roulette">
+                    <div class="roulette-border">
+                        <div id="roulette">
 
-                                <div class="roulette-section">
-                                    <div class="roulette-section-container">
-                                        <p>Historia</p>
-                                    </div>
+                            <div class="roulette-section">
+                                <div class="roulette-section-container">
+                                    <p>Historia</p>
                                 </div>
+                            </div>
 
-                                <div class="roulette-section">
-                                    <div class="roulette-section-container">
-                                        <p>Ciencia</p>
-                                    </div>
+                            <div class="roulette-section">
+                                <div class="roulette-section-container">
+                                    <p>Ciencia</p>
                                 </div>
+                            </div>
 
-                                <div class="roulette-section">
-                                    <div class="roulette-section-container">
-                                        <p>Deportes</p>
-                                    </div>
+                            <div class="roulette-section">
+                                <div class="roulette-section-container">
+                                    <p>Deportes</p>
                                 </div>
+                            </div>
 
-                                <div class="roulette-section">
-                                    <div class="roulette-section-container">
-                                        <p>Geografía</p>
-                                    </div>
+                            <div class="roulette-section">
+                                <div class="roulette-section-container">
+                                    <p>Geografía</p>
                                 </div>
+                            </div>
 
-                                <div class="roulette-section">
-                                    <div class="roulette-section-container">
-                                        <p>Entretenimiento</p>
-                                    </div>
+                            <div class="roulette-section">
+                                <div class="roulette-section-container">
+                                    <p>Entretenimiento</p>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="button-container">
-                        <button type="button" id="spin">¡Girar!</button>
-                        <button type="button" id="reset">Resetear</button>
-                        </div>
-
-                    </section>
-                </div>
+                    <div class="button-container d-flex flex-column flex-sm-row gap-3">
+                        <button type="button" class="btn btn-warning btn-lg fw-semibold px-5" id="spin">¡Girar!</button>
+                        <button type="button" class="btn btn-outline-light btn-lg fw-semibold px-5" id="reset">Resetear</button>
+                    </div>
+                </section>
             </div>
         </div>
     </div>
-</div>
+</section>
 
 {{>partials/footer}}
 

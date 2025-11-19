@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.2
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 03-11-2025 a las 23:18:13
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Servidor: 127.0.0.1:3306
+-- Tiempo de generación: 19-11-2025 a las 14:55:43
+-- Versión del servidor: 11.8.3-MariaDB-log
+-- Versión de PHP: 7.2.34
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,8 +18,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `preguntados`
+-- Base de datos: `u625329211_preguntados`
 --
+CREATE DATABASE IF NOT EXISTS `u625329211_preguntados` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE `u625329211_preguntados`;
 
 -- --------------------------------------------------------
 
@@ -329,8 +331,10 @@ CREATE TABLE `report` (
 --
 
 CREATE TABLE `user` (
+  `id` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
+  `rol` varchar(15) NOT NULL,
   `authToken` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   `lastname` varchar(255) DEFAULT NULL,
@@ -340,7 +344,6 @@ CREATE TABLE `user` (
   `email` varchar(255) NOT NULL,
   `country` varchar(100) DEFAULT NULL,
   `profile_picture` varchar(255) NOT NULL,
-  `role` varchar(1) DEFAULT NULL,
   `total_score` int(20) DEFAULT NULL,
   `games_played` int(20) DEFAULT NULL,
   `games_won` int(20) DEFAULT NULL,
@@ -354,8 +357,11 @@ CREATE TABLE `user` (
 -- Volcado de datos para la tabla `user`
 --
 
-INSERT INTO `user` (`username`, `password`, `authToken`, `name`, `lastname`, `birth_year`, `created_at`, `gender`, `email`, `country`, `profile_picture`, `role`, `total_score`, `games_played`, `games_won`, `match_lost`, `difficulty_level`, `answered_questions`, `last_login`) VALUES
-('user', '12345', '', 'Admin', 'istrador', '1990-01-01 00:00:00', '2025-11-02 21:29:20', 'Male', 'eladmin@gmail.com', 'Argentina', 'default.png', 'U', 0, 0, 0, 0, 'Easy', 0, '2025-11-02 21:29:20');
+INSERT INTO `user` (`id`, `username`, `password`, `rol`, `authToken`, `name`, `lastname`, `birth_year`, `created_at`, `gender`, `email`, `country`, `profile_picture`, `total_score`, `games_played`, `games_won`, `match_lost`, `difficulty_level`, `answered_questions`, `last_login`) VALUES
+(1, 'ADMIN', '12345', 'ADMIN', '', 'Admin', 'istrador', '1990-01-01 00:00:00', '2025-11-02 21:29:20', 'Masculino', 'eladmin@gmail.com', 'Argentina', 'images/usuario.png', 0, 0, 0, 0, NULL, 0, '2025-11-02 21:29:20'),
+(2, 'alexia', 'ead5631214f67ed38456e82b16ee22576a7860282268f629316e9e1bd3bc5640', 'JUGADOR', '535631c6-b9f6-11f0-8306-6db02ed39983', 'Neymar', 'Putellas', '1994-02-04 00:00:00', '2025-11-05 03:20:05', 'Femenino', 'alexia.putellas@example.com', 'España', 'images/Neymar.jpg', 8700, 230, 180, 50, 'Avanzado', 1100, '2025-11-05 03:20:05'),
+(3, 'leomessi', 'db160e9f98553ab525af6b17a719c6b010241d4d2932132d5c4b4867ab560611', 'JUGADOR', '53562985-b9f6-11f0-8306-6db02ed39983', 'Lionel', 'Messi', '1987-06-24 00:00:00', '2025-11-05 03:20:05', 'Masculino', 'leo.messi@example.com', 'Argentina', 'images/Messi.jpg', 9800, 250, 200, 50, 'Medio', 1200, '2025-11-05 03:20:05'),
+(4, 'mbappe', '04d96a896a4cd7dbd16fcef1a9ebe912f789f205ce51d750fea6beb614dbbdcd', 'JUGADOR', '535630b0-b9f6-11f0-8306-6db02ed39983', 'Ronaldinho', 'Mbappé', '1998-12-20 00:00:00', '2025-11-05 03:20:05', 'Masculino', 'k.mbappe@example.com', 'Francia', 'images/Ronaldinho.jpg', 7500, 190, 140, 50, 'Principiante', 900, '2025-11-05 03:20:05');
 
 --
 -- Índices para tablas volcadas
@@ -407,7 +413,8 @@ ALTER TABLE `report`
 -- Indices de la tabla `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`username`);
+  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD UNIQUE KEY `username` (`username`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -448,6 +455,12 @@ ALTER TABLE `question`
 --
 ALTER TABLE `report`
   MODIFY `report_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `user`
+--
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restricciones para tablas volcadas

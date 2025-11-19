@@ -1,19 +1,32 @@
 {{>partials/header}}
 
-<div class="container mt-5">
+<section class="container">
     <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body text-center">
-                    <h2 class="card-title mb-4">¡La partida va a comenzar!</h2>
-                    <p class="card-text">Prepárate para responder las preguntas y demostrar tus conocimientos.</p>
-                    <button type="button" class="btn btn-primary mt-3">
-                        <a href="/partida/partida" class="text-white text-decoration-none">Iniciar!</a>
-                    </button>
+        <div class="col-12 col-lg-8 col-xl-6">
+            <div class="app-card p-5 text-center text-dark">
+                <p class="text-uppercase fw-semibold text-primary mb-2">Próxima ronda</p>
+                <h2 class="display-6 fw-bold mb-3">¿Listo para poner a prueba tus conocimientos?</h2>
+                <p class="subtext fs-5 mb-4">Cada giro de la ruleta puede llevarte a una categoría distinta. Concentrate, respirá profundo y preparate para sumar puntos.</p>
+
+                <div class="row row-cols-1 row-cols-sm-3 gy-3 mb-4 text-start text-sm-center">
+                    <div>
+                        <span class="badge bg-primary-subtle text-primary mb-1">Paso 1</span>
+                        <p class="mb-0">Ingresá a la ruleta.</p>
+                    </div>
+                    <div>
+                        <span class="badge bg-warning-subtle text-warning mb-1">Paso 2</span>
+                        <p class="mb-0">Girarla para elegir categoría.</p>
+                    </div>
+                    <div>
+                        <span class="badge bg-success-subtle text-success mb-1">Paso 3</span>
+                        <p class="mb-0">Respondé y sumá puntos.</p>
+                    </div>
                 </div>
+
+                <a href="/partida/partida" class="btn btn-lg btn-primary fw-semibold px-5 shadow-sm">¡Iniciar partida!</a>
             </div>
         </div>
     </div>
-</div>
+</section>
 
 {{>partials/footer}}

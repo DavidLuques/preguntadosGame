@@ -1,76 +1,182 @@
 {{>partials/header}}
 
-<div class="container">
-    <h1>Listado de Jugadores</h1>
+<section class="container min-vh-100 py-5">
+    <style>
+        .players-table-wrapper {
+            max-height: calc(100vh - 320px);
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
 
-    <div class="contenedor-tabla">
-        <div class="d-flex justify-content-end">
-            <button class="btn btn-primary mb-3">
-                <a class="text-white text-decoration-none" href="/partida/inicioPartida">Jugar partida</a>
-            </button>
-        </div>
-        <div class="table-responsive">
-        <table class="table table-striped table-hover align-middle text-center">
-            <thead class="table-dark">
-                <tr>
-                    <th>ID</th>
-                    <th>Foto</th>
-                    <th>Usuario</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Mail</th>
-                    <th>País</th>
-                    <th>Ciudad</th>
-                    <th>Sexo</th>
-                    <th>Nacimiento</th>
-                    <th>Fecha Alta</th>
-                    <th>Rol</th>
-                    <th>Puntaje</th>
-                    <th>Jugadas</th>
-                    <th>Ganadas</th>
-                    <th>Perdidas</th>
-                    <th>Nivel</th>
-                </tr>
-            </thead>
-            <tbody>
-                {{#jugadores}}
-                    <tr>
-                        <td>{{id}}</td>
-                        <td>
-                            {{#fotoPerfil}}
-                                <img src="{{fotoPerfil}}" alt="Foto de {{usuario}}">
-                            {{/fotoPerfil}}
-                            {{^fotoPerfil}}
-                                <img src="" alt="Sin foto">
-                            {{/fotoPerfil}}
-                        </td>
-                        <td>{{usuario}}</td>
-                        <td>{{nombre}}</td>
-                        <td>{{apellido}}</td>
-                        <td>{{mail}}</td>
-                        <td>{{pais}}</td>
-                        <td>{{ciudad}}</td>
-                        <td>{{sexo}}</td>
-                        <td>{{nacimiento}}</td>
-                        <td>{{fechaAlta}}</td>
-                        <td>{{rol}}</td>
-                        <td>{{puntajeTotal}}</td>
-                        <td>{{partidasJugadas}}</td>
-                        <td>{{partidasGanadas}}</td>
-                        <td>{{partidasPerdidas}}</td>
-                        <td>{{nivelDificultad}}</td>
-                    </tr>
-                {{/jugadores}}
-                {{^jugadores}}
-                    <tr>
-                        <td colspan="17" class="text-center text-muted">No hay jugadores registrados</td>
-                    </tr>
-                {{/jugadores}}
-            </tbody>
-        </table>
+        .players-table {
+            min-width: 100%;
+        }
+
+        .players-table th,
+        .players-table td {
+            vertical-align: middle;
+        }
+
+        .players-table-wrapper th.mail-col,
+        .players-table-wrapper td.mail-col {
+            min-width: 240px;
+            white-space: normal;
+            word-break: break-word;
+            overflow-wrap: anywhere;
+        }
+
+        .players-table-wrapper td.role-cell {
+            overflow: visible;
+        }
+
+        .badge-role {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.35rem 0.9rem;
+            border-radius: 999px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 768px) {
+            .players-table-wrapper {
+                max-height: none;
+                overflow: visible;
+            }
+
+            .players-table thead {
+                display: none;
+            }
+
+            .players-table tbody {
+                display: flex;
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .players-table tr {
+                display: block;
+                background-color: rgba(255, 255, 255, 0.85);
+                border-radius: 1rem;
+                padding: 1.25rem;
+                box-shadow: 0 8px 20px rgba(15, 23, 42, 0.1);
+            }
+
+            .players-table td {
+                display: flex;
+                justify-content: space-between;
+                text-align: left;
+                border: none;
+                padding: 0.35rem 0;
+                font-size: 0.95rem;
+            }
+
+            .players-table td::before {
+                content: attr(data-label);
+                font-weight: 600;
+                color: #475569;
+                margin-right: 1rem;
+                flex-basis: 50%;
+            }
+
+            .players-table td.mail-col {
+                word-break: break-all;
+            }
+
+            .table-avatar {
+                justify-content: flex-start;
+                margin-bottom: 0.5rem;
+            }
+
+            .table-avatar img {
+                width: 72px;
+                height: 72px;
+            }
+        }
+    </style>
+    <div class="row justify-content-center">
+        <div class="col-12 col-xl-10">
+            <div class="app-card p-4 p-md-5 mb-4 text-dark">
+                <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+                    <div>
+                        <p class="section-title mb-2">Comunidad de jugadores</p>
+                        <p class="subtext mb-0">Conocé a tus rivales, seguí los puntajes y descubrí quién lidera el tablero.</p>
+                    </div>
+                    <a href="/partida/inicioPartida" class="btn btn-warning btn-lg fw-semibold shadow-sm text-dark">Jugar partida</a>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-lg overflow-hidden h-100">
+                <div class="card-header bg-dark text-white d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
+                    <div>
+                        <h2 class="h5 mb-0">Jugadores registrados</h2>
+                        <small class="opacity-75">Información actualizada en tiempo real</small>
+                    </div>
+                </div>
+                <div class="players-table-wrapper">
+                    <table class="table table-hover table-striped align-middle text-center mb-0 players-table">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>Foto</th>
+                                <th>Usuario</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th class="mail-col">Mail</th>
+                                <th>País</th>
+                                <th>Ciudad</th>
+                                <th>Sexo</th>
+                                <th>Nacimiento</th>
+                                <th>Fecha Alta</th>
+                                <th>Rol</th>
+                                <th>Puntaje</th>
+                                <th>Jugadas</th>
+                                <th>Ganadas</th>
+                                <th>Perdidas</th>
+                                <th>Nivel</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#jugadores}}
+                                <tr>
+                                    <td class="fw-semibold text-primary" data-label="ID">{{id}}</td>
+                                    <td class="table-avatar" data-label="Foto">
+                                        {{#fotoPerfil}}
+                                            <img src="{{fotoPerfil}}" alt="Foto de {{usuario}}">
+                                        {{/fotoPerfil}}
+                                        {{^fotoPerfil}}
+                                            <img src="/images/usuario.png" alt="Avatar genérico">
+                                        {{/fotoPerfil}}
+                                    </td>
+                                    <td class="fw-semibold" data-label="Usuario">{{usuario}}</td>
+                                    <td data-label="Nombre">{{nombre}}</td>
+                                    <td data-label="Apellido">{{apellido}}</td>
+                                    <td class="mail-col" data-label="Mail">{{mail}}</td>
+                                    <td data-label="País">{{pais}}</td>
+                                    <td data-label="Ciudad">{{ciudad}}</td>
+                                    <td data-label="Sexo">{{sexo}}</td>
+                                    <td data-label="Nacimiento">{{nacimiento}}</td>
+                                    <td data-label="Fecha Alta">{{fechaAlta}}</td>
+                                    <td class="role-cell" data-label="Rol"><span class="badge bg-primary-subtle text-primary badge-role">{{rol}}</span></td>
+                                    <td class="fw-semibold" data-label="Puntaje">{{puntajeTotal}}</td>
+                                    <td data-label="Jugadas">{{partidasJugadas}}</td>
+                                    <td data-label="Ganadas">{{partidasGanadas}}</td>
+                                    <td data-label="Perdidas">{{partidasPerdidas}}</td>
+                                    <td data-label="Nivel">{{nivelDificultad}}</td>
+                                </tr>
+                            {{/jugadores}}
+                            {{^jugadores}}
+                                <tr>
+                                    <td colspan="17" class="py-5 text-muted">Todavía no hay jugadores registrados.</td>
+                                </tr>
+                            {{/jugadores}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+</section>
 
 {{>partials/footer}}
 
