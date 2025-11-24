@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 19-11-2025 a las 14:55:43
+-- Tiempo de generación: 24-11-2025 a las 06:45:23
 -- Versión del servidor: 11.8.3-MariaDB-log
 -- Versión de PHP: 7.2.34
 
@@ -319,9 +319,11 @@ INSERT INTO `question` (`question_id`, `question_text`, `question_date`, `correc
 
 CREATE TABLE `report` (
   `report_id` int(11) NOT NULL,
+  `question_id` int(11) DEFAULT NULL,
   `invalid_question` char(1) DEFAULT NULL,
   `report_date` date DEFAULT NULL,
-  `user_id` varchar(255) DEFAULT NULL
+  `user_id` varchar(255) DEFAULT NULL,
+  `reason` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -361,7 +363,8 @@ INSERT INTO `user` (`id`, `username`, `password`, `rol`, `authToken`, `name`, `l
 (1, 'ADMIN', '12345', 'ADMIN', '', 'Admin', 'istrador', '1990-01-01 00:00:00', '2025-11-02 21:29:20', 'Masculino', 'eladmin@gmail.com', 'Argentina', 'images/usuario.png', 0, 0, 0, 0, NULL, 0, '2025-11-02 21:29:20'),
 (2, 'alexia', 'ead5631214f67ed38456e82b16ee22576a7860282268f629316e9e1bd3bc5640', 'JUGADOR', '535631c6-b9f6-11f0-8306-6db02ed39983', 'Neymar', 'Putellas', '1994-02-04 00:00:00', '2025-11-05 03:20:05', 'Femenino', 'alexia.putellas@example.com', 'España', 'images/Neymar.jpg', 8700, 230, 180, 50, 'Avanzado', 1100, '2025-11-05 03:20:05'),
 (3, 'leomessi', 'db160e9f98553ab525af6b17a719c6b010241d4d2932132d5c4b4867ab560611', 'JUGADOR', '53562985-b9f6-11f0-8306-6db02ed39983', 'Lionel', 'Messi', '1987-06-24 00:00:00', '2025-11-05 03:20:05', 'Masculino', 'leo.messi@example.com', 'Argentina', 'images/Messi.jpg', 9800, 250, 200, 50, 'Medio', 1200, '2025-11-05 03:20:05'),
-(4, 'mbappe', '04d96a896a4cd7dbd16fcef1a9ebe912f789f205ce51d750fea6beb614dbbdcd', 'JUGADOR', '535630b0-b9f6-11f0-8306-6db02ed39983', 'Ronaldinho', 'Mbappé', '1998-12-20 00:00:00', '2025-11-05 03:20:05', 'Masculino', 'k.mbappe@example.com', 'Francia', 'images/Ronaldinho.jpg', 7500, 190, 140, 50, 'Principiante', 900, '2025-11-05 03:20:05');
+(4, 'mbappe', '04d96a896a4cd7dbd16fcef1a9ebe912f789f205ce51d750fea6beb614dbbdcd', 'JUGADOR', '535630b0-b9f6-11f0-8306-6db02ed39983', 'Ronaldinho', 'Mbappé', '1998-12-20 00:00:00', '2025-11-05 03:20:05', 'Masculino', 'k.mbappe@example.com', 'Francia', 'images/Ronaldinho.jpg', 7500, 190, 140, 50, 'Principiante', 900, '2025-11-05 03:20:05'),
+(5, 'panchufleto', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'JUGADOR', '', 'panchufleto', NULL, '1990-01-01 00:00:00', '2025-11-24 01:54:28', 'Masculino', 'panchufleto@example.com', NULL, 'images/usuario.png', 0, 0, 0, 0, NULL, 0, '2025-11-24 01:54:28');
 
 --
 -- Índices para tablas volcadas
@@ -407,7 +410,8 @@ ALTER TABLE `question`
 --
 ALTER TABLE `report`
   ADD PRIMARY KEY (`report_id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `fk_report_question` (`question_id`);
 
 --
 -- Indices de la tabla `user`
@@ -460,7 +464,7 @@ ALTER TABLE `report`
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Restricciones para tablas volcadas
@@ -490,6 +494,7 @@ ALTER TABLE `question`
 -- Filtros para la tabla `report`
 --
 ALTER TABLE `report`
+  ADD CONSTRAINT `fk_report_question` FOREIGN KEY (`question_id`) REFERENCES `question` (`question_id`) ON DELETE SET NULL,
   ADD CONSTRAINT `report_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`username`);
 COMMIT;
 
