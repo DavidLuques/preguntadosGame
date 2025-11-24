@@ -109,20 +109,27 @@ class PartidaModel
 
     public function getQuestionByDifficulty($difficultyLevel)
     {
-        // Mapeo de dificultad del usuario: Principiante/Fácil=1, Medio=2, Avanzado/Difícil=3
-        $difficultyId = 1; // Por defecto fácil
+        $conn = $this->conexion->getConnection();
+        
+        // Mapeo de dificultad del usuario a nivel de pregunta:
+        // Principiante/Fácil -> 'easy'
+        // Medio -> 'medium'
+        // Avanzado/Difícil -> 'hard'
+        $questionDifficulty = 'easy'; // Por defecto fácil
         if ($difficultyLevel === 'Medio') {
-            $difficultyId = 2;
+            $questionDifficulty = 'medium';
         } elseif ($difficultyLevel === 'Dificil' || $difficultyLevel === 'Avanzado') {
-            $difficultyId = 3;
+            $questionDifficulty = 'hard';
         }
         
+        $questionDifficultyEscaped = $conn->real_escape_string($questionDifficulty);
+        
         // Buscar preguntas:
-        // 1. Preguntas con difficulty_id NULL (se muestran a todos los niveles)
-        // 2. Preguntas con difficulty_id que coincida con el nivel del usuario
+        // 1. Preguntas con difficulty_level NULL (se muestran a todos los niveles)
+        // 2. Preguntas con difficulty_level que coincida con el nivel del usuario
         $sql = "SELECT * FROM question 
                 WHERE status = 'activa' 
-                AND (difficulty_id IS NULL OR difficulty_id = $difficultyId)
+                AND (difficulty_level IS NULL OR difficulty_level = '$questionDifficultyEscaped')
                 ORDER BY RAND() LIMIT 1";
         $result = $this->conexion->query($sql);
         
@@ -185,18 +192,19 @@ class PartidaModel
                 $ratio = ($correctCount / $viewCount) * 100;
                 
                 // Calcular nueva dificultad según los nuevos criterios:
-                // Hard (difícil): < 40% de aciertos (difficulty_id = 3)
-                // Medium (medio): >= 40% y < 70% de aciertos (difficulty_id = 2)
-                // Easy (fácil): >= 70% de aciertos (difficulty_id = 1)
-                $newDifficultyId = 1; // Easy por defecto (>= 70%)
+                // Hard: < 40% de aciertos
+                // Medium: >= 40% y < 70% de aciertos
+                // Easy: >= 70% de aciertos
+                $newDifficultyLevel = 'easy'; // Easy por defecto (>= 70%)
                 if ($ratio < 40) {
-                    $newDifficultyId = 3; // Hard (< 40%)
+                    $newDifficultyLevel = 'hard'; // Hard (< 40%)
                 } elseif ($ratio < 70) {
-                    $newDifficultyId = 2; // Medium (>= 40% y < 70%)
+                    $newDifficultyLevel = 'medium'; // Medium (>= 40% y < 70%)
                 }
                 
-                // Actualizar difficulty_id solo si tiene 10 o más vistas
-                $updateSql = "UPDATE question SET difficulty_id = $newDifficultyId WHERE question_id = $questionId";
+                // Actualizar difficulty_level solo si tiene 10 o más vistas
+                $newDifficultyLevelEscaped = $conn->real_escape_string($newDifficultyLevel);
+                $updateSql = "UPDATE question SET difficulty_level = '$newDifficultyLevelEscaped' WHERE question_id = $questionId";
                 $conn->query($updateSql);
             }
         }
