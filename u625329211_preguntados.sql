@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 24-11-2025 a las 06:45:23
+-- Tiempo de generación: 24-11-2025 a las 07:40:22
 -- Versión del servidor: 11.8.3-MariaDB-log
 -- Versión de PHP: 7.2.34
 
@@ -322,7 +322,7 @@ CREATE TABLE `report` (
   `question_id` int(11) DEFAULT NULL,
   `invalid_question` char(1) DEFAULT NULL,
   `report_date` date DEFAULT NULL,
-  `user_id` varchar(255) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
   `reason` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -495,7 +495,7 @@ ALTER TABLE `question`
 --
 ALTER TABLE `report`
   ADD CONSTRAINT `fk_report_question` FOREIGN KEY (`question_id`) REFERENCES `question` (`question_id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `report_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`username`);
+  ADD CONSTRAINT `fk_report_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
