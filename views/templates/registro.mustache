@@ -5,10 +5,22 @@
         <div class="col-11 col-sm-9 col-md-7 col-lg-5 col-xl-4">
             {{#success}}
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    Usuario registrado correctamente.
+                    {{#mensaje}}
+                        {{mensaje}}
+                    {{/mensaje}}
+                    {{^mensaje}}
+                        Usuario registrado correctamente.
+                    {{/mensaje}}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             {{/success}}
+
+            {{#error}}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{error}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {{/error}}
 
             <div class="card">
                 <div class="card-body p-4 p-sm-5">
