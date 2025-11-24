@@ -11,15 +11,30 @@ class JugadoresModel
 
     public function mostrarTabla()
     {
-        $sql = "SELECT username as usuario, name as nombre, lastname as apellido, 
-                email as mail, country as pais, '' as ciudad, gender as sexo, 
-                birth_year as nacimiento, created_at as fechaAlta, rol as rol, 
-                total_score as puntajeTotal, games_played as partidasJugadas, 
-                games_won as partidasGanadas, match_lost as partidasPerdidas, 
-                difficulty_level as nivelDificultad, profile_picture as fotoPerfil,
+        $sql = "SELECT username as usuario, country as pais, 
+                total_score as puntajeTotal, profile_picture as fotoPerfil,
                 id as id
-                FROM user";
+                FROM user
+                WHERE rol = 'JUGADOR' AND total_score IS NOT NULL
+                ORDER BY total_score DESC
+                LIMIT 7";
+        
         $jugadores = $this->conexion->query($sql);
-        return $jugadores;
+        
+        // Si la consulta falla o retorna null, retornar array vacío
+        if ($jugadores === null) {
+            return [];
+        }
+        
+        // Agregar posición en el ranking
+        if (is_array($jugadores) && !empty($jugadores)) {
+            $posicion = 1;
+            foreach ($jugadores as &$jugador) {
+                $jugador['posicion'] = $posicion;
+                $posicion++;
+            }
+        }
+        
+        return $jugadores ?? [];
     }
 }

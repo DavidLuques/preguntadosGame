@@ -57,21 +57,10 @@ class Renderer
                     $defaults = [
                         'id' => '',
                         'usuario' => '',
-                        'nombre' => '',
-                        'apellido' => '',
-                        'mail' => '',
                         'pais' => '',
-                        'ciudad' => '',
-                        'sexo' => '',
-                        'nacimiento' => '',
-                        'fechaAlta' => '',
-                        'rol' => '',
                         'puntajeTotal' => '',
-                        'partidasJugadas' => '',
-                        'partidasGanadas' => '',
-                        'partidasPerdidas' => '',
-                        'nivelDificultad' => '',
-                        'fotoPerfil' => ''
+                        'fotoPerfil' => '',
+                        'posicion' => ''
                     ];
 
                     // Combino valores, convirtiendo NULL a string vacío
