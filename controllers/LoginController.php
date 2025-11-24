@@ -29,7 +29,9 @@ class LoginController
 
             // Si el array no está vacío, el usuario existe
             if (!empty($resultado)) {
-                $_SESSION["usuario"] = $_POST["nombre"];
+                $usuario = $resultado[0];
+                $_SESSION["usuario"] = $usuario["username"];
+                $_SESSION["usuario_id"] = isset($usuario["id"]) ? intval($usuario["id"]) : null;
                 header("Location: /");
                 exit();
             } else {

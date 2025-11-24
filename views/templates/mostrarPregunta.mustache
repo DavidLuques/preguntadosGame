@@ -4,6 +4,19 @@
     <div class="row justify-content-center">
         <div class="col-12 col-lg-8">
             <div class="app-card p-5 text-dark text-center">
+                {{#reportSuccess}}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        ¡Gracias! Registramos tu reporte y seguiremos revisando la pregunta.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {{/reportSuccess}}
+                {{#reportError}}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{reportError}}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {{/reportError}}
+
                 <p class="text-uppercase text-primary fw-semibold mb-2">Categoría: {{category_id}}</p>
                 <h2 class="display-6 fw-bold mb-4">Pregunta</h2>
                 <p class="fs-4 lh-base mb-4">{{question_text}}</p>
@@ -12,6 +25,32 @@
                     <a href="/partida" class="btn btn-outline-primary btn-lg">Volver a la ruleta</a>
                     <a href="/partida/partida" class="btn btn-primary btn-lg">Nueva pregunta</a>
                 </div>
+
+                {{#usuario}}
+                    <div class="mt-5 text-start">
+                        <button class="btn btn-outline-danger btn-lg w-100" type="button" data-bs-toggle="collapse" data-bs-target="#reportarPregunta" aria-expanded="false" aria-controls="reportarPregunta">
+                            Reportar pregunta
+                        </button>
+                        <div class="collapse mt-3" id="reportarPregunta">
+                            <div class="card shadow-sm">
+                                <div class="card-body">
+                                    <h3 class="h5 fw-semibold mb-3 text-danger">Contanos el motivo</h3>
+                                    <form action="/partida/reportarPregunta" method="POST" class="text-start">
+                                        <input type="hidden" name="question_id" value="{{question_id}}">
+                                        <div class="mb-3">
+                                            <label for="reason" class="form-label">Motivo del reporte</label>
+                                            <textarea class="form-control" id="reason" name="reason" rows="4" maxlength="255" placeholder="Explicá brevemente por qué esta pregunta debería revisarse" required></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-danger">Enviar reporte</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {{/usuario}}
+                {{^usuario}}
+                    <p class="text-muted mt-4 mb-0">Iniciá sesión para poder reportar preguntas.</p>
+                {{/usuario}}
             </div>
         </div>
     </div>
