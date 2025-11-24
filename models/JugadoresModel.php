@@ -21,12 +21,10 @@ class JugadoresModel
         
         $jugadores = $this->conexion->query($sql);
         
-        // Si la consulta falla o retorna null, retornar array vacío
         if ($jugadores === null) {
             return [];
         }
         
-        // Agregar posición en el ranking
         if (is_array($jugadores) && !empty($jugadores)) {
             $posicion = 1;
             foreach ($jugadores as &$jugador) {

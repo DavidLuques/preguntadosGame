@@ -31,25 +31,25 @@ class LoginModel
         return !empty($result);
     }
 
-    public function registrarUsuario($username, $password)
+    public function registrarUsuario($username, $password, $name, $lastname, $birthYear, $gender, $email, $country, $profilePicture)
     {
         $conn = $this->conexion->getConnection();
         
         // Escapar datos
         $usernameEscaped = $conn->real_escape_string($username);
         $passwordHash = hash('sha256', $password);
+        $nameEscaped = $conn->real_escape_string($name);
+        $lastnameEscaped = $lastname ? $conn->real_escape_string($lastname) : null;
+        $birthYearEscaped = $conn->real_escape_string($birthYear);
+        $genderEscaped = $conn->real_escape_string($gender);
+        $emailEscaped = $conn->real_escape_string($email);
+        $countryEscaped = $country ? $conn->real_escape_string($country) : null;
+        $profilePictureEscaped = $conn->real_escape_string($profilePicture);
         
         // Valores por defecto
         $rol = 'JUGADOR';
         $authToken = '';
-        $name = $usernameEscaped; // Usar el username como name por defecto
-        $lastname = null;
-        $birthYear = date('Y-m-d H:i:s', strtotime('1990-01-01'));
         $createdAt = date('Y-m-d H:i:s');
-        $gender = 'Masculino';
-        $email = $usernameEscaped . '@example.com'; // Email por defecto
-        $country = null;
-        $profilePicture = 'images/usuario.png';
         $totalScore = 0;
         $gamesPlayed = 0;
         $gamesWon = 0;
@@ -58,9 +58,9 @@ class LoginModel
         $answeredQuestions = 0;
         
         $sql = "INSERT INTO user (username, password, rol, authToken, name, lastname, birth_year, created_at, gender, email, country, profile_picture, total_score, games_played, games_won, match_lost, difficulty_level, answered_questions) 
-                VALUES ('$usernameEscaped', '$passwordHash', '$rol', '$authToken', '$name', " . 
-                ($lastname ? "'$lastname'" : "NULL") . ", '$birthYear', '$createdAt', '$gender', '$email', " . 
-                ($country ? "'$country'" : "NULL") . ", '$profilePicture', $totalScore, $gamesPlayed, $gamesWon, $matchLost, " . 
+                VALUES ('$usernameEscaped', '$passwordHash', '$rol', '$authToken', '$nameEscaped', " . 
+                ($lastnameEscaped ? "'$lastnameEscaped'" : "NULL") . ", '$birthYearEscaped', '$createdAt', '$genderEscaped', '$emailEscaped', " . 
+                ($countryEscaped ? "'$countryEscaped'" : "NULL") . ", '$profilePictureEscaped', $totalScore, $gamesPlayed, $gamesWon, $matchLost, " . 
                 ($difficultyLevel ? "'$difficultyLevel'" : "NULL") . ", $answeredQuestions)";
         
         $result = $conn->query($sql);

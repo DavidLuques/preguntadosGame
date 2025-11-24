@@ -29,17 +29,70 @@
                         <p class="text-muted mb-0">Registrate para jugar</p>
                     </div>
 
-                    <form action="index.php?controller=login&method=registro" method="POST" class="needs-validation" novalidate>
+                    <form action="index.php?controller=login&method=registro" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
                         <div class="mb-3">
-                            <label for="nombre" class="form-label">Usuario</label>
+                            <label for="nombre" class="form-label">Usuario <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre de usuario" required>
                             <div class="invalid-feedback">Ingresá un usuario.</div>
                         </div>
 
                         <div class="mb-3">
-                            <label for="password" class="form-label">Contraseña</label>
+                            <label for="password" class="form-label">Contraseña <span class="text-danger">*</span></label>
                             <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" required>
                             <div class="invalid-feedback">Ingresá una contraseña.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password_confirm" class="form-label">Confirmar Contraseña <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control" id="password_confirm" name="password_confirm" placeholder="Confirmar contraseña" required>
+                            <div class="invalid-feedback">Las contraseñas deben coincidir.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Nombre <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Tu nombre" required>
+                            <div class="invalid-feedback">Ingresá tu nombre.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="lastname" class="form-label">Apellido <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Tu apellido" required>
+                            <div class="invalid-feedback">Ingresá tu apellido.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="birth_year" class="form-label">Fecha de Nacimiento <span class="text-danger">*</span></label>
+                            <input type="date" class="form-control" id="birth_year" name="birth_year" required>
+                            <div class="invalid-feedback">Ingresá tu fecha de nacimiento.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="gender" class="form-label">Género <span class="text-danger">*</span></label>
+                            <select class="form-select" id="gender" name="gender" required>
+                                <option value="">Seleccionar...</option>
+                                <option value="Masculino">Masculino</option>
+                                <option value="Femenino">Femenino</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                            <div class="invalid-feedback">Seleccioná un género.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="tu@email.com" required>
+                            <div class="invalid-feedback">Ingresá un email válido.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="country" class="form-label">País <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="country" name="country" placeholder="Tu país" required>
+                            <div class="invalid-feedback">Ingresá tu país.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="profile_picture" class="form-label">Foto de Perfil</label>
+                            <input type="file" class="form-control" id="profile_picture" name="profile_picture" accept="image/*">
+                            <small class="text-muted">Formatos permitidos: JPG, PNG, GIF (máx. 5MB)</small>
                         </div>
 
                         <div class="d-grid gap-2">
@@ -55,6 +108,34 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Validación de confirmación de contraseña
+    document.addEventListener('DOMContentLoaded', function() {
+        const password = document.getElementById('password');
+        const passwordConfirm = document.getElementById('password_confirm');
+        const form = document.querySelector('form.needs-validation');
+
+        function validatePasswordMatch() {
+            if (password.value !== passwordConfirm.value) {
+                passwordConfirm.setCustomValidity('Las contraseñas no coinciden');
+            } else {
+                passwordConfirm.setCustomValidity('');
+            }
+        }
+
+        password.addEventListener('input', validatePasswordMatch);
+        passwordConfirm.addEventListener('input', validatePasswordMatch);
+
+        form.addEventListener('submit', function(event) {
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+        });
+    });
+</script>
 
 {{>partials/footer}}
 
