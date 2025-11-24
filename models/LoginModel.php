@@ -54,14 +54,14 @@ class LoginModel
         $gamesPlayed = 0;
         $gamesWon = 0;
         $matchLost = 0;
-        $difficultyLevel = null;
+        $difficultyLevel = 'Principiante'; // Nivel inicial: Fácil
         $answeredQuestions = 0;
         
         $sql = "INSERT INTO user (username, password, rol, authToken, name, lastname, birth_year, created_at, gender, email, country, profile_picture, total_score, games_played, games_won, match_lost, difficulty_level, answered_questions) 
                 VALUES ('$usernameEscaped', '$passwordHash', '$rol', '$authToken', '$nameEscaped', " . 
                 ($lastnameEscaped ? "'$lastnameEscaped'" : "NULL") . ", '$birthYearEscaped', '$createdAt', '$genderEscaped', '$emailEscaped', " . 
                 ($countryEscaped ? "'$countryEscaped'" : "NULL") . ", '$profilePictureEscaped', $totalScore, $gamesPlayed, $gamesWon, $matchLost, " . 
-                ($difficultyLevel ? "'$difficultyLevel'" : "NULL") . ", $answeredQuestions)";
+                "'$difficultyLevel', $answeredQuestions)";
         
         $result = $conn->query($sql);
         

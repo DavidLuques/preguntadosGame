@@ -1,0 +1,89 @@
+{{>partials/header}}
+
+<section class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-8">
+            <div class="app-card p-5 text-dark">
+                {{#reportSuccess}}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        ¡Gracias! Registramos tu reporte y seguiremos revisando la pregunta.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {{/reportSuccess}}
+                {{#reportError}}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{reportError}}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {{/reportError}}
+
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="badge bg-primary fs-6">Pregunta {{pregunta_numero}} de {{total_preguntas}}</span>
+                        <div class="progress" style="width: 200px; height: 25px;">
+                            <div class="progress-bar bg-success" role="progressbar" id="progressBar" style="width: 0%" aria-valuenow="{{pregunta_numero}}" aria-valuemin="0" aria-valuemax="{{total_preguntas}}"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="display-6 fw-bold mb-4 text-center">{{pregunta.question_text}}</h2>
+
+                <form action="/partida/procesarRespuesta" method="POST" class="mt-4">
+                    <input type="hidden" name="question_id" value="{{pregunta.question_id}}">
+                    
+                    <div class="d-grid gap-3">
+                        {{#respuestas}}
+                            <button type="submit" name="answer_id" value="{{answer_id}}" class="btn btn-outline-primary btn-lg text-start p-3">
+                                {{answer_text}}
+                            </button>
+                        {{/respuestas}}
+                    </div>
+                </form>
+
+                <div class="mt-4 text-center">
+                    <small class="text-muted">Seleccioná una respuesta para continuar</small>
+                </div>
+
+                {{#usuario}}
+                    <div class="mt-5 text-start">
+                        <button class="btn btn-outline-danger btn-lg w-100" type="button" data-bs-toggle="collapse" data-bs-target="#reportarPregunta" aria-expanded="false" aria-controls="reportarPregunta">
+                            Reportar pregunta
+                        </button>
+                        <div class="collapse mt-3" id="reportarPregunta">
+                            <div class="card shadow-sm">
+                                <div class="card-body">
+                                    <h3 class="h5 fw-semibold mb-3 text-danger">Contanos el motivo</h3>
+                                    <form action="/partida/reportarPregunta" method="POST" class="text-start">
+                                        <input type="hidden" name="question_id" value="{{pregunta.question_id}}">
+                                        <div class="mb-3">
+                                            <label for="reason" class="form-label">Motivo del reporte</label>
+                                            <textarea class="form-control" id="reason" name="reason" rows="4" maxlength="255" placeholder="Explicá brevemente por qué esta pregunta debería revisarse" required></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-danger">Enviar reporte</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {{/usuario}}
+                {{^usuario}}
+                    <p class="text-muted mt-4 mb-0 text-center">Iniciá sesión para poder reportar preguntas.</p>
+                {{/usuario}}
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const preguntaNum = parseInt('{{pregunta_numero}}') || 0;
+        const totalPreguntas = parseInt('{{total_preguntas}}') || 10;
+        const porcentaje = totalPreguntas > 0 ? (preguntaNum / totalPreguntas) * 100 : 0;
+        const progressBar = document.getElementById('progressBar');
+        if (progressBar) {
+            progressBar.style.width = porcentaje + '%';
+        }
+    });
+</script>
+
+{{>partials/footer}}

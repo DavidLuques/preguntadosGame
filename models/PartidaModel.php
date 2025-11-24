@@ -99,4 +99,160 @@ class PartidaModel
 
         return true;
     }
+
+    public function getAnswersByQuestionId($questionId)
+    {
+        $questionId = intval($questionId);
+        $sql = "SELECT * FROM answer WHERE question_id = $questionId ORDER BY RAND()";
+        return $this->conexion->query($sql);
+    }
+
+    public function getQuestionByDifficulty($difficultyLevel)
+    {
+        // Mapeo de dificultad del usuario: Principiante/Fácil=1, Medio=2, Avanzado/Difícil=3
+        $difficultyId = 1; // Por defecto fácil
+        if ($difficultyLevel === 'Medio') {
+            $difficultyId = 2;
+        } elseif ($difficultyLevel === 'Dificil' || $difficultyLevel === 'Avanzado') {
+            $difficultyId = 3;
+        }
+        
+        // Buscar preguntas:
+        // 1. Preguntas con difficulty_id NULL (se muestran a todos los niveles)
+        // 2. Preguntas con difficulty_id que coincida con el nivel del usuario
+        $sql = "SELECT * FROM question 
+                WHERE status = 'activa' 
+                AND (difficulty_id IS NULL OR difficulty_id = $difficultyId)
+                ORDER BY RAND() LIMIT 1";
+        $result = $this->conexion->query($sql);
+        
+        if ($result && !empty($result)) {
+            return $result[0];
+        }
+        
+        // Si no hay preguntas, buscar cualquier pregunta activa
+        $sql = "SELECT * FROM question WHERE status = 'activa' ORDER BY RAND() LIMIT 1";
+        $result = $this->conexion->query($sql);
+        
+        return ($result && !empty($result)) ? $result[0] : null;
+    }
+
+    public function incrementarViewCount($questionId)
+    {
+        $questionId = intval($questionId);
+        $conn = $this->conexion->getConnection();
+        
+        // Asegurar que view_count y correct_answer_count existen, inicializarlos si no existen
+        $conn->query("UPDATE question SET view_count = COALESCE(view_count, 0) WHERE question_id = $questionId");
+        $conn->query("UPDATE question SET correct_answer_count = COALESCE(correct_answer_count, 0) WHERE question_id = $questionId");
+        
+        // Incrementar view_count
+        $sql = "UPDATE question SET view_count = view_count + 1 WHERE question_id = $questionId";
+        $conn->query($sql);
+        
+        // NO establecer difficulty_id automáticamente - se mantiene NULL para que se muestre a todos
+    }
+
+    public function incrementarCorrectAnswerCount($questionId)
+    {
+        $questionId = intval($questionId);
+        $conn = $this->conexion->getConnection();
+        
+        // Asegurar que correct_answer_count existe y actualizarlo
+        $sql = "UPDATE question SET correct_answer_count = COALESCE(correct_answer_count, 0) + 1 WHERE question_id = $questionId";
+        $conn->query($sql);
+        
+        // Actualizar difficulty_id basado en el ratio
+        $this->actualizarDificultadPregunta($questionId);
+    }
+
+    private function actualizarDificultadPregunta($questionId)
+    {
+        $questionId = intval($questionId);
+        $conn = $this->conexion->getConnection();
+        
+        // Obtener view_count y correct_answer_count
+        $sql = "SELECT view_count, correct_answer_count FROM question WHERE question_id = $questionId";
+        $result = $conn->query($sql);
+        
+        if ($result && $result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $viewCount = intval($row['view_count'] ?? 0);
+            $correctCount = intval($row['correct_answer_count'] ?? 0);
+            
+            // Solo actualizar dificultad cuando view_count >= 10
+            if ($viewCount >= 10 && $viewCount > 0) {
+                $ratio = ($correctCount / $viewCount) * 100;
+                
+                // Calcular nueva dificultad según los nuevos criterios:
+                // Hard (difícil): < 40% de aciertos (difficulty_id = 3)
+                // Medium (medio): >= 40% y < 70% de aciertos (difficulty_id = 2)
+                // Easy (fácil): >= 70% de aciertos (difficulty_id = 1)
+                $newDifficultyId = 1; // Easy por defecto (>= 70%)
+                if ($ratio < 40) {
+                    $newDifficultyId = 3; // Hard (< 40%)
+                } elseif ($ratio < 70) {
+                    $newDifficultyId = 2; // Medium (>= 40% y < 70%)
+                }
+                
+                // Actualizar difficulty_id solo si tiene 10 o más vistas
+                $updateSql = "UPDATE question SET difficulty_id = $newDifficultyId WHERE question_id = $questionId";
+                $conn->query($updateSql);
+            }
+        }
+    }
+
+    public function actualizarEstadisticasUsuario($userId, $puntosObtenidos)
+    {
+        $userId = intval($userId);
+        $puntosObtenidos = intval($puntosObtenidos);
+        $conn = $this->conexion->getConnection();
+        
+        // Obtener estadísticas actuales
+        $sql = "SELECT total_score, games_played FROM user WHERE id = $userId";
+        $result = $conn->query($sql);
+        
+        if ($result && $result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $totalScore = intval($row['total_score'] ?? 0);
+            $gamesPlayed = intval($row['games_played'] ?? 0);
+            
+            // Actualizar total_score y games_played
+            $newTotalScore = $totalScore + $puntosObtenidos;
+            $newGamesPlayed = $gamesPlayed + 1;
+            
+            // Calcular nuevo nivel de dificultad
+            $ratio = ($newGamesPlayed > 0) ? ($newTotalScore / ($newGamesPlayed * 10)) * 100 : 0;
+            
+            $newDifficultyLevel = 'Principiante';
+            if ($ratio >= 70) {
+                $newDifficultyLevel = 'Avanzado';
+            } elseif ($ratio >= 40) {
+                $newDifficultyLevel = 'Medio';
+            }
+            
+            // Actualizar en base de datos
+            $updateSql = "UPDATE user SET total_score = $newTotalScore, games_played = $newGamesPlayed, difficulty_level = '$newDifficultyLevel' WHERE id = $userId";
+            $conn->query($updateSql);
+            
+            return ['total_score' => $newTotalScore, 'games_played' => $newGamesPlayed, 'difficulty_level' => $newDifficultyLevel];
+        }
+        
+        return null;
+    }
+
+    public function getDifficultyLevelByUserId($userId)
+    {
+        $userId = intval($userId);
+        $conn = $this->conexion->getConnection();
+        $sql = "SELECT difficulty_level FROM user WHERE id = $userId";
+        $result = $conn->query($sql);
+        
+        if ($result && $result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            return $row['difficulty_level'] ?? 'Principiante';
+        }
+        
+        return 'Principiante';
+    }
 }
