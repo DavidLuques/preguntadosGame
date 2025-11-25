@@ -127,8 +127,9 @@ class PartidaModel
         // Buscar preguntas:
         // 1. Preguntas con difficulty_level NULL (se muestran a todos los niveles)
         // 2. Preguntas con difficulty_level que coincida con el nivel del usuario
+        // Acepta tanto 'activa' como 'active' como estados válidos
         $sql = "SELECT * FROM question 
-                WHERE status = 'activa' 
+                WHERE (status = 'activa' OR status = 'active')
                 AND (difficulty_level IS NULL OR difficulty_level = '$questionDifficultyEscaped')
                 ORDER BY RAND() LIMIT 1";
         $result = $this->conexion->query($sql);
@@ -138,7 +139,7 @@ class PartidaModel
         }
         
         // Si no hay preguntas, buscar cualquier pregunta activa
-        $sql = "SELECT * FROM question WHERE status = 'activa' ORDER BY RAND() LIMIT 1";
+        $sql = "SELECT * FROM question WHERE (status = 'activa' OR status = 'active') ORDER BY RAND() LIMIT 1";
         $result = $this->conexion->query($sql);
         
         return ($result && !empty($result)) ? $result[0] : null;
@@ -191,15 +192,18 @@ class PartidaModel
             if ($viewCount >= 10 && $viewCount > 0) {
                 $ratio = ($correctCount / $viewCount) * 100;
                 
-                // Calcular nueva dificultad según los nuevos criterios:
+                // Calcular nueva dificultad según los criterios:
                 // Hard: < 40% de aciertos
                 // Medium: >= 40% y < 70% de aciertos
                 // Easy: >= 70% de aciertos
                 $newDifficultyLevel = 'easy'; // Easy por defecto (>= 70%)
+                
                 if ($ratio < 40) {
                     $newDifficultyLevel = 'hard'; // Hard (< 40%)
-                } elseif ($ratio < 70) {
+                } elseif ($ratio >= 40 && $ratio < 70) {
                     $newDifficultyLevel = 'medium'; // Medium (>= 40% y < 70%)
+                } else {
+                    $newDifficultyLevel = 'easy'; // Easy (>= 70%)
                 }
                 
                 // Actualizar difficulty_level solo si tiene 10 o más vistas
