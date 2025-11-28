@@ -136,7 +136,9 @@
                                             <img src="/images/usuario.png" alt="Avatar genérico">
                                         {{/fotoPerfil}}
                                     </td>
-                                    <td class="fw-semibold" data-label="Usuario">{{usuario}}</td>
+                                    <td class="fw-semibold" data-label="Usuario">
+                                        <a href="/perfil/ver?id={{id}}" class="text-decoration-none text-dark fw-bold stretched-link">{{usuario}}</a>
+                                    </td>
                                     <td data-label="País">{{pais}}</td>
                                     <td class="fw-semibold" data-label="Puntaje">{{puntajeTotal}}</td>
                                 </tr>

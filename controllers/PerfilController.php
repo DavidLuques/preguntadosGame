@@ -112,4 +112,28 @@ class PerfilController
             }
         }
     }
+
+    public function ver()
+    {
+        if (!isset($_GET['id'])) {
+            header("Location: /");
+            exit();
+        }
+
+        $userId = $_GET['id'];
+        $user = $this->model->getUserById($userId);
+
+        if (!$user) {
+            die("Usuario no encontrado");
+        }
+
+        // Generate QR Code URL (using goqr.me API)
+        $currentUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        $qrCodeUrl = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" . urlencode($currentUrl);
+
+        $this->renderer->render("perfil/usuario", [
+            "user" => $user,
+            "qr_code_url" => $qrCodeUrl
+        ]);
+    }
 }
