@@ -27,3 +27,4 @@ error_log
 vendor/
 composer.lock
 
+to_do.txt

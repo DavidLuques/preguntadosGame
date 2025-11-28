@@ -6,4 +6,4 @@ El editor se define por ser un usuario ya creado en la base de datos con el rol 
 
 3_necesito autenticar mi correo electronico antes de poder crear una cuenta, podes hacerme eso ? las cuentas que ya estan creadas , ya quedan creadas...  pero necesito un servicio de autenticacion
 
-4_Necesito que el usuario admin tenga un dashboard con estadisticas, el debe poder ver ,cantidad de partidas jugadas totales de todos los usuarios, la cantidad de puntaje total por todos los usuarios, la cantidad de usuarios que tienen difficulty_level facil, media y dificil , ademas los que no tienen difficulty_level aun por que no jugaron ninguna partida u otro. 
+4_Necesito que el usuario admin tenga un dashboard con estadisticas, el debe poder ver ,cantidad de partidas jugadas totales de todos los usuarios, la cantidad de puntaje total por todos los usuarios, la cantidad de usuarios que tienen difficulty_level facil, media y dificil , ademas los que no tienen difficulty_level aun por que no jugaron ninguna partida u otro.  ADEMAS TIENE QUE DESCARGARSE UN PDF CON ESTOS DATOS COMO REPORTE. 

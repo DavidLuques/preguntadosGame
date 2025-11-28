@@ -18,6 +18,7 @@
                                 <th scope="col">Pregunta</th>
                                 <th scope="col">Categoría</th>
                                 <th scope="col">Dificultad</th>
+                                <th scope="col" class="text-center">Vistas</th>
                                 <th scope="col" class="text-end">Acciones</th>
                             </tr>
                         </thead>
@@ -32,6 +33,9 @@
                                         <span class="badge bg-light text-dark border">{{difficulty_level}}</span>
                                     {{/difficulty_level}}
                                 </td>
+                                <td class="text-center">
+                                    <span class="badge bg-primary rounded-pill">{{view_count}}</span>
+                                </td>
                                 <td class="text-end">
                                     <div class="btn-group" role="group">
                                         <a href="/editor/editQuestion?id={{question_id}}" class="btn btn-sm btn-outline-primary">Editar</a>
@@ -42,7 +46,7 @@
                             {{/questions}}
                             {{^questions}}
                             <tr>
-                                <td colspan="5" class="text-center py-4 text-muted">No hay preguntas registradas.</td>
+                                <td colspan="6" class="text-center py-4 text-muted">No hay preguntas registradas.</td>
                             </tr>
                             {{/questions}}
                         </tbody>

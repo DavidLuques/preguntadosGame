@@ -93,7 +93,8 @@ class EditorModel
 
     public function getReportedQuestions($minReports = 3)
     {
-        $sql = "SELECT q.*, c.category_name, COUNT(r.report_id) as report_count 
+        $sql = "SELECT q.*, c.category_name, COUNT(r.report_id) as report_count,
+                GROUP_CONCAT(r.reason SEPARATOR '|||') as report_reasons
                 FROM question q 
                 JOIN report r ON q.question_id = r.question_id 
                 LEFT JOIN category c ON q.category_id = c.category_id

@@ -32,9 +32,24 @@
                                 <td class="text-center"><span class="badge bg-danger rounded-pill">{{report_count}}</span></td>
                                 <td class="text-end">
                                     <div class="btn-group" role="group">
+                                        <button class="btn btn-sm btn-outline-info" type="button" data-bs-toggle="collapse" data-bs-target="#reasons-{{question_id}}" aria-expanded="false">
+                                            Ver Motivos
+                                        </button>
                                         <a href="/editor/editQuestion?id={{question_id}}" class="btn btn-sm btn-outline-primary" title="Editar Pregunta">Editar</a>
                                         <a href="/editor/dismissReports?id={{question_id}}" class="btn btn-sm btn-outline-warning" title="Ignorar Reportes" onclick="return confirm('¿Estás seguro de ignorar los reportes? Se borrarán todos los reportes de esta pregunta.')">Ignorar</a>
                                         <a href="/editor/deleteQuestion?id={{question_id}}" class="btn btn-sm btn-outline-danger" title="Eliminar Pregunta" onclick="return confirm('¿Estás seguro de eliminar esta pregunta?')">Eliminar</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="collapse" id="reasons-{{question_id}}">
+                                <td colspan="5" class="bg-light">
+                                    <div class="p-3">
+                                        <h6 class="fw-bold mb-2">Motivos de los reportes:</h6>
+                                        <ul class="mb-0">
+                                            {{#reasons_array}}
+                                            <li>{{.}}</li>
+                                            {{/reasons_array}}
+                                        </ul>
                                     </div>
                                 </td>
                             </tr>

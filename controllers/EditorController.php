@@ -179,6 +179,16 @@ class EditorController
     {
         $this->checkEditor();
         $questions = $this->model->getReportedQuestions(3);
+        
+        // Process report reasons into arrays
+        if ($questions) {
+            foreach ($questions as &$question) {
+                if (isset($question['report_reasons'])) {
+                    $question['reasons_array'] = explode('|||', $question['report_reasons']);
+                }
+            }
+        }
+        
         $this->renderer->render("editor/reported_questions", ["questions" => $questions]);
     }
 
