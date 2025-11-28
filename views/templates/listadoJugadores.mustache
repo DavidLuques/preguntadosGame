@@ -129,15 +129,17 @@
                                 <tr>
                                     <td class="fw-semibold text-primary" data-label="Posición">{{posicion}}</td>
                                     <td class="table-avatar" data-label="Foto">
-                                        {{#fotoPerfil}}
-                                            <img src="{{fotoPerfil}}" alt="Foto de {{usuario}}">
-                                        {{/fotoPerfil}}
-                                        {{^fotoPerfil}}
-                                            <img src="/images/usuario.png" alt="Avatar genérico">
-                                        {{/fotoPerfil}}
+                                        <a href="/perfil/ver?id={{id}}" class="text-decoration-none">
+                                            {{#fotoPerfil}}
+                                                <img src="{{fotoPerfil}}" alt="Foto de {{usuario}}">
+                                            {{/fotoPerfil}}
+                                            {{^fotoPerfil}}
+                                                <img src="/images/usuario.png" alt="Avatar genérico">
+                                            {{/fotoPerfil}}
+                                        </a>
                                     </td>
                                     <td class="fw-semibold" data-label="Usuario">
-                                        <a href="/perfil/ver?id={{id}}" class="text-decoration-none text-dark fw-bold stretched-link">{{usuario}}</a>
+                                        <a href="/perfil/ver?id={{id}}" class="text-decoration-none text-dark fw-bold">{{usuario}}</a>
                                     </td>
                                     <td data-label="País">{{pais}}</td>
                                     <td class="fw-semibold" data-label="Puntaje">{{puntajeTotal}}</td>
