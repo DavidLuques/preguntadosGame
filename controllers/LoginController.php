@@ -32,7 +32,13 @@ class LoginController
                 $usuario = $resultado[0];
                 $_SESSION["usuario"] = $usuario["username"];
                 $_SESSION["usuario_id"] = isset($usuario["id"]) ? intval($usuario["id"]) : null;
-                header("Location: /");
+                $_SESSION["rol"] = $usuario["rol"];
+
+                if ($usuario["rol"] === 'editor') {
+                    header("Location: /editor/dashboard");
+                } else {
+                    header("Location: /");
+                }
                 exit();
             } else {
                 $this->renderer->render("login", ["error" => "Usuario o clave incorrecta"]);

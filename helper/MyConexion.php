@@ -23,6 +23,11 @@ class MyConexion
             return null;
         }
 
+        // Para consultas SELECT, devolver array asociativo
+        if ($result === true) {
+            return true;
+        }
+
         if ($result->num_rows > 0) {
             return $result->fetch_all(MYSQLI_ASSOC);
         }
@@ -33,5 +38,10 @@ class MyConexion
     public function getConnection()
     {
         return $this->conexion;
+    }
+
+    public function insertId()
+    {
+        return $this->conexion->insert_id;
     }
 }

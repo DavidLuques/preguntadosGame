@@ -1,0 +1,102 @@
+{{> partials/header}}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-8">
+            <div class="app-card p-5 text-dark">
+                <h2 class="fw-bold mb-4">{{#is_edit}}Editar{{/is_edit}}{{^is_edit}}Nueva{{/is_edit}} Pregunta</h2>
+                
+                <form action="/editor/{{action}}" method="POST" class="needs-validation" novalidate>
+                    {{#is_edit}}
+                    <input type="hidden" name="question_id" value="{{question.question_id}}">
+                    {{/is_edit}}
+                    
+                    <div class="mb-4">
+                        <label for="question_text" class="form-label fw-semibold">Pregunta</label>
+                        <textarea class="form-control" id="question_text" name="question_text" rows="2" required placeholder="Escribe la pregunta aquí...">{{question.question_text}}</textarea>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <label for="category_id" class="form-label fw-semibold">Categoría</label>
+                            <select class="form-select" id="category_id" name="category_id" required>
+                                <option value="" disabled {{^question.category_id}}selected{{/question.category_id}}>Seleccionar...</option>
+                                {{#categories}}
+                                <option value="{{category_id}}" {{#selected}}selected{{/selected}}>{{category_name}}</option>
+                                {{/categories}}
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="difficulty" class="form-label fw-semibold">Dificultad</label>
+                            <select class="form-select" id="difficulty" name="difficulty" required>
+                                <option value="easy" {{#question.difficulty_level_easy}}selected{{/question.difficulty_level_easy}}>Fácil</option>
+                                <option value="medium" {{#question.difficulty_level_medium}}selected{{/question.difficulty_level_medium}}>Medio</option>
+                                <option value="hard" {{#question.difficulty_level_hard}}selected{{/question.difficulty_level_hard}}>Difícil</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <h4 class="mb-3 fw-semibold">Respuestas</h4>
+                    <p class="text-muted small mb-3">Ingresa 4 respuestas y selecciona la correcta usando el botón de opción.</p>
+
+                    <div class="card bg-light border-0 p-3 mb-4">
+                        {{#is_edit}}
+                            {{#answers}}
+                            <div class="input-group mb-3">
+                                <div class="input-group-text bg-white border-end-0">
+                                    <input class="form-check-input mt-0" type="radio" name="correct_answer" value="{{answer_id}}" {{#is_correct}}checked{{/is_correct}} required aria-label="Respuesta correcta">
+                                </div>
+                                <input type="hidden" name="answer_ids[]" value="{{answer_id}}">
+                                <input type="text" class="form-control border-start-0" name="answers[]" value="{{answer_text}}" required>
+                            </div>
+                            {{/answers}}
+                        {{/is_edit}}
+
+                        {{^is_edit}}
+                            {{#answers_placeholder}}
+                            <div class="input-group mb-3">
+                                <div class="input-group-text bg-white border-end-0">
+                                    <input class="form-check-input mt-0" type="radio" name="correct_answer" value="{{index}}" {{#checked}}checked{{/checked}} required aria-label="Respuesta correcta">
+                                </div>
+                                <input type="text" class="form-control border-start-0" name="answers[]" placeholder="Respuesta {{num}}" required>
+                            </div>
+                            {{/answers_placeholder}}
+                            <!-- Fallback if no placeholder data -->
+                            {{^answers_placeholder}}
+                                <div class="input-group mb-3">
+                                    <div class="input-group-text bg-white border-end-0">
+                                        <input class="form-check-input mt-0" type="radio" name="correct_answer" value="0" required>
+                                    </div>
+                                    <input type="text" class="form-control border-start-0" name="answers[]" placeholder="Respuesta 1" required>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-text bg-white border-end-0">
+                                        <input class="form-check-input mt-0" type="radio" name="correct_answer" value="1">
+                                    </div>
+                                    <input type="text" class="form-control border-start-0" name="answers[]" placeholder="Respuesta 2" required>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-text bg-white border-end-0">
+                                        <input class="form-check-input mt-0" type="radio" name="correct_answer" value="2">
+                                    </div>
+                                    <input type="text" class="form-control border-start-0" name="answers[]" placeholder="Respuesta 3" required>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-text bg-white border-end-0">
+                                        <input class="form-check-input mt-0" type="radio" name="correct_answer" value="3">
+                                    </div>
+                                    <input type="text" class="form-control border-start-0" name="answers[]" placeholder="Respuesta 4" required>
+                                </div>
+                            {{/answers_placeholder}}
+                        {{/is_edit}}
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="/editor/questions" class="btn btn-outline-secondary me-md-2">Cancelar</a>
+                        <button type="submit" class="btn btn-primary px-4">Guardar Pregunta</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{{> partials/footer}}

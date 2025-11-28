@@ -14,6 +14,10 @@ class JugadoresController
 
     public function base()
     {
+        if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'editor') {
+            header("Location: /editor/dashboard");
+            exit();
+        }
         $this->listadoJugadores();
     }
 

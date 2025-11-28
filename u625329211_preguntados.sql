@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 24-11-2025 a las 19:48:55
+-- Tiempo de generación: 28-11-2025 a las 05:54:17
 -- Versión del servidor: 11.8.3-MariaDB-log
 -- Versión de PHP: 7.2.34
 
@@ -273,45 +273,45 @@ CREATE TABLE `question` (
 --
 
 INSERT INTO `question` (`question_id`, `question_text`, `question_date`, `correct_answer_id`, `category_id`, `status`, `view_count`, `correct_answer_count`, `difficulty_level`) VALUES
-(1, '¿Quién descubrió América?', '2025-11-02 00:00:00', 1, 1, 'activa', NULL, NULL, NULL),
-(2, '¿En qué año comenzó la Primera Guerra Mundial?', '2025-11-02 00:00:00', 5, 1, 'activa', NULL, NULL, NULL),
-(3, '¿Cuál es el planeta más grande del sistema solar?', '2025-11-02 00:00:00', 9, 2, 'activa', NULL, NULL, NULL),
-(4, '¿Qué gas necesitan las plantas para realizar la fotosíntesis?', '2025-11-02 00:00:00', 13, 2, 'activa', NULL, NULL, NULL),
-(5, '¿Cuántos jugadores tiene un equipo de fútbol en el campo?', '2025-11-02 00:00:00', 17, 3, 'activa', NULL, NULL, NULL),
-(6, '¿En qué deporte se utiliza una raqueta y una pelota amarilla?', '2025-11-02 00:00:00', 21, 3, 'activa', NULL, NULL, NULL),
-(7, '¿Cuál es el río más largo del mundo?', '2025-11-02 00:00:00', 25, 4, 'activa', NULL, NULL, NULL),
-(8, '¿En qué continente se encuentra Egipto?', '2025-11-02 00:00:00', 29, 4, 'activa', NULL, NULL, NULL),
-(9, '¿Quién es el creador de Mickey Mouse?', '2025-11-02 00:00:00', 33, 5, 'activa', NULL, NULL, NULL),
-(10, '¿En qué año se estrenó la película “Titanic”?', '2025-11-02 00:00:00', 37, 5, 'activa', NULL, NULL, NULL),
-(11, '¿Cuál es el océano más grande del mundo?', '2025-11-02 21:42:05', 201, 3, 'active', NULL, NULL, NULL),
-(12, '¿Quién descubrió la penicilina?', '2025-11-02 21:42:05', 205, 1, 'active', NULL, NULL, NULL),
-(13, '¿En qué país se encuentra la Torre de Pisa?', '2025-11-02 21:42:05', 209, 3, 'active', NULL, NULL, NULL),
-(14, '¿Qué deporte se juega en Wimbledon?', '2025-11-02 21:42:05', 213, 4, 'active', NULL, NULL, NULL),
+(1, '¿Quién descubrió América?', '2025-11-02 00:00:00', 1, 1, 'activa', 17, 13, 'easy'),
+(2, '¿En qué año comenzó la Primera Guerra Mundial?', '2025-11-02 00:00:00', 5, 1, 'activa', 24, 2, 'hard'),
+(3, '¿Cuál es el planeta más grande del sistema solar?', '2025-11-02 00:00:00', 9, 2, 'activa', 48, 8, 'hard'),
+(4, '¿Qué gas necesitan las plantas para realizar la fotosíntesis?', '2025-11-02 00:00:00', 13, 2, 'activa', 18, 5, 'hard'),
+(5, '¿Cuántos jugadores tiene un equipo de fútbol en el campo?', '2025-11-02 00:00:00', 17, 3, 'activa', 14, 10, 'easy'),
+(6, '¿En qué deporte se utiliza una raqueta y una pelota amarilla?', '2025-11-02 00:00:00', 21, 3, 'activa', 15, 11, 'easy'),
+(7, '¿Cuál es el río más largo del mundo?', '2025-11-02 00:00:00', 25, 4, 'activa', 10, 7, 'easy'),
+(8, '¿En qué continente se encuentra Egipto?', '2025-11-02 00:00:00', 29, 4, 'activa', 15, 7, 'easy'),
+(9, '¿Quién es el creador de Mickey Mouse?', '2025-11-02 00:00:00', 33, 5, 'activa', 22, 16, 'easy'),
+(10, '¿En qué año se estrenó la película “Titanic”?', '2025-11-02 00:00:00', 37, 5, 'activa', 30, 4, 'hard'),
+(11, '¿Cuál es el océano más grande del mundo?', '2025-11-02 21:42:05', 201, 3, 'active', 4, 1, NULL),
+(12, '¿Quién descubrió la penicilina?', '2025-11-02 21:42:05', 205, 1, 'active', 9, 0, NULL),
+(13, '¿En qué país se encuentra la Torre de Pisa?', '2025-11-02 21:42:05', 209, 3, 'active', 2, 1, NULL),
+(14, '¿Qué deporte se juega en Wimbledon?', '2025-11-02 21:42:05', 213, 4, 'active', 2, 0, NULL),
 (15, '¿Quién escribió \"Cien años de soledad\"?', '2025-11-02 21:42:05', 217, 5, 'active', NULL, NULL, NULL),
-(16, '¿Cuál es el metal más ligero?', '2025-11-02 21:42:05', 221, 1, 'active', NULL, NULL, NULL),
-(17, '¿Qué imperio construyó el Coliseo?', '2025-11-02 21:42:05', 225, 2, 'active', NULL, NULL, NULL),
-(18, '¿Cuál es el continente más poblado?', '2025-11-02 21:42:05', 229, 3, 'active', NULL, NULL, NULL),
-(19, '¿En qué deporte se usa una raqueta y una pelota amarilla pequeña?', '2025-11-02 21:42:05', 233, 4, 'active', NULL, NULL, NULL),
-(21, '¿Cuál es el planeta más cercano al sol?', '2025-11-02 00:00:00', 121, 1, 'active', NULL, NULL, NULL),
+(16, '¿Cuál es el metal más ligero?', '2025-11-02 21:42:05', 221, 1, 'active', 1, 0, NULL),
+(17, '¿Qué imperio construyó el Coliseo?', '2025-11-02 21:42:05', 225, 2, 'active', 1, 1, NULL),
+(18, '¿Cuál es el continente más poblado?', '2025-11-02 21:42:05', 229, 3, 'active', 2, 0, NULL),
+(19, '¿En qué deporte se usa una raqueta y una pelota amarilla pequeña?', '2025-11-02 21:42:05', 233, 4, 'active', 3, 1, NULL),
+(21, '¿Cuál es el planeta más cercano al sol?', '2025-11-02 00:00:00', 121, 1, 'active', 7, 1, NULL),
 (22, '¿En qué año llegó Cristóbal Colón a América?', '2025-11-02 00:00:00', 125, 2, 'active', NULL, NULL, NULL),
-(23, '¿Cuál es la capital de Francia?', '2025-11-02 00:00:00', 129, 3, 'active', NULL, NULL, NULL),
-(24, '¿Cuántos jugadores tiene un equipo de fútbol en el campo?', '2025-11-02 00:00:00', 17, 4, 'active', NULL, NULL, NULL),
-(25, '¿Quién escribió Hamlet?', '2025-11-02 00:00:00', 137, 5, 'active', NULL, NULL, NULL),
-(26, '¿Cuál es el elemento químico con símbolo O?', '2025-11-02 00:00:00', 141, 1, 'active', NULL, NULL, NULL),
-(27, '¿Quién fue el primer presidente de Estados Unidos?', '2025-11-02 00:00:00', 145, 2, 'active', NULL, NULL, NULL),
-(28, '¿Qué río pasa por Londres?', '2025-11-02 00:00:00', 149, 3, 'active', NULL, NULL, NULL),
-(29, '¿En qué deporte se utiliza un aro y un balón grande?', '2025-11-02 00:00:00', 153, 4, 'active', NULL, NULL, NULL),
-(30, '¿Cuál es la saga de películas sobre un mago llamado Harry?', '2025-11-02 00:00:00', 157, 5, 'active', NULL, NULL, NULL),
-(31, '¿Cuál es la velocidad de la luz?', '2025-11-02 00:00:00', 161, 1, 'active', NULL, NULL, NULL),
-(32, '¿Qué civilización construyó las pirámides de Egipto?', '2025-11-02 00:00:00', 165, 2, 'active', NULL, NULL, NULL),
-(33, '¿Cuál es la montaña más alta del mundo?', '2025-11-02 00:00:00', 169, 3, 'active', NULL, NULL, NULL),
-(34, '¿Cuántos sets se juegan normalmente en un partido de tenis masculino?', '2025-11-02 00:00:00', 174, 4, 'active', NULL, NULL, NULL),
-(35, '¿Quién pintó la Mona Lisa?', '2025-11-02 00:00:00', 177, 5, 'active', NULL, NULL, NULL),
-(36, '¿Qué gas respiramos principalmente?', '2025-11-02 00:00:00', 181, 1, 'active', NULL, NULL, NULL),
-(37, '¿En qué año terminó la Segunda Guerra Mundial?', '2025-11-02 00:00:00', 185, 2, 'active', NULL, NULL, NULL),
-(38, '¿Cuál es el país más grande del mundo?', '2025-11-02 00:00:00', 189, 3, 'active', NULL, NULL, NULL),
-(39, '¿Qué instrumento se toca con baquetas y tiene parches?', '2025-11-02 00:00:00', 39, 4, 'active', NULL, NULL, NULL),
-(40, '¿Qué película animada tiene a un ratón llamado Mickey?', '2025-11-02 00:00:00', 197, 5, 'active', NULL, NULL, NULL);
+(23, '¿Cuál es la capital de Francia?', '2025-11-02 00:00:00', 129, 3, 'active', 2, 2, NULL),
+(24, '¿Cuántos jugadores tiene un equipo de fútbol en el campo?', '2025-11-02 00:00:00', 17, 4, 'active', 1, 0, NULL),
+(25, '¿Quién escribió Hamlet?', '2025-11-02 00:00:00', 137, 5, 'active', 2, 0, NULL),
+(26, '¿Cuál es el elemento químico con símbolo O?', '2025-11-02 00:00:00', 141, 1, 'active', 2, 1, NULL),
+(27, '¿Quién fue el primer presidente de Estados Unidos?', '2025-11-02 00:00:00', 145, 2, 'active', 8, 6, NULL),
+(28, '¿Qué río pasa por Londres?', '2025-11-02 00:00:00', 149, 3, 'active', 7, 2, NULL),
+(29, '¿En qué deporte se utiliza un aro y un balón grande?', '2025-11-02 00:00:00', 153, 4, 'active', 1, 0, NULL),
+(30, '¿Cuál es la saga de películas sobre un mago llamado Harry?', '2025-11-02 00:00:00', 157, 5, 'active', 1, 0, NULL),
+(31, '¿Cuál es la velocidad de la luz?', '2025-11-02 00:00:00', 161, 1, 'active', 1, 0, NULL),
+(32, '¿Qué civilización construyó las pirámides de Egipto?', '2025-11-02 00:00:00', 165, 2, 'active', 1, 0, NULL),
+(33, '¿Cuál es la montaña más alta del mundo?', '2025-11-02 00:00:00', 169, 3, 'active', 3, 3, NULL),
+(34, '¿Cuántos sets se juegan normalmente en un partido de tenis masculino?', '2025-11-02 00:00:00', 174, 4, 'active', 1, 0, NULL),
+(35, '¿Quién pintó la Mona Lisa?', '2025-11-02 00:00:00', 177, 5, 'active', 5, 0, NULL),
+(36, '¿Qué gas respiramos principalmente?', '2025-11-02 00:00:00', 181, 1, 'active', 1, 1, NULL),
+(37, '¿En qué año terminó la Segunda Guerra Mundial?', '2025-11-02 00:00:00', 185, 2, 'active', 3, 2, NULL),
+(38, '¿Cuál es el país más grande del mundo?', '2025-11-02 00:00:00', 189, 3, 'active', 2, 1, NULL),
+(39, '¿Qué instrumento se toca con baquetas y tiene parches?', '2025-11-02 00:00:00', 39, 4, 'active', 1, 0, NULL),
+(40, '¿Qué película animada tiene a un ratón llamado Mickey?', '2025-11-02 00:00:00', 197, 5, 'active', 4, 2, NULL);
 
 -- --------------------------------------------------------
 
@@ -327,6 +327,13 @@ CREATE TABLE `report` (
   `user_id` int(11) DEFAULT NULL,
   `reason` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `report`
+--
+
+INSERT INTO `report` (`report_id`, `question_id`, `invalid_question`, `report_date`, `user_id`, `reason`) VALUES
+(1, 12, NULL, '2025-11-28', 5, 'no me gusta');
 
 -- --------------------------------------------------------
 
@@ -366,7 +373,12 @@ INSERT INTO `user` (`id`, `username`, `password`, `rol`, `authToken`, `name`, `l
 (2, 'alexia', 'ead5631214f67ed38456e82b16ee22576a7860282268f629316e9e1bd3bc5640', 'JUGADOR', '535631c6-b9f6-11f0-8306-6db02ed39983', 'Neymar', 'Putellas', '1994-02-04 00:00:00', '2025-11-05 03:20:05', 'Femenino', 'alexia.putellas@example.com', 'España', 'images/Neymar.jpg', 8700, 230, 180, 50, 'Avanzado', 1100, '2025-11-05 03:20:05'),
 (3, 'leomessi', 'db160e9f98553ab525af6b17a719c6b010241d4d2932132d5c4b4867ab560611', 'JUGADOR', '53562985-b9f6-11f0-8306-6db02ed39983', 'Lionel', 'Messi', '1987-06-24 00:00:00', '2025-11-05 03:20:05', 'Masculino', 'leo.messi@example.com', 'Argentina', 'images/Messi.jpg', 9800, 250, 200, 50, 'Medio', 1200, '2025-11-05 03:20:05'),
 (4, 'mbappe', '04d96a896a4cd7dbd16fcef1a9ebe912f789f205ce51d750fea6beb614dbbdcd', 'JUGADOR', '535630b0-b9f6-11f0-8306-6db02ed39983', 'Ronaldinho', 'Mbappé', '1998-12-20 00:00:00', '2025-11-05 03:20:05', 'Masculino', 'k.mbappe@example.com', 'Francia', 'images/Ronaldinho.jpg', 7500, 190, 140, 50, 'Principiante', 900, '2025-11-05 03:20:05'),
-(5, 'panchufleto', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'JUGADOR', '', 'panchufleto', NULL, '1990-01-01 00:00:00', '2025-11-24 01:54:28', 'Masculino', 'panchufleto@example.com', NULL, 'images/usuario.png', 0, 0, 0, 0, NULL, 0, '2025-11-24 01:54:28');
+(5, 'panchufleto', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'JUGADOR', '', 'panchufleto', NULL, '1990-01-01 00:00:00', '2025-11-24 01:54:28', 'Masculino', 'panchufleto@example.com', 'Argentina', 'images/usuario.png', 22, 4, 0, 0, 'Medio', 0, '2025-11-24 01:54:28'),
+(6, 'pancho', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'JUGADOR', '', 'panchito', 'Robert', '1900-02-02 00:00:00', '2025-11-24 19:57:53', 'Femenino', 'panchito@gmail.com', 'Peru', 'images/usuario.png', 16, 3, 0, 0, 'Medio', 0, '2025-11-24 19:57:53'),
+(7, 'Sebas', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'JUGADOR', '', 'Sebastian', 'Marcheschi', '1997-02-11 00:00:00', '2025-11-25 01:21:52', 'Masculino', 'marcheschi97@hotmail.com', 'Argentina', 'images/usuario.png', 5, 1, 0, 0, 'Medio', 0, '2025-11-25 01:21:52'),
+(8, 'barto', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'JUGADOR', '', 'bart', 'simpson', '2000-02-02 00:00:00', '2025-11-25 19:32:31', 'Masculino', 'bart@simpson.com', 'USA', 'images/profile_barto_1764099151.jpg', 26, 5, 0, 0, 'Medio', 0, '2025-11-25 19:32:31'),
+(9, 'homero', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'JUGADOR', '', 'homero', 'simpson', '1980-02-02 00:00:00', '2025-11-25 19:35:27', 'Masculino', 'homero@gmail.com', 'USA', 'images/profile_homero_1764099327.jpg', 34, 9, 0, 0, 'Principiante', 0, '2025-11-25 19:35:27'),
+(10, 'editor', '12345', 'editor', '', 'Editor', 'User', '1995-01-01 00:00:00', '2025-11-28 05:54:03', 'otro', 'editor@example.com', 'Argentina', 'images/usuario.png', 0, 0, 0, 0, NULL, 0, '2025-11-28 05:54:03');
 
 --
 -- Índices para tablas volcadas
@@ -459,13 +471,13 @@ ALTER TABLE `question`
 -- AUTO_INCREMENT de la tabla `report`
 --
 ALTER TABLE `report`
-  MODIFY `report_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `report_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Restricciones para tablas volcadas

@@ -9,6 +9,8 @@ include_once(__DIR__ . "/../controllers/PartidaController.php");
 include_once(__DIR__ . "/../models/LoginModel.php");
 include_once(__DIR__ . "/../models/JugadoresModel.php");
 include_once(__DIR__ . "/../models/PartidaModel.php");
+include_once(__DIR__ . "/../controllers/EditorController.php");
+include_once(__DIR__ . "/../models/EditorModel.php");
 
 class ConfigFactory
 {
@@ -45,6 +47,12 @@ class ConfigFactory
         $this->objetos["PartidaModel"] = new PartidaModel($this->conexion);
         $this->objetos["PartidaController"] = new PartidaController(
             $this->objetos["PartidaModel"],
+            $this->renderer
+        );
+
+        $this->objetos["EditorModel"] = new EditorModel($this->conexion);
+        $this->objetos["EditorController"] = new EditorController(
+            $this->objetos["EditorModel"],
             $this->renderer
         );
 

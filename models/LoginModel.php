@@ -18,6 +18,12 @@ class LoginModel
         $sql = "SELECT * FROM user WHERE username = '$userEscaped' AND password = '$passwordHash'";
         $result = $this->conexion->query($sql);
 
+        // Fallback: Check for plain text password (for dev/legacy users like 'editor')
+        if (empty($result)) {
+            $sqlPlain = "SELECT * FROM user WHERE username = '$userEscaped' AND password = '$password'";
+            $result = $this->conexion->query($sqlPlain);
+        }
+
         return $result ?? [];
     }
 

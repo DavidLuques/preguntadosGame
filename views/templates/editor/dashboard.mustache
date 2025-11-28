@@ -1,0 +1,24 @@
+{{> partials/header}}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8">
+            <div class="app-card p-5 text-center text-dark">
+                <h2 class="display-6 fw-bold mb-4">Panel de Editor</h2>
+                <p class="subtext fs-5 mb-4">Gestiona el contenido del juego desde aquí.</p>
+                
+                <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
+                    <a href="/editor/questions" class="btn btn-lg btn-primary fw-semibold px-4 shadow-sm">
+                        <i class="bi bi-question-circle-fill me-2"></i>Administrar Preguntas
+                    </a>
+                    <a href="/editor/categories" class="btn btn-lg btn-secondary fw-semibold px-4 shadow-sm">
+                        <i class="bi bi-tags-fill me-2"></i>Administrar Categorías
+                    </a>
+                    <a href="/editor/reportedQuestions" class="btn btn-lg btn-danger fw-semibold px-4 shadow-sm">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>Preguntas Reportadas
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{> partials/footer}}
