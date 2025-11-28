@@ -3,3 +3,7 @@
 2_Crear la pantalla de vista de editor, una vez que el editor se loguea, solo debe ver una pantalla para el, donde tenga un ABM , de preguntas, categorias y pueda dar de alta preguntas nuevas, editarlas y borrarlas. y ademas subiir las 4 respuestas de cada pregunta. una de ellas debe ser la correcta.  
 Tambien debe tener un ABM de categorias, donde pueda dar de alta categorias nuevas, editarlas y borrarlas.
 El editor se define por ser un usuario ya creado en la base de datos con el rol 'editor'. en la columna   `rol` varchar(15) NOT NULL, si el usuario logueado es editor entonces se debe redireccionar a la vista de usuario editor. 
+
+3_necesito autenticar mi correo electronico antes de poder crear una cuenta, podes hacerme eso ? las cuentas que ya estan creadas , ya quedan creadas...  pero necesito un servicio de autenticacion
+
+4_Necesito que el usuario admin tenga un dashboard con estadisticas, el debe poder ver ,cantidad de partidas jugadas totales de todos los usuarios, la cantidad de puntaje total por todos los usuarios, la cantidad de usuarios que tienen difficulty_level facil, media y dificil , ademas los que no tienen difficulty_level aun por que no jugaron ninguna partida u otro. 
