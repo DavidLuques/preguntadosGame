@@ -31,9 +31,16 @@ class PerfilController
         }
 
         $success = isset($_GET['success']) ? $_GET['success'] : null;
+
+        // Generate QR Code URL for logged-in user
+        $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http");
+        $host = $_SERVER['HTTP_HOST'];
+        $profileUrl = $protocol . "://" . $host . "/perfil/ver?id=" . $userId;
+        $qrCodeUrl = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" . urlencode($profileUrl);
         
         $this->renderer->render("perfil/perfil", [
             "user" => $user,
+            "qr_code_url" => $qrCodeUrl,
             "success" => $success,
             "success_data_updated" => $success === 'data_updated',
             "success_password_updated" => $success === 'password_updated',
@@ -128,8 +135,10 @@ class PerfilController
         }
 
         // Generate QR Code URL (using goqr.me API)
-        $currentUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-        $qrCodeUrl = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" . urlencode($currentUrl);
+        $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http");
+        $host = $_SERVER['HTTP_HOST'];
+        $profileUrl = $protocol . "://" . $host . "/perfil/ver?id=" . $user['id'];
+        $qrCodeUrl = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" . urlencode($profileUrl);
 
         $this->renderer->render("perfil/usuario", [
             "user" => $user,

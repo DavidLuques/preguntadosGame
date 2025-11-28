@@ -44,6 +44,13 @@
                             </div>
                         </div>
 
+                        <div class="text-center mb-4">
+                            <h6 class="fw-bold mb-2 small text-muted">Tu Código QR</h6>
+                            <div class="bg-white p-2 d-inline-block rounded shadow-sm border">
+                                <img src="{{qr_code_url}}" alt="QR Code del Perfil" class="img-fluid" style="width: 120px; height: 120px;">
+                            </div>
+                        </div>
+
                         <hr>
 
                         <form action="/perfil/changePicture" method="POST" enctype="multipart/form-data" class="mt-4">
