@@ -11,6 +11,8 @@ include_once(__DIR__ . "/../models/JugadoresModel.php");
 include_once(__DIR__ . "/../models/PartidaModel.php");
 include_once(__DIR__ . "/../controllers/EditorController.php");
 include_once(__DIR__ . "/../models/EditorModel.php");
+include_once(__DIR__ . "/../models/PerfilModel.php");
+include_once(__DIR__ . "/../controllers/PerfilController.php");
 
 class ConfigFactory
 {
@@ -53,6 +55,12 @@ class ConfigFactory
         $this->objetos["EditorModel"] = new EditorModel($this->conexion);
         $this->objetos["EditorController"] = new EditorController(
             $this->objetos["EditorModel"],
+            $this->renderer
+        );
+
+        $this->objetos["PerfilModel"] = new PerfilModel($this->conexion);
+        $this->objetos["PerfilController"] = new PerfilController(
+            $this->objetos["PerfilModel"],
             $this->renderer
         );
 
