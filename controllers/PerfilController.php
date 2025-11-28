@@ -134,7 +134,7 @@ class PerfilController
             die("Usuario no encontrado");
         }
 
-        // Generate QR Code URL (using goqr.me API)
+        // goqr.me API uso aca
         $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http");
         $host = $_SERVER['HTTP_HOST'];
         $profileUrl = $protocol . "://" . $host . "/perfil/ver?id=" . $user['id'];
