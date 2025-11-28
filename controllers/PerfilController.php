@@ -139,7 +139,7 @@ class PerfilController
         $host = $_SERVER['HTTP_HOST'];
         $profileUrl = $protocol . "://" . $host . "/perfil/ver?id=" . $user['id'];
         $qrCodeUrl = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" . urlencode($profileUrl);
-
+        echo($qrCodeUrl);
         $this->renderer->render("perfil/usuario", [
             "user" => $user,
             "qr_code_url" => $qrCodeUrl
