@@ -45,11 +45,11 @@ class EditorController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $text = $_POST['question_text'];
             $categoryId = $_POST['category_id'];
-            $difficulty = $_POST['difficulty'];
+            // $difficulty = $_POST['difficulty']; // Eliminado
             $answers = $_POST['answers']; // Array of 4 answers
             $correctIndex = $_POST['correct_answer']; // Index 0-3
 
-            $questionId = $this->model->addQuestion($text, $categoryId, $difficulty);
+            $questionId = $this->model->addQuestion($text, $categoryId);
 
             foreach ($answers as $index => $answerText) {
                 $answerId = $this->model->addAnswer($answerText, $questionId);
@@ -94,12 +94,12 @@ class EditorController
             $id = $_POST['question_id'];
             $text = $_POST['question_text'];
             $categoryId = $_POST['category_id'];
-            $difficulty = $_POST['difficulty'];
+            // $difficulty = $_POST['difficulty']; // Eliminado
             $answers = $_POST['answers']; // Array of answer texts
             $answerIds = $_POST['answer_ids']; // Array of answer IDs
             $correctAnswerId = $_POST['correct_answer']; // ID of correct answer
 
-            $this->model->updateQuestion($id, $text, $categoryId, $difficulty, $correctAnswerId);
+            $this->model->updateQuestion($id, $text, $categoryId, $correctAnswerId);
 
             for ($i = 0; $i < 4; $i++) {
                 $this->model->updateAnswer($answerIds[$i], $answers[$i]);

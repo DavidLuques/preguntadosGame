@@ -148,8 +148,18 @@ class PartidaController
         
         $selectedCategory = $categories[array_rand($categories)];
         
-        // 2. Buscar pregunta de esa categoría y dificultad
-        $pregunta = $this->model->getQuestionByCategoryAndDifficulty($selectedCategory['id'], $difficultyLevel);
+        // Obtener IDs de preguntas ya jugadas en esta partida
+        $playedQuestions = [];
+        if (isset($_SESSION['partida_respuestas']) && is_array($_SESSION['partida_respuestas'])) {
+            foreach ($_SESSION['partida_respuestas'] as $respuesta) {
+                if (isset($respuesta['question_id'])) {
+                    $playedQuestions[] = $respuesta['question_id'];
+                }
+            }
+        }
+
+        // 2. Buscar pregunta de esa categoría y dificultad, excluyendo las jugadas
+        $pregunta = $this->model->getQuestionByCategoryAndDifficulty($selectedCategory['id'], $difficultyLevel, $playedQuestions);
 
         if (!$pregunta) {
             // Fallback: buscar cualquier pregunta si no hay de esa categoría (raro)

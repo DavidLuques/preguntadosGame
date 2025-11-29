@@ -107,41 +107,88 @@ class PartidaModel
         return $this->conexion->query($sql);
     }
 
-    public function getQuestionByCategoryAndDifficulty($categoryId, $difficultyLevel)
+    public function getQuestionByCategoryAndDifficulty($categoryId, $difficultyLevel, $playedQuestions = [])
     {
         $conn = $this->conexion->getConnection();
         $categoryId = intval($categoryId);
         
-        // Mapeo de dificultad
-        $questionDifficulty = 'easy';
-        if ($difficultyLevel === 'Medio') {
-            $questionDifficulty = 'medium';
-        } elseif ($difficultyLevel === 'Dificil' || $difficultyLevel === 'Avanzado') {
-            $questionDifficulty = 'hard';
+        if (empty($difficultyLevel)) {
+            $difficultyLevel = 'Principiante';
         }
         
-        $questionDifficultyEscaped = $conn->real_escape_string($questionDifficulty);
-        
-        // Buscar preguntas de la categoría y dificultad
-        $sql = "SELECT * FROM question 
-                WHERE category_id = $categoryId
-                AND (status = 'activa' OR status = 'active')
-                AND (difficulty_level IS NULL OR difficulty_level = '$questionDifficultyEscaped')
-                ORDER BY RAND() LIMIT 1";
-        $result = $this->conexion->query($sql);
-        
-        if ($result && !empty($result)) {
-            return $result[0];
+        // Construir cláusula NOT IN para excluir preguntas jugadas
+        $notInClause = "";
+        if (!empty($playedQuestions)) {
+            $ids = implode(',', array_map('intval', $playedQuestions));
+            $notInClause = "AND question_id NOT IN ($ids)";
         }
         
-        // Si no hay de esa dificultad, buscar cualquiera de esa categoría
-        $sql = "SELECT * FROM question 
-                WHERE category_id = $categoryId 
-                AND (status = 'activa' OR status = 'active') 
-                ORDER BY RAND() LIMIT 1";
-        $result = $this->conexion->query($sql);
+        // Función auxiliar para buscar pregunta
+        $buscarPregunta = function($nivel) use ($conn, $categoryId, $notInClause) {
+            $nivelEscaped = $conn->real_escape_string($nivel);
+            $sql = "SELECT * FROM question 
+                    WHERE category_id = $categoryId
+                    AND (status = 'activa' OR status = 'active')
+                    AND difficulty_level = '$nivelEscaped'
+                    $notInClause
+                    ORDER BY RAND() LIMIT 1";
+            $result = $conn->query($sql);
+            return ($result && $result->num_rows > 0) ? $result->fetch_assoc() : null;
+        };
+
+        // Lógica de selección con fallback
+        $pregunta = null;
+
+        if ($difficultyLevel === 'Avanzado') {
+            // 1. Intentar Avanzado
+            $pregunta = $buscarPregunta('Avanzado');
+            if (!$pregunta) {
+                // 2. Fallback a Medio
+                $pregunta = $buscarPregunta('Medio');
+            }
+            if (!$pregunta) {
+                // 3. Fallback a Principiante
+                $pregunta = $buscarPregunta('Principiante');
+            }
+        } elseif ($difficultyLevel === 'Medio') {
+            // 1. Intentar Medio
+            $pregunta = $buscarPregunta('Medio');
+            if (!$pregunta) {
+                // 2. Fallback a Principiante
+                $pregunta = $buscarPregunta('Principiante');
+            }
+        } else {
+            // Principiante (o cualquier otro valor)
+            $pregunta = $buscarPregunta('Principiante');
+        }
         
-        return ($result && !empty($result)) ? $result[0] : null;
+        // Si aún no hay pregunta (caso extremo: se acabaron todas las de la categoría),
+        // intentar buscar CUALQUIERA de la categoría que no se haya jugado
+        if (!$pregunta) {
+             $sql = "SELECT * FROM question 
+                    WHERE category_id = $categoryId 
+                    AND (status = 'activa' OR status = 'active') 
+                    $notInClause
+                    ORDER BY RAND() LIMIT 1";
+            $result = $conn->query($sql);
+            if ($result && $result->num_rows > 0) {
+                $pregunta = $result->fetch_assoc();
+            }
+        }
+
+        // Si ABSOLUTAMENTE no hay preguntas nuevas, permitir repetir (último recurso)
+        if (!$pregunta) {
+             $sql = "SELECT * FROM question 
+                    WHERE category_id = $categoryId 
+                    AND (status = 'activa' OR status = 'active') 
+                    ORDER BY RAND() LIMIT 1";
+            $result = $conn->query($sql);
+            if ($result && $result->num_rows > 0) {
+                $pregunta = $result->fetch_assoc();
+            }
+        }
+
+        return $pregunta;
     }
 
     public function incrementarViewCount($questionId)
@@ -156,8 +203,6 @@ class PartidaModel
         // Incrementar view_count
         $sql = "UPDATE question SET view_count = view_count + 1 WHERE question_id = $questionId";
         $conn->query($sql);
-        
-        // NO establecer difficulty_id automáticamente - se mantiene NULL para que se muestre a todos
     }
 
     public function incrementarCorrectAnswerCount($questionId)
@@ -192,20 +237,21 @@ class PartidaModel
                 $ratio = ($correctCount / $viewCount) * 100;
                 
                 // Calcular nueva dificultad según los criterios:
-                // Hard: < 40% de aciertos
-                // Medium: >= 40% y < 70% de aciertos
-                // Easy: >= 70% de aciertos
-                $newDifficultyLevel = 'easy'; // Easy por defecto (>= 70%)
+                // Avanzado: < 30% de aciertos (Muy difícil)
+                // Medio: >= 30% y < 70% de aciertos
+                // Principiante: >= 70% de aciertos (Fácil)
                 
-                if ($ratio < 40) {
-                    $newDifficultyLevel = 'hard'; // Hard (< 40%)
-                } elseif ($ratio >= 40 && $ratio < 70) {
-                    $newDifficultyLevel = 'medium'; // Medium (>= 40% y < 70%)
+                $newDifficultyLevel = 'Principiante'; // Por defecto
+                
+                if ($ratio < 30) {
+                    $newDifficultyLevel = 'Avanzado';
+                } elseif ($ratio >= 30 && $ratio < 70) {
+                    $newDifficultyLevel = 'Medio';
                 } else {
-                    $newDifficultyLevel = 'easy'; // Easy (>= 70%)
+                    $newDifficultyLevel = 'Principiante';
                 }
                 
-                // Actualizar difficulty_level solo si tiene 10 o más vistas
+                // Actualizar difficulty_level
                 $newDifficultyLevelEscaped = $conn->real_escape_string($newDifficultyLevel);
                 $updateSql = "UPDATE question SET difficulty_level = '$newDifficultyLevelEscaped' WHERE question_id = $questionId";
                 $conn->query($updateSql);

@@ -16,21 +16,13 @@
                     </div>
 
                     <div class="row mb-4">
-                        <div class="col-md-6">
+                        <div class="col-12">
                             <label for="category_id" class="form-label fw-semibold">Categoría</label>
                             <select class="form-select" id="category_id" name="category_id" required>
                                 <option value="" disabled {{^question.category_id}}selected{{/question.category_id}}>Seleccionar...</option>
                                 {{#categories}}
                                 <option value="{{category_id}}" {{#selected}}selected{{/selected}}>{{category_name}}</option>
                                 {{/categories}}
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="difficulty" class="form-label fw-semibold">Dificultad</label>
-                            <select class="form-select" id="difficulty" name="difficulty" required>
-                                <option value="easy" {{#question.difficulty_level_easy}}selected{{/question.difficulty_level_easy}}>Fácil</option>
-                                <option value="medium" {{#question.difficulty_level_medium}}selected{{/question.difficulty_level_medium}}>Medio</option>
-                                <option value="hard" {{#question.difficulty_level_hard}}selected{{/question.difficulty_level_hard}}>Difícil</option>
                             </select>
                         </div>
                     </div>
