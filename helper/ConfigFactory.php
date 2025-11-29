@@ -13,6 +13,8 @@ include_once(__DIR__ . "/../controllers/EditorController.php");
 include_once(__DIR__ . "/../models/EditorModel.php");
 include_once(__DIR__ . "/../models/PerfilModel.php");
 include_once(__DIR__ . "/../controllers/PerfilController.php");
+include_once(__DIR__ . "/../models/AdminModel.php");
+include_once(__DIR__ . "/../controllers/AdminController.php");
 
 class ConfigFactory
 {
@@ -61,6 +63,12 @@ class ConfigFactory
         $this->objetos["PerfilModel"] = new PerfilModel($this->conexion);
         $this->objetos["PerfilController"] = new PerfilController(
             $this->objetos["PerfilModel"],
+            $this->renderer
+        );
+
+        $this->objetos["AdminModel"] = new AdminModel($this->conexion);
+        $this->objetos["AdminController"] = new AdminController(
+            $this->objetos["AdminModel"],
             $this->renderer
         );
 

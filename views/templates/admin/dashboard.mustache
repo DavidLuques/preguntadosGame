@@ -1,0 +1,79 @@
+{{> partials/header}}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-xl-10">
+            <div class="app-card p-4 p-md-5 mb-4 text-dark">
+                <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+                    <div>
+                        <h2 class="h3 mb-2">Panel de Administración</h2>
+                        <p class="text-muted mb-0">Estadísticas generales del juego y reportes.</p>
+                    </div>
+                    <a href="/admin/generateReport" class="btn btn-primary btn-lg fw-semibold shadow-sm">
+                        <i class="bi bi-file-earmark-pdf me-2"></i>Descargar Reporte PDF
+                    </a>
+                </div>
+            </div>
+
+            <div class="row g-4 mb-4">
+                <!-- Total Games -->
+                <div class="col-12 col-md-6">
+                    <div class="app-card p-4 h-100 text-dark border-start border-4 border-primary">
+                        <h5 class="text-muted text-uppercase small fw-bold mb-3">Partidas Jugadas</h5>
+                        <div class="d-flex align-items-center">
+                            <h2 class="display-4 fw-bold mb-0 me-3">{{stats.total_games}}</h2>
+                            <i class="bi bi-controller fs-1 text-primary opacity-25 ms-auto"></i>
+                        </div>
+                        <small class="text-muted">Total histórico de partidas</small>
+                    </div>
+                </div>
+
+                <!-- Total Score -->
+                <div class="col-12 col-md-6">
+                    <div class="app-card p-4 h-100 text-dark border-start border-4 border-success">
+                        <h5 class="text-muted text-uppercase small fw-bold mb-3">Puntaje Total</h5>
+                        <div class="d-flex align-items-center">
+                            <h2 class="display-4 fw-bold mb-0 me-3">{{stats.total_score}}</h2>
+                            <i class="bi bi-trophy fs-1 text-success opacity-25 ms-auto"></i>
+                        </div>
+                        <small class="text-muted">Suma de todos los puntajes</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="app-card p-4 p-md-5 text-dark">
+                <h4 class="mb-4">Jugadores por Nivel de Dificultad</h4>
+                <div class="row g-4">
+                    {{#stats.difficulty_levels}}
+                        <div class="col-6 col-md-3">
+                            <div class="p-3 bg-light rounded text-center border">
+                                <h3 class="fw-bold text-primary mb-1">{{Principiante}}</h3>
+                                <small class="text-muted fw-semibold">Principiante</small>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="p-3 bg-light rounded text-center border">
+                                <h3 class="fw-bold text-warning mb-1">{{Medio}}</h3>
+                                <small class="text-muted fw-semibold">Medio</small>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="p-3 bg-light rounded text-center border">
+                                <h3 class="fw-bold text-danger mb-1">{{Avanzado}}</h3>
+                                <small class="text-muted fw-semibold">Avanzado</small>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="p-3 bg-light rounded text-center border">
+                                <h3 class="fw-bold text-secondary mb-1">{{Sin Clasificar}}</h3>
+                                <small class="text-muted fw-semibold">Sin Clasificar</small>
+                            </div>
+                        </div>
+                    {{/stats.difficulty_levels}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{> partials/footer}}

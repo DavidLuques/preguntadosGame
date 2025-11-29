@@ -36,6 +36,8 @@ class LoginController
 
                 if ($usuario["rol"] === 'editor') {
                     header("Location: /editor/dashboard");
+                } elseif ($usuario["rol"] === 'ADMIN') {
+                    header("Location: /admin/dashboard");
                 } else {
                     header("Location: /");
                 }

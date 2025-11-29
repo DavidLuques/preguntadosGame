@@ -14,9 +14,15 @@ class PartidaController
 
     public function base()
     {
-        if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'editor') {
-            header("Location: /editor/dashboard");
-            exit();
+        if (isset($_SESSION['rol'])) {
+            if ($_SESSION['rol'] === 'editor') {
+                header("Location: /editor/dashboard");
+                exit();
+            }
+            if ($_SESSION['rol'] === 'ADMIN') {
+                header("Location: /admin/dashboard");
+                exit();
+            }
         }
         $this->partidaComienzo();
     }
@@ -62,7 +68,7 @@ class PartidaController
 
     public function partida()
     {
-        if (isset($_SESSION['editor'])) {
+        if (isset($_SESSION['editor']) || (isset($_SESSION['rol']) && $_SESSION['rol'] === 'ADMIN')) {
             die('Acceso no autorizado. <a href="/">Volver al inicio</a>');
         }
         $this->renderer->render("partida");

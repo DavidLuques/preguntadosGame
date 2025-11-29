@@ -4,7 +4,8 @@
     "type": "project",
     "require": {
         "php": ">=7.0",
-        "mustache/mustache": "^2.14"
+        "mustache/mustache": "^2.14",
+        "fpdf/fpdf": "^1.86"
     },
     "autoload": {
         "psr-4": {
@@ -12,4 +13,3 @@
         }
     }
 }
-
