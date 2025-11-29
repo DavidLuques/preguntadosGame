@@ -33,9 +33,17 @@
                     
                     <div class="d-grid gap-3">
                         {{#respuestas}}
-                            <button type="submit" name="answer_id" value="{{answer_id}}" class="btn btn-outline-primary btn-lg text-start p-3">
+                            <button type="submit" name="answer_id" value="{{answer_id}}" class="btn btn-primary btn-lg text-start p-3">
                                 {{answer_text}}
                             </button>
+                        {{/respuestas}}
+                        
+                        {{^respuestas}}
+                            <div class="alert alert-warning">
+                                No hay respuestas disponibles para esta pregunta (ID: {{pregunta.question_id}}).
+                                <br>
+                                Por favor, reportá este error.
+                            </div>
                         {{/respuestas}}
                     </div>
                 </form>

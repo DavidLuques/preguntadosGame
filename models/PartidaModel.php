@@ -107,15 +107,13 @@ class PartidaModel
         return $this->conexion->query($sql);
     }
 
-    public function getQuestionByDifficulty($difficultyLevel)
+    public function getQuestionByCategoryAndDifficulty($categoryId, $difficultyLevel)
     {
         $conn = $this->conexion->getConnection();
+        $categoryId = intval($categoryId);
         
-        // Mapeo de dificultad del usuario a nivel de pregunta:
-        // Principiante/Fácil -> 'easy'
-        // Medio -> 'medium'
-        // Avanzado/Difícil -> 'hard'
-        $questionDifficulty = 'easy'; // Por defecto fácil
+        // Mapeo de dificultad
+        $questionDifficulty = 'easy';
         if ($difficultyLevel === 'Medio') {
             $questionDifficulty = 'medium';
         } elseif ($difficultyLevel === 'Dificil' || $difficultyLevel === 'Avanzado') {
@@ -124,12 +122,10 @@ class PartidaModel
         
         $questionDifficultyEscaped = $conn->real_escape_string($questionDifficulty);
         
-        // Buscar preguntas:
-        // 1. Preguntas con difficulty_level NULL (se muestran a todos los niveles)
-        // 2. Preguntas con difficulty_level que coincida con el nivel del usuario
-        // Acepta tanto 'activa' como 'active' como estados válidos
+        // Buscar preguntas de la categoría y dificultad
         $sql = "SELECT * FROM question 
-                WHERE (status = 'activa' OR status = 'active')
+                WHERE category_id = $categoryId
+                AND (status = 'activa' OR status = 'active')
                 AND (difficulty_level IS NULL OR difficulty_level = '$questionDifficultyEscaped')
                 ORDER BY RAND() LIMIT 1";
         $result = $this->conexion->query($sql);
@@ -138,8 +134,11 @@ class PartidaModel
             return $result[0];
         }
         
-        // Si no hay preguntas, buscar cualquier pregunta activa
-        $sql = "SELECT * FROM question WHERE (status = 'activa' OR status = 'active') ORDER BY RAND() LIMIT 1";
+        // Si no hay de esa dificultad, buscar cualquiera de esa categoría
+        $sql = "SELECT * FROM question 
+                WHERE category_id = $categoryId 
+                AND (status = 'activa' OR status = 'active') 
+                ORDER BY RAND() LIMIT 1";
         $result = $this->conexion->query($sql);
         
         return ($result && !empty($result)) ? $result[0] : null;
