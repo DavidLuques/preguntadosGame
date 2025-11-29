@@ -39,34 +39,52 @@
                         <small class="text-muted">Suma de todos los puntajes</small>
                     </div>
                 </div>
+
+                <!-- Total Players -->
+                <div class="col-12 col-md-6">
+                    <div class="app-card p-4 h-100 text-dark border-start border-4 border-info">
+                        <h5 class="text-muted text-uppercase small fw-bold mb-3">Jugadores Registrados</h5>
+                        <div class="d-flex align-items-center">
+                            <h2 class="display-4 fw-bold mb-0 me-3">{{stats.total_players}}</h2>
+                            <i class="bi bi-people fs-1 text-info opacity-25 ms-auto"></i>
+                        </div>
+                        <small class="text-muted">Usuarios con rol de jugador</small>
+                    </div>
+                </div>
+
+                <!-- Total Questions -->
+                <div class="col-12 col-md-6">
+                    <div class="app-card p-4 h-100 text-dark border-start border-4 border-warning">
+                        <h5 class="text-muted text-uppercase small fw-bold mb-3">Preguntas Totales</h5>
+                        <div class="d-flex align-items-center">
+                            <h2 class="display-4 fw-bold mb-0 me-3">{{stats.total_questions}}</h2>
+                            <i class="bi bi-question-circle fs-1 text-warning opacity-25 ms-auto"></i>
+                        </div>
+                        <small class="text-muted">Preguntas disponibles en el juego</small>
+                    </div>
+                </div>
             </div>
 
             <div class="app-card p-4 p-md-5 text-dark">
                 <h4 class="mb-4">Jugadores por Nivel de Dificultad</h4>
                 <div class="row g-4">
                     {{#stats.difficulty_levels}}
-                        <div class="col-6 col-md-3">
+                        <div class="col-6 col-md-4">
                             <div class="p-3 bg-light rounded text-center border">
                                 <h3 class="fw-bold text-primary mb-1">{{Principiante}}</h3>
                                 <small class="text-muted fw-semibold">Principiante</small>
                             </div>
                         </div>
-                        <div class="col-6 col-md-3">
+                        <div class="col-6 col-md-4">
                             <div class="p-3 bg-light rounded text-center border">
                                 <h3 class="fw-bold text-warning mb-1">{{Medio}}</h3>
                                 <small class="text-muted fw-semibold">Medio</small>
                             </div>
                         </div>
-                        <div class="col-6 col-md-3">
+                        <div class="col-6 col-md-4">
                             <div class="p-3 bg-light rounded text-center border">
                                 <h3 class="fw-bold text-danger mb-1">{{Avanzado}}</h3>
                                 <small class="text-muted fw-semibold">Avanzado</small>
-                            </div>
-                        </div>
-                        <div class="col-6 col-md-3">
-                            <div class="p-3 bg-light rounded text-center border">
-                                <h3 class="fw-bold text-secondary mb-1">{{Sin Clasificar}}</h3>
-                                <small class="text-muted fw-semibold">Sin Clasificar</small>
                             </div>
                         </div>
                     {{/stats.difficulty_levels}}

@@ -23,6 +23,16 @@ class AdminModel
         $resultScore = $this->database->query($sqlScore);
         $stats['total_score'] = $resultScore[0]['total_score'] ?? 0;
 
+        // Total players
+        $sqlPlayers = "SELECT COUNT(*) as total_players FROM user WHERE rol = 'JUGADOR'";
+        $resultPlayers = $this->database->query($sqlPlayers);
+        $stats['total_players'] = $resultPlayers[0]['total_players'] ?? 0;
+
+        // Total questions
+        $sqlQuestions = "SELECT COUNT(*) as total_questions FROM question";
+        $resultQuestions = $this->database->query($sqlQuestions);
+        $stats['total_questions'] = $resultQuestions[0]['total_questions'] ?? 0;
+
         // Users by difficulty
         $sqlDifficulty = "SELECT difficulty_level, COUNT(*) as count 
                           FROM user 
@@ -34,14 +44,11 @@ class AdminModel
         $stats['difficulty_levels']['Principiante'] = 0;
         $stats['difficulty_levels']['Medio'] = 0;
         $stats['difficulty_levels']['Avanzado'] = 0;
-        $stats['difficulty_levels']['Sin Clasificar'] = 0;
 
         foreach ($resultDifficulty as $row) {
             $level = $row['difficulty_level'];
             if ($level === 'Principiante' || $level === 'Medio' || $level === 'Avanzado') {
                 $stats['difficulty_levels'][$level] = $row['count'];
-            } else {
-                $stats['difficulty_levels']['Sin Clasificar'] += $row['count'];
             }
         }
 

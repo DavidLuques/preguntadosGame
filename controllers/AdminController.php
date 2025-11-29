@@ -50,6 +50,8 @@ class AdminController
         $pdf->SetFont('Arial', '', 12);
         $pdf->Cell(0, 10, utf8_decode('Total de Partidas Jugadas: ' . $stats['total_games']), 0, 1);
         $pdf->Cell(0, 10, utf8_decode('Puntaje Total Acumulado: ' . $stats['total_score']), 0, 1);
+        $pdf->Cell(0, 10, utf8_decode('Cantidad de Jugadores Registrados: ' . $stats['total_players']), 0, 1);
+        $pdf->Cell(0, 10, utf8_decode('Cantidad de Preguntas en el Sistema: ' . $stats['total_questions']), 0, 1);
         $pdf->Ln(10);
 
         // Difficulty Stats
