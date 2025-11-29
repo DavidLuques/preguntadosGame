@@ -1,0 +1,88 @@
+{{>partials/header}}
+
+<section class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-8">
+            <div class="app-card p-5 text-dark text-center">
+                
+                {{#esCorrecto}}
+                    <div class="mb-4">
+                        <i class="bi bi-check-circle-fill text-success" style="font-size: 4rem;"></i>
+                        <h2 class="display-4 fw-bold text-success mt-3">¡Correcto!</h2>
+                        <p class="fs-4 text-muted">Has sumado un punto.</p>
+                    </div>
+                {{/esCorrecto}}
+
+                {{^esCorrecto}}
+                    <div class="mb-4">
+                        {{#tiempoAgotado}}
+                            <i class="bi bi-alarm-fill text-danger" style="font-size: 4rem;"></i>
+                            <h2 class="display-4 fw-bold text-danger mt-3">¡Tiempo Agotado!</h2>
+                        {{/tiempoAgotado}}
+                        {{^tiempoAgotado}}
+                            <i class="bi bi-x-circle-fill text-danger" style="font-size: 4rem;"></i>
+                            <h2 class="display-4 fw-bold text-danger mt-3">¡Incorrecto!</h2>
+                        {{/tiempoAgotado}}
+                        
+                        <div class="mt-4 p-4 bg-light rounded border">
+                            <p class="mb-2 text-muted">La respuesta correcta era:</p>
+                            <h3 class="fw-bold text-success">{{respuestaCorrecta}}</h3>
+                        </div>
+                    </div>
+                {{/esCorrecto}}
+
+                <div class="mt-5 d-grid gap-3 col-md-8 mx-auto">
+                    <a href="{{siguienteUrl}}" class="btn btn-primary btn-lg p-3">
+                        Continuar <i class="bi bi-arrow-right ms-2"></i>
+                    </a>
+                </div>
+
+                <!-- Report Section -->
+                {{#usuario}}
+                    <div class="mt-5 text-start border-top pt-4">
+                        <button class="btn btn-outline-danger w-100" type="button" data-bs-toggle="collapse" data-bs-target="#reportarPregunta" aria-expanded="false" aria-controls="reportarPregunta">
+                            <i class="bi bi-flag-fill me-2"></i>Reportar esta pregunta
+                        </button>
+                        <div class="collapse mt-3" id="reportarPregunta">
+                            <div class="card shadow-sm border-danger">
+                                <div class="card-body">
+                                    <h5 class="card-title text-danger mb-3">Reportar Pregunta</h5>
+                                    <p class="small text-muted mb-3">Pregunta: "{{question_text}}"</p>
+                                    
+                                    {{#reportSuccess}}
+                                        <div class="alert alert-success">
+                                            ¡Reporte enviado correctamente! Gracias por tu ayuda.
+                                        </div>
+                                    {{/reportSuccess}}
+                                    
+                                    {{#reportError}}
+                                        <div class="alert alert-danger">
+                                            {{reportError}}
+                                        </div>
+                                    {{/reportError}}
+
+                                    {{^reportSuccess}}
+                                    <form action="/partida/reportarPregunta" method="POST">
+                                        <input type="hidden" name="question_id" value="{{question_id}}">
+                                        <input type="hidden" name="from_feedback" value="true">
+                                        <div class="mb-3">
+                                            <label for="reason" class="form-label">Motivo del reporte</label>
+                                            <textarea class="form-control" id="reason" name="reason" rows="3" maxlength="255" placeholder="¿Qué está mal con esta pregunta?" required></textarea>
+                                        </div>
+                                        <div class="text-end">
+                                            <button type="submit" class="btn btn-danger">Enviar Reporte</button>
+                                        </div>
+                                    </form>
+                                    {{/reportSuccess}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {{/usuario}}
+
+            </div>
+        </div>
+    </div>
+</section>
+
+{{>partials/footer}}

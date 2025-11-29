@@ -112,7 +112,30 @@ class PartidaController
             exit();
         }
 
-        $this->renderer->render("partida"); // Vista de la ruleta
+        // Preparar datos de progreso
+        $progreso = [];
+        $respuestas = isset($_SESSION['partida_respuestas']) ? $_SESSION['partida_respuestas'] : [];
+        
+        for ($i = 0; $i < 10; $i++) {
+            if (isset($respuestas[$i])) {
+                // Mostrar siempre como completado (verde/neutro) sin revelar si fue correcto o no
+                $progreso[] = [
+                    'numero' => $i + 1,
+                    'estado' => 'completed',
+                    'clase' => 'bg-success', // O bg-primary si prefieren azul
+                    'icono' => 'bi-check-lg'
+                ];
+            } else {
+                $progreso[] = [
+                    'numero' => $i + 1,
+                    'estado' => 'pending',
+                    'clase' => 'bg-secondary',
+                    'icono' => 'bi-circle'
+                ];
+            }
+        }
+
+        $this->renderer->render("partida", ['progreso' => $progreso]); // Vista de la ruleta
     }
 
     public function girarRuleta()
@@ -273,16 +296,69 @@ class PartidaController
         // Avanzar contador
         $_SESSION['partida_preguntas_jugadas']++;
         
-        // Limpiar pregunta actual para permitir girar ruleta de nuevo
-        unset($_SESSION['current_question']);
-
-        if ($_SESSION['partida_preguntas_jugadas'] >= 10) {
-            header("Location: /partida/resultados");
-        } else {
-            // Volver a la ruleta para la siguiente pregunta
-            header("Location: /partida/ruleta");
+        // Obtener texto de la respuesta correcta para mostrarlo
+        $respuestaCorrectaTexto = "Desconocida";
+        $respuestas = $this->model->getAnswersByQuestionId($questionId);
+        foreach ($respuestas as $resp) {
+            if ($resp['answer_id'] == $pregunta['correct_answer_id']) {
+                $respuestaCorrectaTexto = $resp['answer_text'];
+                break;
+            }
         }
+
+        // Guardar datos para la pantalla de feedback
+        $_SESSION['last_result'] = [
+            'esCorrecto' => $correcto,
+            'tiempoAgotado' => $tiempoAgotado,
+            'respuestaCorrecta' => $respuestaCorrectaTexto,
+            'question_text' => $pregunta['question_text'],
+            'question_id' => $questionId,
+            'siguienteUrl' => ($_SESSION['partida_preguntas_jugadas'] >= 10) ? '/partida/resultados' : '/partida/ruleta'
+        ];
+        
+        // Limpiar pregunta actual
+        unset($_SESSION['current_question']);
+        unset($_SESSION['question_start_time']);
+
+        // Redirigir a la pantalla de respuesta (feedback)
+        header("Location: /partida/respuesta");
         exit();
+    }
+
+    public function respuesta()
+    {
+        if (!isset($_SESSION['partida_activa']) || !$_SESSION['partida_activa']) {
+            header("Location: /partida/inicioPartida");
+            exit();
+        }
+
+        if (!isset($_SESSION['last_result'])) {
+            // Si no hay resultado guardado, probablemente recargó o entró directo.
+            // Redirigir a donde corresponda según el estado del juego.
+            if (isset($_SESSION['current_question'])) {
+                header("Location: /partida/jugarPregunta");
+            } else {
+                header("Location: /partida/ruleta");
+            }
+            exit();
+        }
+
+        $data = $_SESSION['last_result'];
+        
+        // Agregar datos de reporte si existen en GET
+        if (isset($_GET['report']) && $_GET['report'] === 'success') {
+            $data['reportSuccess'] = true;
+        }
+        if (isset($_GET['reportError'])) {
+            $data['reportError'] = urldecode($_GET['reportError']);
+        }
+        
+        // Asegurar que usuario está disponible para el template
+        if (isset($_SESSION['usuario'])) {
+            $data['usuario'] = $_SESSION['usuario'];
+        }
+
+        $this->renderer->render("respuesta", $data);
     }
 
     public function resultados()
@@ -292,7 +368,6 @@ class PartidaController
             exit();
         }
 
-        $puntos = intval($_SESSION['partida_puntos']);
         $puntos = intval($_SESSION['partida_puntos']);
         $totalPreguntas = 10; // Fijo en 10
 
@@ -304,11 +379,11 @@ class PartidaController
 
         // Limpiar sesión de partida
         unset($_SESSION['partida_activa']);
-        unset($_SESSION['partida_activa']);
         unset($_SESSION['partida_preguntas_jugadas']);
         unset($_SESSION['partida_puntos']);
         unset($_SESSION['partida_respuestas']);
         unset($_SESSION['current_question']);
+        unset($_SESSION['last_result']); // Limpiar también el último resultado
 
         $this->renderer->render("resultadosPartida", [
             'puntos' => $puntos,
@@ -326,6 +401,7 @@ class PartidaController
 
         $questionId = isset($_POST['question_id']) ? intval($_POST['question_id']) : null;
         $reason = isset($_POST['reason']) ? trim($_POST['reason']) : '';
+        $fromFeedback = isset($_POST['from_feedback']) && $_POST['from_feedback'] === 'true';
 
         if (!$questionId) {
             header('Location: /partida');
@@ -334,8 +410,9 @@ class PartidaController
 
         if ($reason === '') {
             $error = urlencode('Debés indicar un motivo para reportar la pregunta.');
-            // Si hay partida activa, redirigir a jugarPregunta, sino a mostrarPregunta
-            if (isset($_SESSION['partida_activa']) && $_SESSION['partida_activa']) {
+            if ($fromFeedback) {
+                header("Location: /partida/respuesta?reportError=$error");
+            } elseif (isset($_SESSION['partida_activa']) && $_SESSION['partida_activa']) {
                 header("Location: /partida/jugarPregunta?reportError=$error");
             } else {
                 header("Location: /partida/mostrarPregunta?question_id=$questionId&reportError=$error");
@@ -351,11 +428,11 @@ class PartidaController
         $userId = intval($_SESSION['usuario_id']);
         $resultado = $this->model->guardarReportePregunta($questionId, $userId, $reason);
 
-        // Determinar a dónde redirigir según si hay partida activa
-        $tienePartidaActiva = isset($_SESSION['partida_activa']) && $_SESSION['partida_activa'];
-        
+        // Determinar a dónde redirigir
         if (isset($resultado['success']) && $resultado['success'] === true) {
-            if ($tienePartidaActiva) {
+            if ($fromFeedback) {
+                header("Location: /partida/respuesta?report=success");
+            } elseif (isset($_SESSION['partida_activa']) && $_SESSION['partida_activa']) {
                 header("Location: /partida/jugarPregunta?report=success");
             } else {
                 header("Location: /partida/mostrarPregunta?question_id=$questionId&report=success");
@@ -365,7 +442,9 @@ class PartidaController
                 ? $resultado['error']
                 : 'No pudimos guardar tu reporte. Intentá nuevamente.';
             $error = urlencode($mensajeError);
-            if ($tienePartidaActiva) {
+            if ($fromFeedback) {
+                header("Location: /partida/respuesta?reportError=$error");
+            } elseif (isset($_SESSION['partida_activa']) && $_SESSION['partida_activa']) {
                 header("Location: /partida/jugarPregunta?reportError=$error");
             } else {
                 header("Location: /partida/mostrarPregunta?question_id=$questionId&reportError=$error");

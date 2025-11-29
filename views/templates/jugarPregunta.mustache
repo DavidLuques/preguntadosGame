@@ -55,31 +55,7 @@
                     <small class="text-muted">Seleccioná una respuesta para continuar</small>
                 </div>
 
-                {{#usuario}}
-                    <div class="mt-5 text-start">
-                        <button class="btn btn-outline-danger btn-lg w-100" type="button" data-bs-toggle="collapse" data-bs-target="#reportarPregunta" aria-expanded="false" aria-controls="reportarPregunta">
-                            Reportar pregunta
-                        </button>
-                        <div class="collapse mt-3" id="reportarPregunta">
-                            <div class="card shadow-sm">
-                                <div class="card-body">
-                                    <h3 class="h5 fw-semibold mb-3 text-danger">Contanos el motivo</h3>
-                                    <form action="/partida/reportarPregunta" method="POST" class="text-start">
-                                        <input type="hidden" name="question_id" value="{{pregunta.question_id}}">
-                                        <div class="mb-3">
-                                            <label for="reason" class="form-label">Motivo del reporte</label>
-                                            <textarea class="form-control" id="reason" name="reason" rows="4" maxlength="255" placeholder="Explicá brevemente por qué esta pregunta debería revisarse" required></textarea>
-                                        </div>
-                                        <button type="submit" class="btn btn-danger">Enviar reporte</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                {{/usuario}}
-                {{^usuario}}
-                    <p class="text-muted mt-4 mb-0 text-center">Iniciá sesión para poder reportar preguntas.</p>
-                {{/usuario}}
+                <!-- Report button moved to feedback screen -->
             </div>
         </div>
     </div>

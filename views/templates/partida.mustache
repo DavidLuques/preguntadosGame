@@ -1,47 +1,33 @@
 {{>partials/header}}
 
-<section class="container">
-    <div class="row justify-content-center">
-        <div class="col-12 col-lg-8">
-            <div class="app-card roulette-card p-5 text-center">
+<section class="container-fluid min-vh-100 d-flex align-items-center overflow-hidden">
+    <div class="row w-100 m-0">
+        <!-- Main Roulette Section -->
+        <div class="col-12 col-lg-10 d-flex justify-content-center align-items-center">
+            <div class="app-card roulette-card p-4 text-center w-100" style="max-width: 800px;">
                 <p class="text-uppercase text-warning fw-semibold mb-2">Modo desafío</p>
                 <h2 class="display-6 fw-bold mb-3 text-white">¡La ruleta está lista para girar!</h2>
-                <p class="lead text-white-50 mb-5">Cada color representa una categoría distinta. Tocá «Girar» para descubrir la pregunta que decidirá tu puntaje.</p>
+                <p class="lead text-white-50 mb-4">Cada color representa una categoría distinta. Tocá «Girar» para descubrir la pregunta.</p>
 
                 <section class="roulette-container d-flex flex-column align-items-center gap-4">
                     <div id="selector"></div>
 
                     <div class="roulette-border">
                         <div id="roulette">
-
                             <div class="roulette-section">
-                                <div class="roulette-section-container">
-                                    <p>Historia</p>
-                                </div>
+                                <div class="roulette-section-container"><p>Historia</p></div>
                             </div>
-
                             <div class="roulette-section">
-                                <div class="roulette-section-container">
-                                    <p>Ciencia</p>
-                                </div>
+                                <div class="roulette-section-container"><p>Ciencia</p></div>
                             </div>
-
                             <div class="roulette-section">
-                                <div class="roulette-section-container">
-                                    <p>Deportes</p>
-                                </div>
+                                <div class="roulette-section-container"><p>Deportes</p></div>
                             </div>
-
                             <div class="roulette-section">
-                                <div class="roulette-section-container">
-                                    <p>Geografía</p>
-                                </div>
+                                <div class="roulette-section-container"><p>Geografía</p></div>
                             </div>
-
                             <div class="roulette-section">
-                                <div class="roulette-section-container">
-                                    <p>Entretenimiento</p>
-                                </div>
+                                <div class="roulette-section-container"><p>Entretenimiento</p></div>
                             </div>
                         </div>
                     </div>
@@ -51,6 +37,20 @@
                         <button type="button" class="btn btn-outline-light btn-lg fw-semibold px-5" id="reset">Resetear</button>
                     </div>
                 </section>
+            </div>
+        </div>
+
+        <!-- Sidebar Progress Section (Compact) -->
+        <div class="col-12 col-lg-2 d-flex flex-column justify-content-center align-items-center mt-3 mt-lg-0">
+            <div class="d-flex flex-row flex-lg-column gap-2 p-3 rounded" style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(5px);">
+                {{#progreso}}
+                    <div class="rounded-circle d-flex align-items-center justify-content-center text-white {{clase}}" 
+                         style="width: 25px; height: 25px; font-size: 0.8rem;" 
+                         data-bs-toggle="tooltip" 
+                         title="Pregunta {{numero}}">
+                        <i class="bi {{icono}}"></i>
+                    </div>
+                {{/progreso}}
             </div>
         </div>
     </div>
