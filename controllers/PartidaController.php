@@ -208,6 +208,9 @@ class PartidaController
             $_SESSION['question_viewed_' . $questionId] = true;
         }
 
+        // INICIO TEMPORIZADOR: Guardar tiempo de inicio
+        $_SESSION['question_start_time'] = microtime(true);
+
         // Obtener respuestas
         $respuestas = $this->model->getAnswersByQuestionId($questionId);
 
@@ -242,10 +245,20 @@ class PartidaController
             exit();
         }
 
+        // VALIDACIÓN DE TIEMPO
+        $tiempoAgotado = false;
+        if (isset($_SESSION['question_start_time'])) {
+            $tiempoTranscurrido = microtime(true) - $_SESSION['question_start_time'];
+            // 10 segundos + 2 segundos de margen por latencia
+            if ($tiempoTranscurrido > 12) {
+                $tiempoAgotado = true;
+            }
+        }
+
         $pregunta = $_SESSION['current_question'];
         $correcto = false;
 
-        if (intval($pregunta['correct_answer_id']) === $answerId) {
+        if (!$tiempoAgotado && intval($pregunta['correct_answer_id']) === $answerId) {
             $correcto = true;
             $_SESSION['partida_puntos'] = intval($_SESSION['partida_puntos']) + 1;
             $this->model->incrementarCorrectAnswerCount($questionId);
