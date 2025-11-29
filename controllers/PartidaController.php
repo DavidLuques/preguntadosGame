@@ -32,48 +32,6 @@ class PartidaController
         $this->renderer->render("inicioPartida");
     }
 
-    public function mostrarPregunta()
-    {
-        $pregunta = null;
-
-        if (isset($_GET['question_id'])) {
-            $questionId = intval($_GET['question_id']);
-            $pregunta = $this->model->getQuestionById($questionId);
-            if (!$pregunta) {
-                die('No se encontró la pregunta solicitada.');
-            }
-        } else {
-            if (!isset($_GET['category_id'])) {
-                die('Falta el parámetro category_id');
-            }
-
-            $categoryId = intval($_GET['category_id']);
-            $pregunta = $this->model->getRandomQuestionByCategory($categoryId);
-
-            if (!$pregunta || empty($pregunta)) {
-                die('No se encontró ninguna pregunta para esa categoría');
-            }
-
-            $pregunta = $pregunta[0];
-        }
-
-        $this->renderer->render("mostrarPregunta", [
-            'category_id' => $pregunta['category_id'],
-            'question_text' => $pregunta['question_text'],
-            'question_id' => $pregunta['question_id'],
-            'reportSuccess' => isset($_GET['report']) && $_GET['report'] === 'success',
-            'reportError' => isset($_GET['reportError']) ? urldecode($_GET['reportError']) : null
-        ]);
-    }
-
-    public function partida()
-    {
-        if (isset($_SESSION['editor']) || (isset($_SESSION['rol']) && $_SESSION['rol'] === 'ADMIN')) {
-            die('Acceso no autorizado. <a href="/">Volver al inicio</a>');
-        }
-        $this->renderer->render("partida");
-    }
-
     public function iniciarPartida()
     {
         if (!isset($_SESSION['usuario_id'])) {
@@ -415,7 +373,7 @@ class PartidaController
             } elseif (isset($_SESSION['partida_activa']) && $_SESSION['partida_activa']) {
                 header("Location: /partida/jugarPregunta?reportError=$error");
             } else {
-                header("Location: /partida/mostrarPregunta?question_id=$questionId&reportError=$error");
+                header("Location: /partida/inicioPartida?reportError=$error");
             }
             exit();
         }
@@ -435,7 +393,7 @@ class PartidaController
             } elseif (isset($_SESSION['partida_activa']) && $_SESSION['partida_activa']) {
                 header("Location: /partida/jugarPregunta?report=success");
             } else {
-                header("Location: /partida/mostrarPregunta?question_id=$questionId&report=success");
+                header("Location: /partida/inicioPartida?report=success");
             }
         } else {
             $mensajeError = isset($resultado['error'])
@@ -447,7 +405,7 @@ class PartidaController
             } elseif (isset($_SESSION['partida_activa']) && $_SESSION['partida_activa']) {
                 header("Location: /partida/jugarPregunta?reportError=$error");
             } else {
-                header("Location: /partida/mostrarPregunta?question_id=$questionId&reportError=$error");
+                header("Location: /partida/inicioPartida?reportError=$error");
             }
         }
 

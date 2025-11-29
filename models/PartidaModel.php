@@ -9,26 +9,6 @@ class PartidaModel
         $this->conexion = $conexion;
     }
 
-    public function getRandomQuestionByCategory($categoryId)
-    {
-        $categoryId = intval($categoryId);
-        $sql = "SELECT * FROM question WHERE category_id = $categoryId ORDER BY RAND() LIMIT 1";
-        return $this->conexion->query($sql);
-    }
-
-    public function getQuestionById($questionId)
-    {
-        $questionId = intval($questionId);
-        $sql = "SELECT * FROM question WHERE question_id = $questionId LIMIT 1";
-        $resultado = $this->conexion->query($sql);
-
-        if ($resultado && !empty($resultado)) {
-            return $resultado[0];
-        }
-
-        return null;
-    }
-
     public function guardarReportePregunta($questionId, $userId, $reason)
     {
         $questionId = intval($questionId);
