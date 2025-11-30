@@ -72,7 +72,7 @@ class PerfilController
             // Únicos campos que tu BD tiene:
             $location = $_POST['location'] ?? "";
             $lat      = $_POST['lat'] ?? null;
-            $lng      = $_POST['lng'] ?? null;
+            $lon      = $_POST['lon'] ?? null;
 
             $this->model->updateUser(
                 $userId,
@@ -83,7 +83,7 @@ class PerfilController
                 $email,
                 $location,
                 $lat,
-                $lng
+                $lon
             );
 
             header("Location: /perfil/perfil?success=data_updated");

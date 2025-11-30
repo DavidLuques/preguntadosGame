@@ -16,13 +16,13 @@ class PerfilModel
         return $result ? $result[0] : null;
     }
 
-    public function updateUser($id, $name, $lastname, $birthYear, $gender, $email, $location, $lat, $lng)
+    public function updateUser($id, $name, $lastname, $birthYear, $gender, $email, $location, $lat, $lon)
     {
         $conn = $this->database->getConnection();
 
         $location = $conn->real_escape_string($location);
         $lat = floatval($lat);
-        $lng = floatval($lng);
+        $lon = floatval($lon);
 
         $sql = "UPDATE user SET 
         name = '$name',
@@ -32,7 +32,7 @@ class PerfilModel
         email = '$email',
         location = '$location',
         lat = '$lat',
-        lng = '$lng'
+        lon = '$lon'
         WHERE id = '$id'";
 
         $this->database->query($sql);

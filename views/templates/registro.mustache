@@ -89,7 +89,7 @@
 
                         <!-- Guardamos solo esto -->
                         <input type="hidden" id="lat" name="lat">
-                        <input type="hidden" id="lng" name="lng">
+                        <input type="hidden" id="lon" name="lon">
 
                         <div class="mb-3">
                             <label class="form-label">Mapa</label>
@@ -148,7 +148,7 @@ const resultsBox = document.getElementById("location_results");
 
 // Ocultos
 const lat = document.getElementById("lat");
-const lng = document.getElementById("lng");
+const lon = document.getElementById("lon");
 
 async function geocode(q) {
     const API_KEY = "pk.8e06c88eb28f9a2fce1d0e3b80fb24cb";
@@ -164,7 +164,7 @@ async function geocode(q) {
         return data.map(x => ({
             name: x.display_name,
             lat: x.lat,
-            lng: x.lon
+            lon: x.lon
         }));
     } catch (e) {
         return [];
@@ -191,14 +191,14 @@ locationInput.addEventListener("input", async () => {
         btn.onclick = () => {
             locationInput.value = item.name;
             lat.value = item.lat;
-            lng.value = item.lng;
+            lon.value = item.lon;
 
             resultsBox.innerHTML = "";
 
-            map.setView([item.lat, item.lng], 13);
+            map.setView([item.lat, item.lon], 13);
 
-            if (marker) marker.setLatLng([item.lat, item.lng]);
-            else marker = L.marker([item.lat, item.lng]).addTo(map);
+            if (marker) marker.setLatLpn([item.lat, item.lon]);
+            else marker = L.marker([item.lat, item.lon]).addTo(map);
         };
 
         resultsBox.appendChild(btn);
