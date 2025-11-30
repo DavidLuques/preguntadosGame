@@ -25,7 +25,8 @@ class AdminController
         $stats = $this->model->getStatistics();
         
         $this->renderer->render("admin/dashboard", [
-            "stats" => $stats
+            "stats" => $stats,
+            "statsJson" => json_encode($stats)
         ]);
     }
 

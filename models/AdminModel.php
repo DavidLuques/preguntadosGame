@@ -71,6 +71,20 @@ class AdminModel
             }
         }
 
+        // Questions by category
+        $sqlCategory = "SELECT c.category_name, COUNT(q.question_id) as count 
+                        FROM question q 
+                        JOIN category c ON q.category_id = c.category_id 
+                        GROUP BY c.category_name";
+        $resultCategory = $this->database->query($sqlCategory);
+        
+        $stats['questions_by_category'] = [];
+        if ($resultCategory) {
+            foreach ($resultCategory as $row) {
+                $stats['questions_by_category'][$row['category_name']] = $row['count'];
+            }
+        }
+
         return $stats;
     }
 }

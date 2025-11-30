@@ -97,6 +97,27 @@
                 </div>
             </div>
 
+            <div class="row mb-4">
+                <div class="col-12 col-lg-4">
+                    <div class="app-card p-4 h-100 text-dark">
+                        <h5 class="text-muted text-uppercase small fw-bold mb-3">Preguntas por Estado</h5>
+                        <canvas id="questionsStatusChart"></canvas>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-4">
+                    <div class="app-card p-4 h-100 text-dark">
+                        <h5 class="text-muted text-uppercase small fw-bold mb-3">Usuarios por Dificultad</h5>
+                        <canvas id="usersDifficultyChart"></canvas>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-4">
+                    <div class="app-card p-4 h-100 text-dark">
+                        <h5 class="text-muted text-uppercase small fw-bold mb-3">Preguntas por Categoría</h5>
+                        <canvas id="questionsCategoryChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
             <div class="app-card p-4 p-md-5 text-dark">
                 <h4 class="mb-4">Jugadores por Nivel de Dificultad</h4>
                 <div class="row g-4">
@@ -125,5 +146,61 @@
         </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const stats = {{{statsJson}}};
+
+        // Questions by Status Chart
+        new Chart(document.getElementById('questionsStatusChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Activas', 'Sugeridas', 'Rechazadas'],
+                datasets: [{
+                    data: [stats.active_questions, stats.suggested_questions, stats.rejected_questions],
+                    backgroundColor: ['#198754', '#0dcaf0', '#dc3545']
+                }]
+            },
+            options: { responsive: true }
+        });
+
+        // Users by Difficulty Chart
+        new Chart(document.getElementById('usersDifficultyChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Principiante', 'Medio', 'Avanzado'],
+                datasets: [{
+                    label: 'Usuarios',
+                    data: [
+                        stats.difficulty_levels.Principiante,
+                        stats.difficulty_levels.Medio,
+                        stats.difficulty_levels.Avanzado
+                    ],
+                    backgroundColor: ['#0d6efd', '#ffc107', '#dc3545']
+                }]
+            },
+            options: { responsive: true }
+        });
+
+        // Questions by Category Chart
+        const categoryLabels = Object.keys(stats.questions_by_category);
+        const categoryData = Object.values(stats.questions_by_category);
+
+        new Chart(document.getElementById('questionsCategoryChart'), {
+            type: 'pie',
+            data: {
+                labels: categoryLabels,
+                datasets: [{
+                    data: categoryData,
+                    backgroundColor: [
+                        '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'
+                    ]
+                }]
+            },
+            options: { responsive: true }
+        });
+    });
+</script>
 
 {{> partials/footer}}
