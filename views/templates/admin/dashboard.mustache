@@ -53,14 +53,46 @@
                 </div>
 
                 <!-- Total Questions -->
-                <div class="col-12 col-md-6">
+                <!-- Total Questions -->
+                <div class="col-12 col-md-6 col-lg-3">
                     <div class="app-card p-4 h-100 text-dark border-start border-4 border-warning">
-                        <h5 class="text-muted text-uppercase small fw-bold mb-3">Preguntas Totales</h5>
+                        <h5 class="text-muted text-uppercase small fw-bold mb-3">Total Preguntas</h5>
                         <div class="d-flex align-items-center">
                             <h2 class="display-4 fw-bold mb-0 me-3">{{stats.total_questions}}</h2>
-                            <i class="bi bi-question-circle fs-1 text-warning opacity-25 ms-auto"></i>
                         </div>
-                        <small class="text-muted">Preguntas disponibles en el juego</small>
+                    </div>
+                </div>
+
+                <!-- Active Questions -->
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="app-card p-4 h-100 text-dark border-start border-4 border-success">
+                        <h5 class="text-muted text-uppercase small fw-bold mb-3">Activas</h5>
+                        <div class="d-flex align-items-center">
+                            <h2 class="display-4 fw-bold mb-0 me-3">{{stats.active_questions}}</h2>
+                            <i class="bi bi-check-circle fs-1 text-success opacity-25 ms-auto"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Suggested Questions -->
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="app-card p-4 h-100 text-dark border-start border-4 border-info">
+                        <h5 class="text-muted text-uppercase small fw-bold mb-3">Sugeridas</h5>
+                        <div class="d-flex align-items-center">
+                            <h2 class="display-4 fw-bold mb-0 me-3">{{stats.suggested_questions}}</h2>
+                            <i class="bi bi-lightbulb fs-1 text-info opacity-25 ms-auto"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rejected Questions -->
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="app-card p-4 h-100 text-dark border-start border-4 border-danger">
+                        <h5 class="text-muted text-uppercase small fw-bold mb-3">Rechazadas</h5>
+                        <div class="d-flex align-items-center">
+                            <h2 class="display-4 fw-bold mb-0 me-3">{{stats.rejected_questions}}</h2>
+                            <i class="bi bi-x-circle fs-1 text-danger opacity-25 ms-auto"></i>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -25,7 +25,7 @@ class EditorModel
         // Por defecto la dificultad es 'Principiante'
         $difficulty = 'Principiante';
         $sql = "INSERT INTO question (question_text, question_date, category_id, status, difficulty_level, view_count, correct_answer_count) 
-                VALUES ('$text', '$date', '$categoryId', 'active', '$difficulty', 0, 0)";
+                VALUES ('$text', '$date', '$categoryId', 'activa', '$difficulty', 0, 0)";
         $this->database->query($sql);
         return $this->database->insertId();
     }
@@ -109,5 +109,22 @@ class EditorModel
     public function dismissReports($questionId)
     {
         $this->database->query("DELETE FROM report WHERE question_id = '$questionId'");
+    }
+
+    public function getSuggestedQuestions()
+    {
+        $sql = "SELECT q.*, c.category_name, q.question_date as created_at
+                FROM question q 
+                LEFT JOIN category c ON q.category_id = c.category_id 
+                WHERE q.status = 'sugerida' 
+                ORDER BY q.question_id DESC";
+        return $this->database->query($sql);
+    }
+
+    public function updateQuestionStatus($questionId, $status)
+    {
+        $status = $this->database->getConnection()->real_escape_string($status);
+        $sql = "UPDATE question SET status = '$status' WHERE question_id = '$questionId'";
+        $this->database->query($sql);
     }
 }

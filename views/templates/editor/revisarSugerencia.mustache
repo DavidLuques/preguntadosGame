@@ -1,0 +1,54 @@
+{{> partials/header}}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Revisar Sugerencia #{{question.question_id}}</h4>
+                </div>
+                <div class="card-body">
+                    <form action="/editor/procesarRevision" method="POST">
+                        <input type="hidden" name="question_id" value="{{question.question_id}}">
+                        
+                        <div class="mb-3">
+                            <label for="question_text" class="form-label fw-bold">Pregunta</label>
+                            <input type="text" class="form-control" id="question_text" name="question_text" value="{{question.question_text}}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="category_id" class="form-label fw-bold">Categoría</label>
+                            <select class="form-select" id="category_id" name="category_id" required>
+                                {{#categories}}
+                                <option value="{{category_id}}" {{#selected}}selected{{/selected}}>{{category_name}}</option>
+                                {{/categories}}
+                            </select>
+                        </div>
+
+                        <h5 class="mt-4 mb-3 fw-bold">Respuestas</h5>
+                        {{#answers}}
+                        <div class="input-group mb-2">
+                            <div class="input-group-text">
+                                <input class="form-check-input mt-0" type="radio" name="correct_answer" value="{{answer_id}}" {{#is_correct}}checked{{/is_correct}} required>
+                            </div>
+                            <input type="text" class="form-control" name="answers[{{answer_id}}]" value="{{answer_text}}" required>
+                        </div>
+                        {{/answers}}
+
+                        <div class="d-flex justify-content-between mt-4 pt-3 border-top">
+                            <a href="/editor/sugeridas" class="btn btn-secondary">Cancelar</a>
+                            <div>
+                                <button type="submit" name="action" value="reject" class="btn btn-danger me-2">
+                                    <i class="bi bi-x-circle me-1"></i>Rechazar
+                                </button>
+                                <button type="submit" name="action" value="accept" class="btn btn-success">
+                                    <i class="bi bi-check-circle me-1"></i>Aceptar y Activar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{> partials/footer}}

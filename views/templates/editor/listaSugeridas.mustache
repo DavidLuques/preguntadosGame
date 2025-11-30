@@ -1,0 +1,48 @@
+{{> partials/header}}
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">Preguntas Sugeridas</h2>
+        <a href="/editor/dashboard" class="btn btn-secondary">Volver al Panel</a>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0 align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Pregunta</th>
+                            <th>Categoría</th>
+                            <th>Fecha</th>
+                            <th class="text-end">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#questions}}
+                        <tr>
+                            <td>{{question_id}}</td>
+                            <td>{{question_text}}</td>
+                            <td><span class="badge bg-secondary">{{category_name}}</span></td>
+                            <td>{{created_at}}</td>
+                            <td class="text-end">
+                                <a href="/editor/revisarSugerencia?id={{question_id}}" class="btn btn-sm btn-primary">
+                                    <i class="bi bi-eye-fill me-1"></i>Revisar
+                                </a>
+                            </td>
+                        </tr>
+                        {{/questions}}
+                        {{^questions}}
+                        <tr>
+                            <td colspan="5" class="text-center py-4 text-muted">
+                                No hay preguntas sugeridas pendientes.
+                            </td>
+                        </tr>
+                        {{/questions}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{{> partials/footer}}

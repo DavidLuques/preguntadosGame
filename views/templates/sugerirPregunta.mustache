@@ -1,0 +1,84 @@
+{{>partials/header}}
+
+<section class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="app-card p-4 p-md-5">
+                <h2 class="mb-4 text-center fw-bold">Sugerir Nueva Pregunta</h2>
+                <p class="text-center text-muted mb-4">Ayudanos a mejorar el juego enviando tus propias preguntas. Un editor las revisará antes de publicarlas.</p>
+
+                {{#success}}
+                    <div class="alert alert-success mb-4" role="alert">
+                        ¡Gracias! Tu pregunta ha sido enviada y está pendiente de revisión.
+                    </div>
+                {{/success}}
+
+                {{#error}}
+                    <div class="alert alert-danger mb-4" role="alert">
+                        {{error}}
+                    </div>
+                {{/error}}
+
+                <form action="/jugadores/procesarSugerencia" method="POST">
+                    <!-- Pregunta -->
+                    <div class="mb-3">
+                        <label for="question_text" class="form-label fw-semibold">Pregunta</label>
+                        <input type="text" class="form-control" id="question_text" name="question_text" required placeholder="Ej: ¿Cuál es la capital de Francia?">
+                    </div>
+
+                    <!-- Categoría -->
+                    <div class="mb-3">
+                        <label for="category_id" class="form-label fw-semibold">Categoría</label>
+                        <select class="form-select" id="category_id" name="category_id" required>
+                            <option value="" selected disabled>Seleccioná una categoría</option>
+                            <option value="1">Historia</option>
+                            <option value="2">Ciencia</option>
+                            <option value="3">Deportes</option>
+                            <option value="4">Geografía</option>
+                            <option value="5">Entretenimiento</option>
+                        </select>
+                    </div>
+
+                    <hr class="my-4">
+                    <h5 class="mb-3 fw-semibold">Respuestas</h5>
+                    <p class="small text-muted mb-3">Ingresá 4 opciones y marcá cuál es la correcta.</p>
+
+                    <!-- Respuestas -->
+                    <div class="mb-3">
+                        <div class="input-group mb-2">
+                            <div class="input-group-text">
+                                <input class="form-check-input mt-0" type="radio" name="correct_answer" value="1" required aria-label="Respuesta correcta 1">
+                            </div>
+                            <input type="text" class="form-control" name="answer_1" required placeholder="Opción 1">
+                        </div>
+                        <div class="input-group mb-2">
+                            <div class="input-group-text">
+                                <input class="form-check-input mt-0" type="radio" name="correct_answer" value="2" required aria-label="Respuesta correcta 2">
+                            </div>
+                            <input type="text" class="form-control" name="answer_2" required placeholder="Opción 2">
+                        </div>
+                        <div class="input-group mb-2">
+                            <div class="input-group-text">
+                                <input class="form-check-input mt-0" type="radio" name="correct_answer" value="3" required aria-label="Respuesta correcta 3">
+                            </div>
+                            <input type="text" class="form-control" name="answer_3" required placeholder="Opción 3">
+                        </div>
+                        <div class="input-group mb-2">
+                            <div class="input-group-text">
+                                <input class="form-check-input mt-0" type="radio" name="correct_answer" value="4" required aria-label="Respuesta correcta 4">
+                            </div>
+                            <input type="text" class="form-control" name="answer_4" required placeholder="Opción 4">
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg fw-semibold">Enviar Sugerencia</button>
+                        <a href="/" class="btn btn-outline-secondary">Volver</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{{>partials/footer}}

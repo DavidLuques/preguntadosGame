@@ -108,7 +108,7 @@ class PartidaModel
             $nivelEscaped = $conn->real_escape_string($nivel);
             $sql = "SELECT * FROM question 
                     WHERE category_id = $categoryId
-                    AND (status = 'activa' OR status = 'active')
+                    AND status = 'activa'
                     AND difficulty_level = '$nivelEscaped'
                     $notInClause
                     ORDER BY RAND() LIMIT 1";
@@ -147,7 +147,7 @@ class PartidaModel
         if (!$pregunta) {
              $sql = "SELECT * FROM question 
                     WHERE category_id = $categoryId 
-                    AND (status = 'activa' OR status = 'active') 
+                    AND status = 'activa' 
                     $notInClause
                     ORDER BY RAND() LIMIT 1";
             $result = $conn->query($sql);
@@ -160,7 +160,7 @@ class PartidaModel
         if (!$pregunta) {
              $sql = "SELECT * FROM question 
                     WHERE category_id = $categoryId 
-                    AND (status = 'activa' OR status = 'active') 
+                    AND status = 'activa' 
                     ORDER BY RAND() LIMIT 1";
             $result = $conn->query($sql);
             if ($result && $result->num_rows > 0) {

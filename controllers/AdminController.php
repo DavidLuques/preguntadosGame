@@ -55,7 +55,11 @@ class AdminController
             <div class="stat-item"><span class="label">Total de Partidas Jugadas:</span> ' . $stats['total_games'] . '</div>
             <div class="stat-item"><span class="label">Puntaje Total Acumulado:</span> ' . $stats['total_score'] . '</div>
             <div class="stat-item"><span class="label">Cantidad de Jugadores Registrados:</span> ' . $stats['total_players'] . '</div>
+            <div class="stat-item"><span class="label">Cantidad de Jugadores Registrados:</span> ' . $stats['total_players'] . '</div>
             <div class="stat-item"><span class="label">Cantidad de Preguntas en el Sistema:</span> ' . $stats['total_questions'] . '</div>
+            <div class="stat-item" style="margin-left: 20px;"><span class="label">- Activas:</span> ' . $stats['active_questions'] . '</div>
+            <div class="stat-item" style="margin-left: 20px;"><span class="label">- Sugeridas:</span> ' . $stats['suggested_questions'] . '</div>
+            <div class="stat-item" style="margin-left: 20px;"><span class="label">- Rechazadas:</span> ' . $stats['rejected_questions'] . '</div>
 
             <h2>Jugadores por Nivel de Dificultad</h2>
             <ul>';

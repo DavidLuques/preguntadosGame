@@ -200,4 +200,80 @@ class EditorController
             header("Location: /editor/reportedQuestions");
         }
     }
+
+    public function sugeridas()
+    {
+        $this->checkEditor();
+        $questions = $this->model->getSuggestedQuestions();
+        $this->renderer->render("editor/listaSugeridas", ["questions" => $questions]);
+    }
+
+    public function revisarSugerencia()
+    {
+        $this->checkEditor();
+        if (!isset($_GET['id'])) {
+            header("Location: /editor/sugeridas");
+            exit();
+        }
+
+        $id = $_GET['id'];
+        $question = $this->model->getQuestionById($id);
+        
+        if (!$question) {
+            header("Location: /editor/sugeridas");
+            exit();
+        }
+
+        $answers = $this->model->getAnswersByQuestionId($id);
+        $categories = $this->model->getAllCategories();
+
+        // Mark correct answer and selected category
+        foreach ($answers as &$answer) {
+            if ($answer['answer_id'] == $question[0]['correct_answer_id']) {
+                $answer['is_correct'] = true;
+            }
+        }
+
+        foreach ($categories as &$cat) {
+            if ($cat['category_id'] == $question[0]['category_id']) {
+                $cat['selected'] = true;
+            }
+        }
+
+        $this->renderer->render("editor/revisarSugerencia", [
+            "question" => $question[0],
+            "answers" => $answers,
+            "categories" => $categories
+        ]);
+    }
+
+    public function procesarRevision()
+    {
+        $this->checkEditor();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $questionId = $_POST['question_id'];
+            $action = $_POST['action']; // 'accept' or 'reject'
+            
+            if ($action === 'reject') {
+                $this->model->updateQuestionStatus($questionId, 'rechazada');
+            } elseif ($action === 'accept') {
+                // Update content first
+                $text = $_POST['question_text'];
+                $categoryId = $_POST['category_id'];
+                $answers = $_POST['answers']; // Array [answer_id => text]
+                $correctAnswerId = $_POST['correct_answer'];
+
+                $this->model->updateQuestion($questionId, $text, $categoryId, $correctAnswerId);
+                
+                foreach ($answers as $ansId => $ansText) {
+                    $this->model->updateAnswer($ansId, $ansText);
+                }
+
+                // Set status to active
+                $this->model->updateQuestionStatus($questionId, 'activa');
+            }
+
+            header("Location: /editor/sugeridas");
+        }
+    }
 }

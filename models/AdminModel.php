@@ -33,6 +33,25 @@ class AdminModel
         $resultQuestions = $this->database->query($sqlQuestions);
         $stats['total_questions'] = $resultQuestions[0]['total_questions'] ?? 0;
 
+        // Questions by status
+        $sqlStatus = "SELECT status, COUNT(*) as count FROM question GROUP BY status";
+        $resultStatus = $this->database->query($sqlStatus);
+        
+        $stats['active_questions'] = 0;
+        $stats['suggested_questions'] = 0;
+        $stats['rejected_questions'] = 0;
+
+        foreach ($resultStatus as $row) {
+            $status = strtolower($row['status']);
+            if ($status === 'activa') {
+                $stats['active_questions'] += $row['count'];
+            } elseif ($status === 'sugerida') {
+                $stats['suggested_questions'] += $row['count'];
+            } elseif ($status === 'rechazada') {
+                $stats['rejected_questions'] += $row['count'];
+            }
+        }
+
         // Users by difficulty
         $sqlDifficulty = "SELECT difficulty_level, COUNT(*) as count 
                           FROM user 
