@@ -25,6 +25,5 @@ error_log
 
 # Composer
 vendor/
-composer.lock
 
 to_do.txt
