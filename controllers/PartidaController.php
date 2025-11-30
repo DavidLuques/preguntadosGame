@@ -76,12 +76,12 @@ class PartidaController
         
         for ($i = 0; $i < 10; $i++) {
             if (isset($respuestas[$i])) {
-                // Mostrar siempre como completado (verde/neutro) sin revelar si fue correcto o no
+                $esCorrecto = $respuestas[$i]['correcto'];
                 $progreso[] = [
                     'numero' => $i + 1,
-                    'estado' => 'completed',
-                    'clase' => 'bg-success', // O bg-primary si prefieren azul
-                    'icono' => 'bi-check-lg'
+                    'estado' => $esCorrecto ? 'correct' : 'incorrect',
+                    'clase' => $esCorrecto ? 'bg-success' : 'bg-danger',
+                    'icono' => $esCorrecto ? 'bi-check-lg' : 'bi-x-lg'
                 ];
             } else {
                 $progreso[] = [
