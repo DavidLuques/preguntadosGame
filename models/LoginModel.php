@@ -14,7 +14,7 @@ class LoginModel
         $conn = $this->conexion->getConnection();
         $userEscaped = $conn->real_escape_string($user);
         $passwordHash = hash('sha256', $password);
-        
+
         $sql = "SELECT * FROM user WHERE username = '$userEscaped' AND password = '$passwordHash'";
         $result = $this->conexion->query($sql);
 
@@ -33,14 +33,14 @@ class LoginModel
         $usernameEscaped = $conn->real_escape_string($username);
         $sql = "SELECT id FROM user WHERE username = '$usernameEscaped' LIMIT 1";
         $result = $this->conexion->query($sql);
-        
+
         return !empty($result);
     }
 
-    public function registrarUsuario($username, $password, $name, $lastname, $birthYear, $gender, $email, $country, $profilePicture)
+    public function registrarUsuario($username, $password, $name, $lastname, $birthYear, $gender, $email, $country, $profilePicture, $city, $lat, $lon)
     {
         $conn = $this->conexion->getConnection();
-        
+
         // Escapar datos
         $usernameEscaped = $conn->real_escape_string($username);
         $passwordHash = hash('sha256', $password);
@@ -51,7 +51,10 @@ class LoginModel
         $emailEscaped = $conn->real_escape_string($email);
         $countryEscaped = $country ? $conn->real_escape_string($country) : null;
         $profilePictureEscaped = $conn->real_escape_string($profilePicture);
-        
+        $cityEscaped = $city ? $conn->real_escape_string($city) : null;
+        $latEscaped = $lat ? $conn->real_escape_string($lat) : null;
+        $lonEscaped = $lon ? $conn->real_escape_string($lon) : null;
+
         // Valores por defecto
         $rol = 'JUGADOR';
         $authToken = '';
@@ -62,15 +65,15 @@ class LoginModel
         $matchLost = 0;
         $difficultyLevel = 'Principiante'; // Nivel inicial: Fácil
         $answeredQuestions = 0;
-        
-        $sql = "INSERT INTO user (username, password, rol, authToken, name, lastname, birth_year, created_at, gender, email, country, profile_picture, total_score, games_played, games_won, match_lost, difficulty_level, answered_questions) 
-                VALUES ('$usernameEscaped', '$passwordHash', '$rol', '$authToken', '$nameEscaped', " . 
-                ($lastnameEscaped ? "'$lastnameEscaped'" : "NULL") . ", '$birthYearEscaped', '$createdAt', '$genderEscaped', '$emailEscaped', " . 
-                ($countryEscaped ? "'$countryEscaped'" : "NULL") . ", '$profilePictureEscaped', $totalScore, $gamesPlayed, $gamesWon, $matchLost, " . 
-                "'$difficultyLevel', $answeredQuestions)";
-        
+
+        $sql = "INSERT INTO user (username, password, rol, authToken, name, lastname, birth_year, created_at, gender, email, country, city, lat, lon, profile_picture, total_score, games_played, games_won, match_lost, difficulty_level, answered_questions)
+                VALUES ('$usernameEscaped', '$passwordHash', '$rol', '$authToken', '$nameEscaped', " .
+            ($lastnameEscaped ? "'$lastnameEscaped'" : "NULL") . ", '$birthYearEscaped', '$createdAt', '$genderEscaped', '$emailEscaped', " . ($countryEscaped ? "'$countryEscaped'" : "NULL") . ",
+            " . ($cityEscaped ? "'$cityEscaped'" : "NULL") . ", " . ($latEscaped ? "'$latEscaped'" : "NULL") . ", " . ($lonEscaped ? "'$lonEscaped'" : "NULL") . ", '$profilePictureEscaped',
+            $totalScore, $gamesPlayed, $gamesWon, $matchLost, " . "'$difficultyLevel', $answeredQuestions)";
+
         $result = $conn->query($sql);
-        
+
         if ($result) {
             return true;
         } else {

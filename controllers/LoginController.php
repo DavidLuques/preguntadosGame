@@ -78,6 +78,9 @@ class LoginController
             $gender = $_POST["gender"];
             $email = trim($_POST["email"]);
             $country = trim($_POST["country"]);
+            $city = trim($_POST["city"]);
+            $lat = trim($_POST["lat"]);
+            $lon = trim($_POST["lon"]);
 
             // Validar confirmación de contraseña
             if ($password !== $passwordConfirm) {
@@ -99,35 +102,35 @@ class LoginController
 
             // Manejar subida de imagen de perfil
             $profilePicture = 'images/usuario.png'; // Valor por defecto
-            
+
             if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] === UPLOAD_ERR_OK) {
                 $file = $_FILES['profile_picture'];
                 $allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
                 $maxSize = 5 * 1024 * 1024; // 5MB
-                
+
                 // Validar tipo de archivo
                 if (!in_array($file['type'], $allowedTypes)) {
                     $this->renderer->render("registro", ["error" => "El archivo debe ser una imagen (JPG, PNG o GIF)"]);
                     return;
                 }
-                
+
                 // Validar tamaño
                 if ($file['size'] > $maxSize) {
                     $this->renderer->render("registro", ["error" => "La imagen es demasiado grande. Máximo 5MB"]);
                     return;
                 }
-                
+
                 // Generar nombre único para el archivo
                 $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
                 $newFileName = 'profile_' . $username . '_' . time() . '.' . $extension;
                 $uploadPath = __DIR__ . '/../images/' . $newFileName;
-                
+
                 // Crear directorio si no existe
                 $imagesDir = __DIR__ . '/../images';
                 if (!is_dir($imagesDir)) {
                     mkdir($imagesDir, 0755, true);
                 }
-                
+
                 // Mover archivo
                 if (move_uploaded_file($file['tmp_name'], $uploadPath)) {
                     $profilePicture = 'images/' . $newFileName;
@@ -141,7 +144,7 @@ class LoginController
             $birthYearFormatted = date('Y-m-d H:i:s', strtotime($birthYear));
 
             // Registrar el usuario
-            if ($this->model->registrarUsuario($username, $password, $name, $lastname, $birthYearFormatted, $gender, $email, $country, $profilePicture)) {
+            if ($this->model->registrarUsuario($username, $password, $name, $lastname, $birthYearFormatted, $gender, $email, $country, $profilePicture, $city, $lat, $lon)) {
                 // Mostrar mensaje de éxito
                 $this->renderer->render("registro", ["success" => true, "mensaje" => "¡Éxito! Usuario registrado correctamente"]);
             } else {
