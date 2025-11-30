@@ -36,34 +36,51 @@ class AdminController
 
         require_once __DIR__ . '/../vendor/autoload.php';
 
-        $pdf = new \Fpdf\Fpdf();
-        $pdf->AddPage();
-        
-        // Title
-        $pdf->SetFont('Arial', 'B', 16);
-        $pdf->Cell(0, 10, utf8_decode('Reporte de Estadísticas - Preguntados'), 0, 1, 'C');
-        $pdf->Ln(10);
+        // Prepare HTML content
+        $html = '
+        <html>
+        <head>
+            <style>
+                body { font-family: sans-serif; }
+                h1 { text-align: center; color: #333; }
+                h2 { border-bottom: 1px solid #ccc; padding-bottom: 5px; color: #555; }
+                .stat-item { margin-bottom: 10px; font-size: 14px; }
+                .label { font-weight: bold; }
+            </style>
+        </head>
+        <body>
+            <h1>Reporte de Estadísticas - Preguntados</h1>
+            
+            <h2>Estadísticas Generales</h2>
+            <div class="stat-item"><span class="label">Total de Partidas Jugadas:</span> ' . $stats['total_games'] . '</div>
+            <div class="stat-item"><span class="label">Puntaje Total Acumulado:</span> ' . $stats['total_score'] . '</div>
+            <div class="stat-item"><span class="label">Cantidad de Jugadores Registrados:</span> ' . $stats['total_players'] . '</div>
+            <div class="stat-item"><span class="label">Cantidad de Preguntas en el Sistema:</span> ' . $stats['total_questions'] . '</div>
 
-        // General Stats
-        $pdf->SetFont('Arial', 'B', 12);
-        $pdf->Cell(0, 10, utf8_decode('Estadísticas Generales'), 0, 1);
-        $pdf->SetFont('Arial', '', 12);
-        $pdf->Cell(0, 10, utf8_decode('Total de Partidas Jugadas: ' . $stats['total_games']), 0, 1);
-        $pdf->Cell(0, 10, utf8_decode('Puntaje Total Acumulado: ' . $stats['total_score']), 0, 1);
-        $pdf->Cell(0, 10, utf8_decode('Cantidad de Jugadores Registrados: ' . $stats['total_players']), 0, 1);
-        $pdf->Cell(0, 10, utf8_decode('Cantidad de Preguntas en el Sistema: ' . $stats['total_questions']), 0, 1);
-        $pdf->Ln(10);
-
-        // Difficulty Stats
-        $pdf->SetFont('Arial', 'B', 12);
-        $pdf->Cell(0, 10, utf8_decode('Jugadores por Nivel de Dificultad'), 0, 1);
-        $pdf->SetFont('Arial', '', 12);
+            <h2>Jugadores por Nivel de Dificultad</h2>
+            <ul>';
         
         foreach ($stats['difficulty_levels'] as $level => $count) {
-            $pdf->Cell(0, 10, utf8_decode($level . ': ' . $count . ' jugadores'), 0, 1);
+            $html .= '<li><span class="label">' . htmlspecialchars($level) . ':</span> ' . $count . ' jugadores</li>';
         }
 
-        // Output
-        $pdf->Output('D', 'reporte_estadisticas.pdf');
+        $html .= '
+            </ul>
+            <p style="text-align: center; margin-top: 50px; font-size: 12px; color: #999;">Generado el ' . date('d/m/Y H:i') . '</p>
+        </body>
+        </html>';
+
+        // Instantiate Dompdf
+        $dompdf = new \Dompdf\Dompdf();
+        $dompdf->loadHtml($html);
+
+        // (Optional) Setup the paper size and orientation
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser
+        $dompdf->stream('reporte_estadisticas.pdf', ['Attachment' => true]);
     }
 }
