@@ -3,98 +3,93 @@
 <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-10 col-sm-9 col-md-8 col-lg-7 col-xl-6">
+
             {{#success}}
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{#mensaje}}
-                        {{mensaje}}
-                    {{/mensaje}}
-                    {{^mensaje}}
-                        Usuario registrado correctamente.
-                    {{/mensaje}}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{#mensaje}}{{mensaje}}{{/mensaje}}
+                {{^mensaje}}Usuario registrado correctamente.{{/mensaje}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
             {{/success}}
 
             {{#error}}
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    {{error}}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{error}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
             {{/error}}
 
             <div class="card">
                 <div class="card-body p-4 p-sm-5">
+
                     <div class="text-center mb-4">
                         <h1 class="h4 fw-bold mb-1">Crear cuenta</h1>
                         <p class="text-muted mb-0">Registrate para jugar</p>
                     </div>
 
-                    <form action="index.php?controller=login&method=registro" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+                    <form action="index.php?controller=login&method=registro" 
+                          method="POST" 
+                          enctype="multipart/form-data"
+                          class="needs-validation" 
+                          novalidate>
+
                         <div class="mb-3">
-                            <label for="nombre" class="form-label">Usuario <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre de usuario" required>
-                            <div class="invalid-feedback">Ingresá un usuario.</div>
+                            <label class="form-label">Usuario *</label>
+                            <input type="text" class="form-control" name="nombre" required>
                         </div>
 
                         <div class="mb-3">
-                            <label for="password" class="form-label">Contraseña <span class="text-danger">*</span></label>
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" required>
-                            <div class="invalid-feedback">Ingresá una contraseña.</div>
+                            <label class="form-label">Contraseña *</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
                         </div>
 
                         <div class="mb-3">
-                            <label for="password_confirm" class="form-label">Confirmar Contraseña <span class="text-danger">*</span></label>
-                            <input type="password" class="form-control" id="password_confirm" name="password_confirm" placeholder="Confirmar contraseña" required>
-                            <div class="invalid-feedback">Las contraseñas deben coincidir.</div>
+                            <label class="form-label">Confirmar contraseña *</label>
+                            <input type="password" class="form-control" id="password_confirm" name="password_confirm" required>
                         </div>
 
                         <div class="mb-3">
-                            <label for="name" class="form-label">Nombre <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Tu nombre" required>
-                            <div class="invalid-feedback">Ingresá tu nombre.</div>
+                            <label class="form-label">Nombre *</label>
+                            <input type="text" class="form-control" name="name" required>
                         </div>
 
                         <div class="mb-3">
-                            <label for="lastname" class="form-label">Apellido <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Tu apellido" required>
-                            <div class="invalid-feedback">Ingresá tu apellido.</div>
+                            <label class="form-label">Apellido *</label>
+                            <input type="text" class="form-control" name="lastname" required>
                         </div>
 
                         <div class="mb-3">
-                            <label for="birth_year" class="form-label">Fecha de Nacimiento <span class="text-danger">*</span></label>
-                            <input type="date" class="form-control" id="birth_year" name="birth_year" required>
-                            <div class="invalid-feedback">Ingresá tu fecha de nacimiento.</div>
+                            <label class="form-label">Fecha de nacimiento *</label>
+                            <input type="date" class="form-control" name="birth_year" required>
                         </div>
 
                         <div class="mb-3">
-                            <label for="gender" class="form-label">Género <span class="text-danger">*</span></label>
-                            <select class="form-select" id="gender" name="gender" required>
-                                <option value="">Seleccionar...</option>
-                                <option value="Masculino">Masculino</option>
-                                <option value="Femenino">Femenino</option>
-                                <option value="Otro">Otro</option>
+                            <label class="form-label">Género *</label>
+                            <select class="form-select" name="gender" required>
+                                <option value="">Seleccionar…</option>
+                                <option>Masculino</option>
+                                <option>Femenino</option>
+                                <option>Otro</option>
                             </select>
-                            <div class="invalid-feedback">Seleccioná un género.</div>
                         </div>
 
                         <div class="mb-3">
-                            <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="tu@email.com" required>
-                            <div class="invalid-feedback">Ingresá un email válido.</div>
+                            <label class="form-label">Email *</label>
+                            <input type="email" class="form-control" name="email" required>
                         </div>
 
+                        <!-- ===================================== -->
+                        <!--           UBICACIÓN ÚNICA            -->
+                        <!-- ===================================== -->
                         <div class="mb-3 position-relative">
-                            <label for="location_search" class="form-label">Ubicación (país / ciudad) <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="location_search" name="location_search" placeholder="Ej: Buenos Aires, Argentina" required autocomplete="off">
+                            <label class="form-label">Ubicación (país / ciudad)</label>
+                            <input type="text" class="form-control" id="location" name="location" placeholder="Ej: Buenos Aires, Argentina">
                             <div id="location_results" class="list-group position-absolute w-100"></div>
-                            <div class="invalid-feedback">Elegí una ubicación válida.</div>
                         </div>
 
-                        <!-- Campos ocultos para guardar datos -->
-                        <input type="hidden" id="country" name="country">
-                        <input type="hidden" id="city" name="city">
+                        <!-- Guardamos solo esto -->
                         <input type="hidden" id="lat" name="lat">
-                        <input type="hidden" id="lon" name="lon">
+                        <input type="hidden" id="lng" name="lng">
 
                         <div class="mb-3">
                             <label class="form-label">Mapa</label>
@@ -102,110 +97,111 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="profile_picture" class="form-label">Foto de Perfil</label>
-                            <input type="file" class="form-control" id="profile_picture" name="profile_picture" accept="image/*">
-                            <small class="text-muted">Formatos permitidos: JPG, PNG, GIF (máx. 5MB)</small>
+                            <label class="form-label">Foto de perfil</label>
+                            <input type="file" class="form-control" name="profile_picture" accept="image/*">
                         </div>
 
-                        <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-success btn-lg">Registrarme</button>
-                        </div>
+                        <button class="btn btn-success btn-lg w-100">Registrarme</button>
                     </form>
 
                     <div class="text-center mt-4">
-                        <small class="text-muted">¿Ya tenés cuenta? <a href="index.php?controller=login&method=login" class="text-decoration-underline">Iniciá sesión</a></small>
+                        <small>¿Ya tenés cuenta? 
+                            <a href="index.php?controller=login&method=login">Iniciá sesión</a>
+                        </small>
                     </div>
+
                 </div>
             </div>
+
         </div>
     </div>
 </div>
 
 <script>
-    // Validación de confirmación de contraseña
-    document.addEventListener('DOMContentLoaded', function() {
-        const password = document.getElementById('password');
-        const passwordConfirm = document.getElementById('password_confirm');
-        const form = document.querySelector('form.needs-validation');
+// Validación contraseñas
+document.addEventListener("DOMContentLoaded", () => {
+    const pass = document.getElementById("password");
+    const pass2 = document.getElementById("password_confirm");
 
-        function validatePasswordMatch() {
-            if (password.value !== passwordConfirm.value) {
-                passwordConfirm.setCustomValidity('Las contraseñas no coinciden');
-            } else {
-                passwordConfirm.setCustomValidity('');
-            }
-        }
+    const validate = () => {
+        pass2.setCustomValidity(pass.value !== pass2.value ? "No coincide" : "");
+    };
 
-        password.addEventListener('input', validatePasswordMatch);
-        passwordConfirm.addEventListener('input', validatePasswordMatch);
-
-        form.addEventListener('submit', function(event) {
-            if (!form.checkValidity()) {
-                event.preventDefault();
-                event.stopPropagation();
-            }
-            form.classList.add('was-validated');
-        });
-    });
+    pass.addEventListener("input", validate);
+    pass2.addEventListener("input", validate);
+});
 </script>
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-    const input = document.getElementById("location_search");
-    const resultados = document.getElementById("location_results");
+// Leaflet inicial
+const map = L.map('map').setView([0,0], 2);
 
-    // Inicializar mapa
-    const map = L.map('map').setView([-34.6037, -58.3816], 5);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18 }).addTo(map);
-    let marker = L.marker([-34.6037, -58.3816]).addTo(map);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19
+}).addTo(map);
 
-    let timeout = null;
+let marker = null;
 
-    input.addEventListener("input", () => {
-        clearTimeout(timeout);
-        const query = input.value.trim();
-        if (query.length < 2) {
-            resultados.innerHTML = "";
-            return;
-        }
+// Inputs
+const locationInput = document.getElementById("location");
+const resultsBox = document.getElementById("location_results");
 
-        timeout = setTimeout(async () => {
-            try {
-                const res = await fetch(`/helper/geocode.php?q=${encodeURIComponent(query)}`);
-                const data = await res.json();
+// Ocultos
+const lat = document.getElementById("lat");
+const lng = document.getElementById("lng");
 
-                resultados.innerHTML = "";
-                data.slice(0, 5).forEach(item => {
-                    const li = document.createElement("li");
-                    li.classList.add("list-group-item");
-                    li.textContent = item.display_name;
+async function geocode(q) {
+    const API_KEY = "pk.8e06c88eb28f9a2fce1d0e3b80fb24cb";
+    const url = `https://us1.locationiq.com/v1/search?key=${API_KEY}&q=${encodeURIComponent(q)}&format=json`;
 
-                    li.addEventListener("click", () => {
-                        input.value = item.display_name;
-                        resultados.innerHTML = "";
+    try {
+        const res = await fetch(url);
+        if (!res.ok) return [];
+        const data = await res.json();
 
-                        const lat = parseFloat(item.lat);
-                        const lon = parseFloat(item.lon);
+        if (!Array.isArray(data)) return [];
 
-                        map.setView([lat, lon], 14);
-                        if (marker) map.removeLayer(marker);
-                        marker = L.marker([lat, lon]).addTo(map);
+        return data.map(x => ({
+            name: x.display_name,
+            lat: x.lat,
+            lng: x.lon
+        }));
+    } catch (e) {
+        return [];
+    }
+}
 
-                        // Completar campos ocultos
-                        document.getElementById("lat").value = lat;
-                        document.getElementById("lon").value = lon;
-                        document.getElementById("city").value = item.name || "";
-                        const parts = item.display_name.split(",");
-                        document.getElementById("country").value = parts[parts.length - 1].trim();
-                    });
+locationInput.addEventListener("input", async () => {
+    const text = locationInput.value.trim();
+    if (text.length < 2) {
+        resultsBox.innerHTML = "";
+        return;
+    }
 
-                    resultados.appendChild(li);
-                });
+    const results = await geocode(text);
 
-            } catch (e) {
-                console.error("Error buscando localidades:", e);
-            }
-        }, 300);
+    resultsBox.innerHTML = "";
+
+    results.forEach(item => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "list-group-item list-group-item-action";
+        btn.textContent = item.name;
+
+        btn.onclick = () => {
+            locationInput.value = item.name;
+            lat.value = item.lat;
+            lng.value = item.lng;
+
+            resultsBox.innerHTML = "";
+
+            map.setView([item.lat, item.lng], 13);
+
+            if (marker) marker.setLatLng([item.lat, item.lng]);
+            else marker = L.marker([item.lat, item.lng]).addTo(map);
+        };
+
+        resultsBox.appendChild(btn);
     });
 });
 </script>

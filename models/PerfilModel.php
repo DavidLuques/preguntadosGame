@@ -16,25 +16,25 @@ class PerfilModel
         return $result ? $result[0] : null;
     }
 
-    public function updateUser($id, $name, $lastname, $birthYear, $gender, $email, $country)
+    public function updateUser($id, $name, $lastname, $birthYear, $gender, $email, $location, $lat, $lng)
     {
         $conn = $this->database->getConnection();
-        $name = $conn->real_escape_string($name);
-        $lastname = $conn->real_escape_string($lastname);
-        $birthYear = $conn->real_escape_string($birthYear);
-        $gender = $conn->real_escape_string($gender);
-        $email = $conn->real_escape_string($email);
-        $country = $conn->real_escape_string($country);
+
+        $location = $conn->real_escape_string($location);
+        $lat = floatval($lat);
+        $lng = floatval($lng);
 
         $sql = "UPDATE user SET 
-                name = '$name', 
-                lastname = '$lastname', 
-                birth_year = '$birthYear', 
-                gender = '$gender', 
-                email = '$email', 
-                country = '$country' 
-                WHERE id = '$id'";
-        
+        name = '$name',
+        lastname = '$lastname',
+        birth_year = '$birthYear',
+        gender = '$gender',
+        email = '$email',
+        location = '$location',
+        lat = '$lat',
+        lng = '$lng'
+        WHERE id = '$id'";
+
         $this->database->query($sql);
     }
 

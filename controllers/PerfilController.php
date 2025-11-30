@@ -22,29 +22,36 @@ class PerfilController
     public function perfil()
     {
         $this->checkLoggedIn();
+
         $userId = $_SESSION['usuario_id'];
         $user = $this->model->getUserById($userId);
-        
-        // Format birth_year for input date (YYYY-MM-DD)
+
+        // Fecha YYYY-MM-DD
         if (isset($user['birth_year'])) {
             $user['birth_year_formatted'] = date('Y-m-d', strtotime($user['birth_year']));
         }
 
-        $success = isset($_GET['success']) ? $_GET['success'] : null;
+        // Ubicación: LA LEEMOS DE LA COLUMNA REAL "location"
+        $locationString = $user["location"] ?? "";
 
-        // Generate QR Code URL for logged-in user
-        $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http");
+        // Bandera: OPCIONAL, solo si tuvieras country_code en BD
+        $flagUrl = "";
+        if (!empty($user["country_code"])) {
+            $flagUrl = "https://flagsapi.com/" . strtoupper($user["country_code"]) . "/flat/64.png";
+        }
+
+        // QR Code
+        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? "https" : "http";
         $host = $_SERVER['HTTP_HOST'];
-        $profileUrl = $protocol . "://" . $host . "/perfil/ver?id=" . $userId;
+        $profileUrl = "$protocol://$host/perfil/ver?id=$userId";
         $qrCodeUrl = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" . urlencode($profileUrl);
-        
+
         $this->renderer->render("perfil/perfil", [
             "user" => $user,
+            "locationString" => $locationString,
+            "flagUrl" => $flagUrl,
             "qr_code_url" => $qrCodeUrl,
-            "success" => $success,
-            "success_data_updated" => $success === 'data_updated',
-            "success_password_updated" => $success === 'password_updated',
-            "success_picture_updated" => $success === 'picture_updated',
+            "success" => $_GET['success'] ?? null,
             "error" => isset($_GET['error']) ? urldecode($_GET['error']) : null
         ]);
     }
@@ -52,17 +59,35 @@ class PerfilController
     public function updateData()
     {
         $this->checkLoggedIn();
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $userId = $_SESSION['usuario_id'];
-            $name = $_POST['name'];
-            $lastname = $_POST['lastname'];
-            $birthYear = $_POST['birth_year'];
-            $gender = $_POST['gender'];
-            $email = $_POST['email'];
-            $country = $_POST['country'];
 
-            $this->model->updateUser($userId, $name, $lastname, $birthYear, $gender, $email, $country);
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $userId     = $_SESSION['usuario_id'];
+            $name       = $_POST['name'];
+            $lastname   = $_POST['lastname'];
+            $birthYear  = $_POST['birth_year'];
+            $gender     = $_POST['gender'];
+            $email      = $_POST['email'];
+
+            // Únicos campos que tu BD tiene:
+            $location = $_POST['location'] ?? "";
+            $lat      = $_POST['lat'] ?? null;
+            $lng      = $_POST['lng'] ?? null;
+
+            $this->model->updateUser(
+                $userId,
+                $name,
+                $lastname,
+                $birthYear,
+                $gender,
+                $email,
+                $location,
+                $lat,
+                $lng
+            );
+
             header("Location: /perfil/perfil?success=data_updated");
+            exit();
         }
     }
 
@@ -70,6 +95,7 @@ class PerfilController
     {
         $this->checkLoggedIn();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
             $userId = $_SESSION['usuario_id'];
             $currentPass = $_POST['current_password'];
             $newPass = $_POST['new_password'];
@@ -93,11 +119,14 @@ class PerfilController
     {
         $this->checkLoggedIn();
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profile_picture'])) {
+
             $userId = $_SESSION['usuario_id'];
             $file = $_FILES['profile_picture'];
-            
+
             if ($file['error'] === UPLOAD_ERR_OK) {
+
                 $allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+
                 if (!in_array($file['type'], $allowedTypes)) {
                     header("Location: /perfil/perfil?error=" . urlencode("Formato de imagen no válido"));
                     return;
@@ -106,7 +135,7 @@ class PerfilController
                 $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
                 $newFileName = 'profile_' . $_SESSION['usuario'] . '_' . time() . '.' . $extension;
                 $uploadPath = __DIR__ . '/../images/' . $newFileName;
-                
+
                 if (move_uploaded_file($file['tmp_name'], $uploadPath)) {
                     $dbPath = 'images/' . $newFileName;
                     $this->model->updateProfilePicture($userId, $dbPath);
@@ -134,12 +163,11 @@ class PerfilController
             die("Usuario no encontrado");
         }
 
-        // goqr.me API uso aca
         $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http");
         $host = $_SERVER['HTTP_HOST'];
         $profileUrl = $protocol . "://" . $host . "/perfil/ver?id=" . $user['id'];
         $qrCodeUrl = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" . urlencode($profileUrl);
-        echo($qrCodeUrl);
+
         $this->renderer->render("perfil/usuario", [
             "user" => $user,
             "qr_code_url" => $qrCodeUrl

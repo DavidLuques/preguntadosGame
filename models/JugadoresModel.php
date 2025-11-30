@@ -11,7 +11,7 @@ class JugadoresModel
 
     public function mostrarTabla()
     {
-        $sql = "SELECT username as usuario, country as pais, 
+        $sql = "SELECT username as usuario, location as location, 
                 total_score as puntajeTotal, profile_picture as fotoPerfil,
                 id as id
                 FROM user

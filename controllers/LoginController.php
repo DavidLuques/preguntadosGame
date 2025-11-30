@@ -61,7 +61,7 @@ class LoginController
     {
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             // Validar campos requeridos
-            $requiredFields = ['nombre', 'password', 'password_confirm', 'name', 'lastname', 'birth_year', 'gender', 'email', 'country'];
+            $requiredFields = ['nombre', 'password', 'password_confirm', 'name', 'lastname', 'birth_year', 'gender', 'email'];
             foreach ($requiredFields as $field) {
                 if (!isset($_POST[$field]) || empty(trim($_POST[$field]))) {
                     $this->renderer->render("registro", ["error" => "Todos los campos marcados con * son obligatorios"]);
@@ -77,10 +77,9 @@ class LoginController
             $birthYear = $_POST["birth_year"];
             $gender = $_POST["gender"];
             $email = trim($_POST["email"]);
-            $country = trim($_POST["country"]);
-            $city = trim($_POST["city"]);
-            $lat = trim($_POST["lat"]);
-            $lon = trim($_POST["lon"]);
+            $location = trim($_POST["location"]);
+            $lat = $_POST["lat"] ?? "";
+            $lon = $_POST["lon"] ?? "";
 
             // Validar confirmación de contraseña
             if ($password !== $passwordConfirm) {
@@ -144,7 +143,7 @@ class LoginController
             $birthYearFormatted = date('Y-m-d H:i:s', strtotime($birthYear));
 
             // Registrar el usuario
-            if ($this->model->registrarUsuario($username, $password, $name, $lastname, $birthYearFormatted, $gender, $email, $country, $profilePicture, $city, $lat, $lon)) {
+            if ($this->model->registrarUsuario($username, $password, $name, $lastname, $birthYearFormatted, $gender, $email, $profilePicture, $location, $lat, $lon)) {
                 // Mostrar mensaje de éxito
                 $this->renderer->render("registro", ["success" => true, "mensaje" => "¡Éxito! Usuario registrado correctamente"]);
             } else {
