@@ -73,6 +73,7 @@ class PerfilController
             $location = $_POST['location'] ?? "";
             $lat      = $_POST['lat'] ?? null;
             $lon      = $_POST['lon'] ?? null;
+            $countryCode = $_POST['country_code'] ?? "";
 
             $this->model->updateUser(
                 $userId,
@@ -83,7 +84,8 @@ class PerfilController
                 $email,
                 $location,
                 $lat,
-                $lon
+                $lon,
+                $countryCode
             );
 
             header("Location: /perfil/perfil?success=data_updated");
