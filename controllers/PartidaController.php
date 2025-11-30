@@ -45,6 +45,7 @@ class PartidaController
         $_SESSION['partida_puntos'] = 0;
         $_SESSION['partida_respuestas'] = [];
         unset($_SESSION['current_question']); // Limpiar pregunta actual
+        unset($_SESSION['question_start_time']); // Limpiar tiempo de inicio
 
         // Redirigir a la ruleta
         header("Location: /partida/ruleta");
@@ -150,6 +151,8 @@ class PartidaController
 
         // 3. Guardar en sesión
         $_SESSION['current_question'] = $pregunta;
+        // Limpiamos el tiempo de inicio para que se setee al entrar a jugarPregunta
+        unset($_SESSION['question_start_time']);
 
         // 4. Calcular ángulo para el frontend (esto debería coincidir con la lógica visual de JS)
         // En JS: 5 segmentos. 360 / 5 = 72 grados cada uno.
@@ -189,8 +192,16 @@ class PartidaController
             $_SESSION['question_viewed_' . $questionId] = true;
         }
 
-        // INICIO TEMPORIZADOR: Guardar tiempo de inicio
-        $_SESSION['question_start_time'] = microtime(true);
+        // INICIO TEMPORIZADOR: Guardar tiempo de inicio SI NO EXISTE
+        if (!isset($_SESSION['question_start_time'])) {
+            $_SESSION['question_start_time'] = microtime(true);
+            $remainingTime = 10;
+        } else {
+            // Si ya existe, calculamos cuánto queda
+            $elapsed = microtime(true) - $_SESSION['question_start_time'];
+            $remainingTime = 10 - $elapsed;
+            if ($remainingTime < 0) $remainingTime = 0;
+        }
 
         // Obtener respuestas
         $respuestas = $this->model->getAnswersByQuestionId($questionId);
@@ -200,6 +211,9 @@ class PartidaController
             'respuestas' => $respuestas,
             'pregunta_numero' => $_SESSION['partida_preguntas_jugadas'] + 1,
             'total_preguntas' => 10,
+            // Formatear para asegurar punto decimal y evitar números científicos o muy largos
+            'remaining_time' => number_format($remainingTime, 2, '.', ''),
+            'remaining_time_int' => ceil($remainingTime), // Para mostrar en el HTML inicial
             'reportSuccess' => isset($_GET['report']) && $_GET['report'] === 'success',
             'reportError' => isset($_GET['reportError']) ? urldecode($_GET['reportError']) : null
         ]);

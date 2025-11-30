@@ -21,7 +21,7 @@
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <span class="badge bg-primary fs-6">Pregunta {{pregunta_numero}} de {{total_preguntas}}</span>
                         <div class="text-end">
-                            <span class="fs-4 fw-bold text-danger" id="timerDisplay">10s</span>
+                            <span class="fs-4 fw-bold text-danger" id="timerDisplay">{{remaining_time_int}}s</span>
                         </div>
                     </div>
                     <div class="progress" style="width: 100%; height: 10px;">
@@ -63,16 +63,22 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        let timeLeft = 10;
+        // Inicializar tiempo restante desde el servidor, o 10 por defecto
+        let timeLeft = parseFloat('{{remaining_time}}');
+        if (isNaN(timeLeft)) timeLeft = 10;
+        
         const timerDisplay = document.getElementById('timerDisplay');
         const timerBar = document.getElementById('timerBar');
         const form = document.getElementById('questionForm');
         
         const timerInterval = setInterval(function() {
-            timeLeft--;
+            timeLeft -= 1; // Restamos 1 segundo
             
-            // Actualizar visualización
-            if (timerDisplay) timerDisplay.textContent = timeLeft + 's';
+            // Actualizar visualización (redondeamos hacia arriba para mostrar 10, 9, 8...)
+            let displayTime = Math.ceil(timeLeft);
+            if (displayTime < 0) displayTime = 0;
+            
+            if (timerDisplay) timerDisplay.textContent = displayTime + 's';
             if (timerBar) {
                 const percentage = (timeLeft / 10) * 100;
                 timerBar.style.width = percentage + '%';
