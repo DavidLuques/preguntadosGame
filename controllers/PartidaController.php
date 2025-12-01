@@ -224,10 +224,10 @@ class PartidaController
     {
         switch ($categoryId) {
             case 1: return '#E91E63'; // Historia - Rosa
-            case 2: return '#6f42c1'; // Ciencia - Violeta
-            case 3: return '#0d6efd'; // Deportes - Azul
+            case 2: return '#a67df3ff'; // Ciencia - Violeta
+            case 3: return '#055685ff'; // Deportes - Azul
             case 4: return '#0dcaf0'; // Geografía - Celeste
-            case 5: return '#198754'; // Entretenimiento - Verde
+            case 5: return '#19c072ff'; // Entretenimiento - Verde
             default: return '#6C757D'; // Default - Gris
         }
     }
