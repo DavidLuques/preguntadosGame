@@ -100,7 +100,7 @@ class LoginModel
 
         // Valores por defecto
         $rol = "JUGADOR";
-        $difficulty = "PRINCIPIANTE";
+        $difficulty = "Principiante";
         $createdAt = date('Y-m-d H:i:s');
 
         $sql = "UPDATE user SET 
