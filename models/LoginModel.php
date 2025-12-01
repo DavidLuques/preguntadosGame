@@ -73,8 +73,18 @@ class LoginModel
         return $this->conexion->query($sql);
     }
 
-    public function actualizarDatosExtra($username, $name, $lastname, $birthYear, $gender, $profilePicture, $location, $lat, $lon, $countryCode)
-    {
+    public function actualizarDatosExtra(
+        $username,
+        $name,
+        $lastname,
+        $birthYear,
+        $gender,
+        $profilePicture,
+        $location,
+        $lat,
+        $lon,
+        $countryCode
+    ) {
         $conn = $this->conexion->getConnection();
 
         $usernameEsc = $conn->real_escape_string($username);
@@ -88,17 +98,25 @@ class LoginModel
         $lonEsc = $lon ? $conn->real_escape_string($lon) : null;
         $countryEsc = $countryCode ? $conn->real_escape_string($countryCode) : null;
 
+        // Valores por defecto
+        $rol = "JUGADOR";
+        $difficulty = "PRINCIPIANTE";
+        $createdAt = date('Y-m-d H:i:s');
+
         $sql = "UPDATE user SET 
-                name = '$nameEsc',
-                lastname = " . ($lastnameEsc ? "'$lastnameEsc'" : "NULL") . ",
-                birth_year = '$birthYearEsc',
-                gender = '$genderEsc',
-                profile_picture = '$picEsc',
-                location = " . ($locEsc ? "'$locEsc'" : "NULL") . ",
-                lat = " . ($latEsc ? "'$latEsc'" : "NULL") . ",
-                lon = " . ($lonEsc ? "'$lonEsc'" : "NULL") . ",
-                country_code = " . ($countryEsc ? "'$countryEsc'" : "NULL") . "
-            WHERE username = '$usernameEsc'";
+            name = '$nameEsc',
+            lastname = " . ($lastnameEsc ? "'$lastnameEsc'" : "NULL") . ",
+            birth_year = '$birthYearEsc',
+            gender = '$genderEsc',
+            profile_picture = '$picEsc',
+            location = " . ($locEsc ? "'$locEsc'" : "NULL") . ",
+            lat = " . ($latEsc ? "'$latEsc'" : "NULL") . ",
+            lon = " . ($lonEsc ? "'$lonEsc'" : "NULL") . ",
+            country_code = " . ($countryEsc ? "'$countryEsc'" : "NULL") . ",
+            rol = '$rol',
+            difficulty_level = '$difficulty',
+            created_at = '$createdAt'
+        WHERE username = '$usernameEsc'";
 
         return $conn->query($sql);
     }

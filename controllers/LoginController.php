@@ -135,7 +135,7 @@ class LoginController
 
             $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
             $domainName = $_SERVER['HTTP_HOST'];
-            $link = $protocol . $domainName . "/verify?token=" . urlencode($token); 
+            $link = $protocol . $domainName . "/verify?token=" . urlencode($token);
             $mail->isHTML(true);
             $mail->Subject = "ACTIVACION DE CUENTA";
             $mail->Body = "
