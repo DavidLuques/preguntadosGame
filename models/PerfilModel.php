@@ -49,7 +49,6 @@ class PerfilModel
         if (hash('sha256', $password) === $user['password']) {
             return true;
         }
-        // Fallback for plain text (legacy/dev)
         if ($password === $user['password']) {
             return true;
         }

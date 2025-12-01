@@ -37,7 +37,7 @@ class LoginModel
         return !empty($result);
     }
 
-    public function registrarUsuario($username, $password, $name, $lastname, $birthYear, $gender, $email, $profilePicture, $location, $lat, $lon)
+    public function registrarUsuario($username, $password, $name, $lastname, $birthYear, $gender, $email, $profilePicture, $location, $lat, $lon, $countryCode)
     {
         $conn = $this->conexion->getConnection();
 
@@ -53,6 +53,7 @@ class LoginModel
         $locationEscaped = $location ? $conn->real_escape_string($location) : null;
         $latEscaped = $lat ? $conn->real_escape_string($lat) : null;
         $lonEscaped = $lon ? $conn->real_escape_string($lon) : null;
+        $countryCodeEscaped = $countryCode ? $conn->real_escape_string($countryCode) : null;
 
         // Valores por defecto
         $rol = 'JUGADOR';
@@ -65,10 +66,15 @@ class LoginModel
         $difficultyLevel = 'Principiante'; // Nivel inicial: Fácil
         $answeredQuestions = 0;
 
-        $sql = "INSERT INTO user (username, password, rol, authToken, name, lastname, birth_year, created_at, gender, email, location, lat, lon, profile_picture, total_score, games_played, games_won, match_lost, difficulty_level, answered_questions)
-                VALUES ('$usernameEscaped', '$passwordHash', '$rol', '$authToken', '$nameEscaped', " .
-                ($lastnameEscaped ? "'$lastnameEscaped'" : "NULL") . ", '$birthYearEscaped', '$createdAt', '$genderEscaped', '$emailEscaped', " . ($locationEscaped ? "'$locationEscaped'" : "NULL") . ", " . ($latEscaped ? "'$latEscaped'" : "NULL") . ",
-                " . ($lonEscaped ? "'$lonEscaped'" : "NULL") . ", '$profilePictureEscaped', $totalScore, $gamesPlayed, $gamesWon, $matchLost, " . "'$difficultyLevel', $answeredQuestions)";
+        $sql = "INSERT INTO user (username, password, rol, authToken, name, lastname, birth_year, created_at, gender, email, location, lat, lon, country_code, profile_picture, total_score, games_played, games_won, match_lost, difficulty_level, answered_questions)
+            VALUES ('$usernameEscaped', '$passwordHash', '$rol', '$authToken', '$nameEscaped', " .
+            ($lastnameEscaped ? "'$lastnameEscaped'" : "NULL") .
+            ", '$birthYearEscaped', '$createdAt', '$genderEscaped', '$emailEscaped', " .
+            ($locationEscaped ? "'$locationEscaped'" : "NULL") . ", " .
+            ($latEscaped ? "'$latEscaped'" : "NULL") . ", " .
+            ($lonEscaped ? "'$lonEscaped'" : "NULL") . ", " .
+            ($countryCodeEscaped ? "'$countryCodeEscaped'" : "NULL") . ", " .
+            "'$profilePictureEscaped', $totalScore, $gamesPlayed, $gamesWon, $matchLost, '$difficultyLevel', $answeredQuestions)";
 
         $result = $conn->query($sql);
 

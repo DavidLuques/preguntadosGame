@@ -26,15 +26,12 @@ class PerfilController
         $userId = $_SESSION['usuario_id'];
         $user = $this->model->getUserById($userId);
 
-        // Fecha YYYY-MM-DD
         if (isset($user['birth_year'])) {
             $user['birth_year_formatted'] = date('Y-m-d', strtotime($user['birth_year']));
         }
 
-        // Ubicación: LA LEEMOS DE LA COLUMNA REAL "location"
         $locationString = $user["location"] ?? "";
 
-        // Bandera: OPCIONAL, solo si tuvieras country_code en BD
         $flagUrl = "";
         if (!empty($user["country_code"])) {
             $flagUrl = "https://flagsapi.com/" . strtoupper($user["country_code"]) . "/flat/64.png";
@@ -69,7 +66,6 @@ class PerfilController
             $gender     = $_POST['gender'];
             $email      = $_POST['email'];
 
-            // Únicos campos que tu BD tiene:
             $location = $_POST['location'] ?? "";
             $lat      = $_POST['lat'] ?? null;
             $lon      = $_POST['lon'] ?? null;
@@ -172,7 +168,9 @@ class PerfilController
 
         $this->renderer->render("perfil/usuario", [
             "user" => $user,
-            "qr_code_url" => $qrCodeUrl
+            "qr_code_url" => $qrCodeUrl,
+            "lat" => $user['lat'],
+            "lon" => $user['lon']
         ]);
     }
 }

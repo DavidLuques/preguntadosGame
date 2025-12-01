@@ -4,7 +4,6 @@
         <div class="col-12 col-lg-8">
             <div class="app-card p-4 p-md-5 text-dark">
                 <div class="row align-items-center">
-                    <!-- Profile Picture & Info -->
                     <div class="col-md-6 text-center text-md-start mb-4 mb-md-0">
                         <div class="d-flex flex-column flex-md-row align-items-center gap-4">
                             <img src="{{#user.profile_picture}}/{{user.profile_picture}}{{/user.profile_picture}}{{^user.profile_picture}}/images/default_profile.png{{/user.profile_picture}}" 
@@ -14,11 +13,29 @@
                             
                             <div class="text-center text-md-start">
                                 <h2 class="fw-bold mb-1">{{user.username}}</h2>
-                                <p class="text-muted mb-2">
-                                    <i class="bi bi-geo-alt-fill me-1"></i>{{#user.location}}{{user.location}}{{/user.location}}{{^user.location}}Ubicación desconocida{{/user.location}}
+                                <p class="text-muted mb-2 d-flex align-items-center pr-1 justify-content-start">
+                                    <i class="bi bi-geo-alt-fill me-1"></i>
+
+                                    {{#user.location}}{{user.location}}{{/user.location}}
+                                    {{^user.location}}Ubicación desconocida{{/user.location}}
+
+                                    {{#user.country_code}}
+                                        <img src=""
+                                            width="24" height="18"
+                                            class="ms-2 border rounded"
+                                            alt="Flag"
+                                            id="flag">
+                                    {{/user.country_code}}
                                 </p>
                                 <span class="badge bg-primary">Jugador</span>
                             </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <div id="map" style="width: 100%; height: 250px;" class="rounded shadow-sm mt-3"></div>
+
+                                <input type="hidden" id="lat" value="{{lat}}">
+                                <input type="hidden" id="lon" value="{{lon}}">
                         </div>
 
                         <div class="row mt-4 g-3">
@@ -37,7 +54,6 @@
                         </div>
                     </div>
 
-                    <!-- QR Code Section -->
                     <div class="col-md-6 text-center border-start-md ps-md-5">
                         <h5 class="fw-bold mb-3">Escanea para ver perfil</h5>
                         <div class="bg-white p-3 d-inline-block rounded shadow-sm border">
@@ -56,4 +72,35 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const lat = parseFloat(document.getElementById("lat").value || "0");
+        const lon = parseFloat(document.getElementById("lon").value || "0");
+
+        const hasLocation = lat !== 0 && lon !== 0;
+
+        const map = L.map("map").setView(
+            hasLocation ? [lat, lon] : [0, 0],
+            hasLocation ? 13 : 2
+        );
+
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            maxZoom: 19
+        }).addTo(map);
+
+        if (hasLocation) {
+            L.marker([lat, lon]).addTo(map);
+        }
+    });
+</script>
+
+<script> // Convierte el código de país a minúsculas para la URL de la bandera
+    document.addEventListener("DOMContentLoaded", () => {
+        const code = "{{user.country_code}}";
+        const lower = code.toLowerCase();
+        document.getElementById("flag").src = `https://flagcdn.com/${lower}.svg`;
+    });
+</script>
+
 {{> partials/footer}}

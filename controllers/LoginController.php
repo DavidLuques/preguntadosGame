@@ -80,6 +80,7 @@ class LoginController
             $location = trim($_POST["location"]);
             $lat = $_POST["lat"] ?? "";
             $lon = $_POST["lon"] ?? "";
+            $countryCode = $_POST["country_code"] ?? "";
 
             // Validar confirmación de contraseña
             if ($password !== $passwordConfirm) {
@@ -143,7 +144,7 @@ class LoginController
             $birthYearFormatted = date('Y-m-d H:i:s', strtotime($birthYear));
 
             // Registrar el usuario
-            if ($this->model->registrarUsuario($username, $password, $name, $lastname, $birthYearFormatted, $gender, $email, $profilePicture, $location, $lat, $lon)) {
+            if ($this->model->registrarUsuario($username, $password, $name, $lastname, $birthYearFormatted, $gender, $email, $profilePicture, $location, $lat, $lon, $countryCode)) {
                 // Mostrar mensaje de éxito
                 $this->renderer->render("registro", ["success" => true, "mensaje" => "¡Éxito! Usuario registrado correctamente"]);
             } else {

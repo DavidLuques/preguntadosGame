@@ -87,6 +87,7 @@
                         <!-- Guardamos solo esto -->
                         <input type="hidden" id="lat" name="lat">
                         <input type="hidden" id="lon" name="lon">
+                        <input type="hidden" id="country_code" name="country_code">
 
                         <div class="mb-3">
                             <div id="map" style="height: 300px; border-radius: 10px;"></div>
@@ -163,9 +164,9 @@ document.addEventListener("DOMContentLoaded", () => {
         resultsBox.innerHTML = "";
 
         data.features.forEach(f => {
-
             const name = f.properties.name || "";
             const country = f.properties.country || "";
+            const countryCode = f.properties.countrycode || "";
 
             const item = document.createElement("button");
             item.className = "list-group-item list-group-item-action";
@@ -175,10 +176,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 const [lon, lat] = f.geometry.coordinates;
 
                 locationInput.value = item.textContent;
+
                 latInput.value = lat;
                 lonInput.value = lon;
+                document.getElementById("country_code").value = countryCode;
 
-                // Actualiza el mapa
+                // Actualizar mapa
                 if (marker) map.removeLayer(marker);
 
                 marker = L.marker([lat, lon]).addTo(map);
