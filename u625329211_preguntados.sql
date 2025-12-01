@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 30-11-2025 a las 12:42:56
+-- Tiempo de generación: 01-12-2025 a las 05:25:56
 -- Versión del servidor: 11.8.3-MariaDB-log
 -- Versión de PHP: 7.2.34
 
@@ -423,7 +423,11 @@ INSERT INTO `answer` (`answer_id`, `answer_text`, `question_id`) VALUES
 (465, 'Una ciudad', 99),
 (466, 'Un pais', 99),
 (467, 'un callejon', 99),
-(468, 'el apellido de Krosty el payaso', 99);
+(468, 'el apellido de Krosty el payaso', 99),
+(469, 'Marron', 100),
+(470, 'Amarillo', 100),
+(471, 'Rojo', 100),
+(472, 'Azul', 100);
 
 -- --------------------------------------------------------
 
@@ -503,79 +507,79 @@ CREATE TABLE `question` (
 
 INSERT INTO `question` (`question_id`, `question_text`, `question_date`, `correct_answer_id`, `category_id`, `status`, `view_count`, `correct_answer_count`, `difficulty_level`) VALUES
 (1, '¿Quién descubrió América?', '2025-11-02 00:00:00', 1, 1, 'activa', 17, 13, 'Principiante'),
-(2, '¿En qué año comenzó la Primera Guerra Mundial?', '2025-11-02 00:00:00', 5, 1, 'activa', 25, 3, 'Avanzado'),
-(3, '¿Cuál es el planeta más grande del sistema solar?', '2025-11-02 00:00:00', 9, 2, 'activa', 49, 8, 'Avanzado'),
-(4, '¿Qué gas necesitan las plantas para realizar la fotosíntesis?', '2025-11-02 00:00:00', 13, 2, 'activa', 24, 9, 'Medio'),
+(2, '¿En qué año comenzó la Primera Guerra Mundial?', '2025-11-02 00:00:00', 5, 1, 'activa', 27, 3, 'Avanzado'),
+(3, '¿Cuál es el planeta más grande del sistema solar?', '2025-11-02 00:00:00', 9, 2, 'activa', 50, 8, 'Avanzado'),
+(4, '¿Qué gas necesitan las plantas para realizar la fotosíntesis?', '2025-11-02 00:00:00', 13, 2, 'activa', 29, 15, 'Medio'),
 (5, '¿Cuántos jugadores tiene un equipo de fútbol en el campo?', '2025-11-02 00:00:00', 17, 3, 'activa', 17, 12, 'Principiante'),
 (6, '¿En qué deporte se utiliza una raqueta y una pelota amarilla?', '2025-11-02 00:00:00', 21, 3, 'activa', 16, 12, 'Principiante'),
 (7, '¿Cuál es el río más largo del mundo?', '2025-11-02 00:00:00', 25, 4, 'activa', 11, 8, 'Principiante'),
-(8, '¿En qué continente se encuentra Egipto?', '2025-11-02 00:00:00', 29, 4, 'activa', 20, 10, 'Medio'),
-(9, '¿Quién es el creador de Mickey Mouse?', '2025-11-02 00:00:00', 33, 5, 'activa', 25, 19, 'Principiante'),
-(10, '¿En qué año se estrenó la película “Titanic”?', '2025-11-02 00:00:00', 37, 5, 'activa', 31, 4, 'Avanzado'),
-(11, '¿Cuál es el océano más grande del mundo?', '2025-11-02 21:42:05', 201, 3, 'activa', 7, 4, 'Principiante'),
-(12, '¿Quién descubrió la penicilina?', '2025-11-02 21:42:05', 205, 1, 'activa', 12, 1, 'Avanzado'),
-(13, '¿En qué país se encuentra la Torre de Pisa?', '2025-11-02 21:42:05', 209, 3, 'activa', 12, 4, 'Medio'),
-(14, '¿Qué deporte se juega en Wimbledon?', '2025-11-02 21:42:05', 213, 4, 'activa', 5, 1, 'Principiante'),
-(15, '¿Quién escribió \"Cien años de soledad\"?', '2025-11-02 21:42:05', 217, 5, 'activa', 3, 3, 'Principiante'),
+(8, '¿En qué continente se encuentra Egipto?', '2025-11-02 00:00:00', 29, 4, 'activa', 23, 14, 'Medio'),
+(9, '¿Quién es el creador de Mickey Mouse?', '2025-11-02 00:00:00', 33, 5, 'activa', 26, 20, 'Principiante'),
+(10, '¿En qué año se estrenó la película “Titanic”?', '2025-11-02 00:00:00', 37, 5, 'activa', 33, 5, 'Avanzado'),
+(11, '¿Cuál es el océano más grande del mundo?', '2025-11-02 21:42:05', 201, 3, 'activa', 8, 5, 'Principiante'),
+(12, '¿Quién descubrió la penicilina?', '2025-11-02 21:42:05', 205, 1, 'activa', 13, 3, 'Avanzado'),
+(13, '¿En qué país se encuentra la Torre de Pisa?', '2025-11-02 21:42:05', 209, 3, 'activa', 16, 7, 'Medio'),
+(14, '¿Qué deporte se juega en Wimbledon?', '2025-11-02 21:42:05', 213, 4, 'activa', 6, 1, 'Principiante'),
+(15, '¿Quién escribió \"Cien años de soledad\"?', '2025-11-02 21:42:05', 217, 5, 'activa', 4, 4, 'Principiante'),
 (16, '¿Cuál es el metal más ligero?', '2025-11-02 21:42:05', 221, 1, 'activa', 2, 0, 'Principiante'),
-(17, '¿Qué imperio construyó el Coliseo?', '2025-11-02 21:42:05', 225, 2, 'activa', 3, 3, 'Principiante'),
+(17, '¿Qué imperio construyó el Coliseo?', '2025-11-02 21:42:05', 225, 2, 'activa', 4, 4, 'Principiante'),
 (18, '¿Cuál es el continente más poblado?', '2025-11-02 21:42:05', 229, 3, 'activa', 4, 0, 'Principiante'),
 (19, '¿En qué deporte se usa una raqueta y una pelota amarilla pequeña?', '2025-11-02 21:42:05', 233, 4, 'activa', 3, 1, 'Principiante'),
-(21, '¿Cuál es el planeta más cercano al sol?', '2025-11-02 00:00:00', 121, 1, 'activa', 16, 7, 'Medio'),
+(21, '¿Cuál es el planeta más cercano al sol?', '2025-11-02 00:00:00', 121, 1, 'activa', 21, 11, 'Medio'),
 (22, '¿En qué año llegó Cristóbal Colón a América?', '2025-11-02 00:00:00', 125, 2, 'activa', 2, 1, 'Principiante'),
 (23, '¿Cuál es la capital de Francia?', '2025-11-02 00:00:00', 129, 3, 'activa', 4, 3, 'Principiante'),
-(24, '¿Cuántos jugadores tiene un equipo de fútbol en el campo?', '2025-11-02 00:00:00', 17, 4, 'activa', 2, 0, 'Principiante'),
+(24, '¿Cuántos jugadores tiene un equipo de fútbol en el campo?', '2025-11-02 00:00:00', 17, 4, 'activa', 3, 0, 'Principiante'),
 (25, '¿Quién escribió Hamlet?', '2025-11-02 00:00:00', 137, 5, 'activa', 6, 3, 'Principiante'),
-(26, '¿Cuál es el elemento químico con símbolo O?', '2025-11-02 00:00:00', 141, 1, 'activa', 6, 2, 'Principiante'),
-(27, '¿Quién fue el primer presidente de Estados Unidos?', '2025-11-02 00:00:00', 145, 2, 'activa', 10, 6, 'Principiante'),
-(28, '¿Qué río pasa por Londres?', '2025-11-02 00:00:00', 149, 3, 'activa', 10, 3, 'Medio'),
-(29, '¿En qué deporte se utiliza un aro y un balón grande?', '2025-11-02 00:00:00', 153, 4, 'activa', 2, 2, 'Principiante'),
+(26, '¿Cuál es el elemento químico con símbolo O?', '2025-11-02 00:00:00', 141, 1, 'activa', 7, 3, 'Principiante'),
+(27, '¿Quién fue el primer presidente de Estados Unidos?', '2025-11-02 00:00:00', 145, 2, 'activa', 11, 7, 'Medio'),
+(28, '¿Qué río pasa por Londres?', '2025-11-02 00:00:00', 149, 3, 'activa', 13, 5, 'Medio'),
+(29, '¿En qué deporte se utiliza un aro y un balón grande?', '2025-11-02 00:00:00', 153, 4, 'activa', 3, 3, 'Principiante'),
 (30, '¿Cuál es la saga de películas sobre un mago llamado Harry?', '2025-11-02 00:00:00', 157, 5, 'activa', 9, 3, 'Principiante'),
 (31, '¿Cuál es la velocidad de la luz?', '2025-11-02 00:00:00', 161, 1, 'activa', 3, 1, 'Principiante'),
 (32, '¿Qué civilización construyó las pirámides de Egipto?', '2025-11-02 00:00:00', 165, 2, 'activa', 4, 0, 'Principiante'),
-(33, '¿Cuál es la montaña más alta del mundo?', '2025-11-02 00:00:00', 169, 3, 'activa', 12, 8, 'Medio'),
-(34, '¿Cuántos sets se juegan normalmente en un partido de tenis masculino?', '2025-11-02 00:00:00', 174, 4, 'activa', 2, 1, 'Principiante'),
-(35, '¿Quién pintó la Mona Lisa?', '2025-11-02 00:00:00', 177, 5, 'activa', 8, 1, 'Principiante'),
+(33, '¿Cuál es la montaña más alta del mundo?', '2025-11-02 00:00:00', 169, 3, 'activa', 14, 10, 'Principiante'),
+(34, '¿Cuántos sets se juegan normalmente en un partido de tenis masculino?', '2025-11-02 00:00:00', 174, 4, 'activa', 3, 2, 'Principiante'),
+(35, '¿Quién pintó la Mona Lisa?', '2025-11-02 00:00:00', 177, 5, 'activa', 9, 2, 'Principiante'),
 (36, '¿Qué gas respiramos principalmente?', '2025-11-02 00:00:00', 181, 2, 'activa', 2, 2, 'Principiante'),
-(37, '¿En qué año terminó la Segunda Guerra Mundial?', '2025-11-02 00:00:00', 185, 2, 'activa', 11, 2, 'Principiante'),
+(37, '¿En qué año terminó la Segunda Guerra Mundial?', '2025-11-02 00:00:00', 185, 2, 'activa', 12, 4, 'Medio'),
 (38, '¿Cuál es el país más grande del mundo?', '2025-11-02 00:00:00', 189, 3, 'activa', 5, 3, 'Principiante'),
-(39, '¿Qué instrumento se toca con baquetas y tiene parches?', '2025-11-02 00:00:00', 39, 4, 'activa', 3, 0, 'Principiante'),
-(40, '¿Qué película animada tiene a un ratón llamado Mickey?', '2025-11-02 00:00:00', 197, 5, 'activa', 5, 3, 'Principiante'),
+(39, '¿Qué instrumento se toca con baquetas y tiene parches?', '2025-11-02 00:00:00', 39, 4, 'activa', 4, 0, 'Principiante'),
+(40, '¿Qué película animada tiene a un ratón llamado Mickey?', '2025-11-02 00:00:00', 197, 5, 'activa', 7, 5, 'Principiante'),
 (43, 'que come la gallina?', '2025-11-28 07:12:35', 241, 2, 'activa', 2, 2, 'Principiante'),
 (44, 'como ladra el perro? ', '2025-11-28 08:56:28', 245, 2, 'activa', 1, 1, 'Principiante'),
 (45, 'Cual es la bebida mas deliciosa', '2025-11-28 08:45:49', 249, 1, 'activa', 0, 0, 'Principiante'),
-(46, '¿En qué año cayó el Muro de Berlín?', '2025-11-29 04:59:48', 253, 1, 'activa', 1, 0, 'Principiante'),
-(47, '¿Quién fue el primer emperador romano?', '2025-11-29 04:59:48', 257, 1, 'activa', 2, 1, 'Principiante'),
-(48, '¿En qué país nació Napoleón Bonaparte?', '2025-11-29 04:59:48', 261, 1, 'activa', 3, 0, 'Principiante'),
-(49, '¿Qué civilización construyó Machu Picchu?', '2025-11-29 04:59:48', 265, 1, 'activa', 2, 2, 'Principiante'),
-(50, '¿En qué año llegó el hombre a la Luna?', '2025-11-29 04:59:48', 269, 1, 'activa', 2, 0, 'Principiante'),
-(51, '¿Quién fue Juana de Arco?', '2025-11-29 04:59:48', 273, 1, 'activa', 0, 0, 'Principiante'),
-(52, '¿Qué guerra duró 100 años?', '2025-11-29 04:59:48', 277, 1, 'activa', 2, 2, 'Principiante'),
+(46, '¿En qué año cayó el Muro de Berlín?', '2025-11-29 04:59:48', 253, 1, 'activa', 2, 0, 'Principiante'),
+(47, '¿Quién fue el primer emperador romano?', '2025-11-29 04:59:48', 257, 1, 'activa', 3, 1, 'Principiante'),
+(48, '¿En qué país nació Napoleón Bonaparte?', '2025-11-29 04:59:48', 261, 1, 'activa', 4, 0, 'Principiante'),
+(49, '¿Qué civilización construyó Machu Picchu?', '2025-11-29 04:59:48', 265, 1, 'activa', 3, 2, 'Principiante'),
+(50, '¿En qué año llegó el hombre a la Luna?', '2025-11-29 04:59:48', 269, 1, 'activa', 3, 1, 'Principiante'),
+(51, '¿Quién fue Juana de Arco?', '2025-11-29 04:59:48', 273, 1, 'activa', 1, 1, 'Principiante'),
+(52, '¿Qué guerra duró 100 años?', '2025-11-29 04:59:48', 277, 1, 'activa', 3, 3, 'Principiante'),
 (53, '¿Quién fue el líder de la Revolución Cubana?', '2025-11-29 04:59:48', 281, 1, 'activa', 1, 1, 'Principiante'),
-(54, '¿En qué año se descubrió América?', '2025-11-29 04:59:48', 285, 1, 'activa', 3, 0, 'Principiante'),
-(55, '¿Qué imperio construyó la Gran Muralla China?', '2025-11-29 04:59:48', 289, 1, 'activa', 1, 1, 'Principiante'),
-(56, '¿Cuántos planetas tiene el sistema solar?', '2025-11-29 04:59:48', 293, 2, 'activa', 3, 1, 'Principiante'),
+(54, '¿En qué año se descubrió América?', '2025-11-29 04:59:48', 285, 1, 'activa', 5, 1, 'Principiante'),
+(55, '¿Qué imperio construyó la Gran Muralla China?', '2025-11-29 04:59:48', 289, 1, 'activa', 2, 2, 'Principiante'),
+(56, '¿Cuántos planetas tiene el sistema solar?', '2025-11-29 04:59:48', 293, 2, 'activa', 4, 1, 'Principiante'),
 (57, '¿Qué órgano bombea la sangre en el cuerpo humano?', '2025-11-29 04:59:48', 297, 2, 'activa', 0, 0, 'Principiante'),
 (58, '¿Cuál es el animal más grande del mundo?', '2025-11-29 04:59:48', 301, 2, 'activa', 2, 1, 'Principiante'),
 (59, '¿A qué temperatura hierve el agua?', '2025-11-29 04:59:48', 305, 2, 'activa', 2, 0, 'Principiante'),
-(60, '¿Cuántos huesos tiene el cuerpo humano adulto?', '2025-11-29 04:59:48', 309, 2, 'activa', 1, 1, 'Principiante'),
-(61, '¿Qué animal pone los huevos más grandes?', '2025-11-29 04:59:48', 313, 2, 'activa', 2, 1, 'Principiante'),
+(60, '¿Cuántos huesos tiene el cuerpo humano adulto?', '2025-11-29 04:59:48', 309, 2, 'activa', 2, 1, 'Principiante'),
+(61, '¿Qué animal pone los huevos más grandes?', '2025-11-29 04:59:48', 313, 2, 'activa', 3, 2, 'Principiante'),
 (62, '¿Cuál es el metal más abundante en la corteza terrestre?', '2025-11-29 04:59:48', 317, 2, 'activa', 2, 0, 'Principiante'),
 (63, '¿Qué planeta es conocido como el planeta rojo?', '2025-11-29 04:59:48', 321, 2, 'activa', 2, 1, 'Principiante'),
 (64, '¿Cuántos dientes tiene un adulto?', '2025-11-29 04:59:48', 325, 2, 'activa', 1, 0, 'Principiante'),
 (65, '¿Qué gas produce las plantas durante la fotosíntesis?', '2025-11-29 04:59:48', 329, 2, 'activa', 2, 2, 'Principiante'),
 (66, '¿Cuál es la capital de Italia?', '2025-11-29 04:59:48', 333, 4, 'activa', 1, 0, 'Principiante'),
-(67, '¿En qué continente está Brasil?', '2025-11-29 04:59:48', 337, 4, 'activa', 2, 1, 'Principiante'),
+(67, '¿En qué continente está Brasil?', '2025-11-29 04:59:48', 337, 4, 'activa', 3, 2, 'Principiante'),
 (68, '¿Cuál es el desierto más grande del mundo?', '2025-11-29 04:59:48', 341, 4, 'activa', 2, 2, 'Principiante'),
-(69, '¿Qué océano está al oeste de América?', '2025-11-29 04:59:48', 345, 4, 'activa', 2, 0, 'Principiante'),
+(69, '¿Qué océano está al oeste de América?', '2025-11-29 04:59:48', 345, 4, 'activa', 3, 1, 'Principiante'),
 (70, '¿Cuál es la capital de Japón?', '2025-11-29 04:59:48', 349, 4, 'activa', 1, 0, 'Principiante'),
 (71, '¿En qué país está la Torre Eiffel?', '2025-11-29 04:59:48', 353, 4, 'activa', 0, 0, 'Principiante'),
-(72, '¿Cuál es el país más pequeño del mundo?', '2025-11-29 04:59:48', 357, 4, 'activa', 2, 2, 'Principiante'),
+(72, '¿Cuál es el país más pequeño del mundo?', '2025-11-29 04:59:48', 357, 4, 'activa', 3, 3, 'Principiante'),
 (73, '¿Qué cordillera separa Europa de Asia?', '2025-11-29 04:59:48', 361, 4, 'activa', 1, 0, 'Principiante'),
 (74, '¿Cuál es la capital de Australia?', '2025-11-29 04:59:48', 365, 4, 'activa', 1, 0, 'Principiante'),
-(75, '¿En qué país está el Taj Mahal?', '2025-11-29 04:59:48', 369, 4, 'activa', 2, 1, 'Principiante'),
+(75, '¿En qué país está el Taj Mahal?', '2025-11-29 04:59:48', 369, 4, 'activa', 3, 2, 'Principiante'),
 (76, '¿Cuántos jugadores hay en un equipo de básquetbol?', '2025-11-29 04:59:48', 373, 3, 'activa', 1, 1, 'Principiante'),
-(77, '¿En qué deporte se usa un guante y una pelota pequeña blanca?', '2025-11-29 04:59:48', 377, 3, 'activa', 0, 0, 'Principiante'),
+(77, '¿En qué deporte se usa un guante y una pelota pequeña blanca?', '2025-11-29 04:59:48', 377, 3, 'activa', 1, 0, 'Principiante'),
 (78, '¿Cada cuántos años se celebran los Juegos Olímpicos?', '2025-11-29 04:59:48', 381, 3, 'activa', 0, 0, 'Principiante'),
 (79, '¿Qué país ganó el Mundial de Fútbol 2018?', '2025-11-29 04:59:48', 385, 3, 'activa', 1, 0, 'Principiante'),
 (80, '¿Cuántos sets gana quien vence en tenis?', '2025-11-29 04:59:48', 389, 3, 'activa', 2, 1, 'Principiante'),
@@ -584,20 +588,21 @@ INSERT INTO `question` (`question_id`, `question_text`, `question_date`, `correc
 (83, '¿En qué deporte se usa una red alta y un balón?', '2025-11-29 04:59:48', 401, 3, 'activa', 1, 0, 'Principiante'),
 (84, '¿Qué selección tiene más Copas del Mundo?', '2025-11-29 04:59:48', 405, 3, 'activa', 1, 0, 'Principiante'),
 (85, '¿Cuántos puntos vale un gol en fútbol?', '2025-11-29 04:59:48', 409, 3, 'activa', 1, 0, 'Principiante'),
-(86, '¿Qué superhéroe tiene un martillo mágico?', '2025-11-29 04:59:48', 413, 5, 'activa', 3, 3, 'Principiante'),
-(87, '¿Quién canta \"Thriller\"?', '2025-11-29 04:59:48', 417, 5, 'activa', 2, 2, 'Principiante'),
-(88, '¿Qué película tiene a un león llamado Simba?', '2025-11-29 04:59:48', 421, 5, 'activa', 0, 0, 'Principiante'),
+(86, '¿Qué superhéroe tiene un martillo mágico?', '2025-11-29 04:59:48', 413, 5, 'activa', 4, 4, 'Principiante'),
+(87, '¿Quién canta \"Thriller\"?', '2025-11-29 04:59:48', 417, 5, 'activa', 3, 3, 'Principiante'),
+(88, '¿Qué película tiene a un león llamado Simba?', '2025-11-29 04:59:48', 421, 5, 'activa', 1, 0, 'Principiante'),
 (89, '¿Cómo se llama el cowboy de Toy Story?', '2025-11-29 04:59:48', 425, 5, 'activa', 2, 2, 'Principiante'),
 (90, '¿Qué banda cantaba \"Bohemian Rhapsody\"?', '2025-11-29 04:59:48', 429, 5, 'activa', 2, 1, 'Principiante'),
 (91, '¿Qué película tiene a Jack y Rose en un barco?', '2025-11-29 04:59:48', 433, 5, 'activa', 2, 1, 'Principiante'),
 (92, '¿Quién es el archienemigo de Batman?', '2025-11-29 04:59:48', 437, 5, 'activa', 1, 0, 'Principiante'),
-(93, '¿Qué serie tiene a Ross, Rachel y Monica?', '2025-11-29 04:59:48', 441, 5, 'activa', 1, 1, 'Principiante'),
-(94, '¿Quién interpretó a Iron Man en las películas?', '2025-11-29 04:59:48', 445, 5, 'activa', 2, 1, 'Principiante'),
-(95, '¿Qué película animada tiene a una princesa con cabello mágico?', '2025-11-29 04:59:48', 449, 5, 'activa', 3, 3, 'Principiante'),
+(93, '¿Qué serie tiene a Ross, Rachel y Monica?', '2025-11-29 04:59:48', 441, 5, 'activa', 2, 1, 'Principiante'),
+(94, '¿Quién interpretó a Iron Man en las películas?', '2025-11-29 04:59:48', 445, 5, 'activa', 3, 2, 'Principiante'),
+(95, '¿Qué película animada tiene a una princesa con cabello mágico?', '2025-11-29 04:59:48', 449, 5, 'activa', 4, 4, 'Principiante'),
 (96, 'por que los perros ladran?', '2025-11-30 13:35:42', 453, 2, 'sugerida', 0, 0, 'Principiante'),
 (97, 'por que los gatos caen de pie ? ', '2025-11-30 13:36:26', 457, 5, 'sugerida', 0, 0, 'Principiante'),
 (98, 'Por que marge es tan hermosa', '2025-11-30 13:37:37', 461, 1, 'rechazada', 0, 0, 'Principiante'),
-(99, 'Springfield es : ', '2025-11-30 13:38:17', 465, 4, 'activa', 0, 0, 'Principiante');
+(99, 'Springfield es : ', '2025-11-30 13:38:17', 465, 4, 'activa', 1, 0, 'Principiante'),
+(100, 'Boladenieves es un perro ', '2025-11-30 13:52:59', 469, 5, 'activa', 0, 0, 'Principiante');
 
 -- --------------------------------------------------------
 
@@ -639,7 +644,9 @@ INSERT INTO `report` (`report_id`, `question_id`, `invalid_question`, `report_da
 (22, 16, NULL, '2025-11-29', 12, 'si es ligero el metal entonces yo no soy ligero'),
 (23, 16, NULL, '2025-11-29', 12, 'si el metal quiere ser ligero que lo sea'),
 (24, 16, NULL, '2025-11-29', 12, 'que es ligero ?'),
-(25, 4, NULL, '2025-11-29', 8, 'meh');
+(25, 4, NULL, '2025-11-29', 8, 'meh'),
+(26, 21, NULL, '2025-11-30', 8, 'no creo que sea asi !'),
+(27, 55, NULL, '2025-11-30', 9, 'los chinos no construyen murallas , construyen supermercados');
 
 -- --------------------------------------------------------
 
@@ -669,33 +676,34 @@ CREATE TABLE `user` (
   `difficulty_level` varchar(100) DEFAULT NULL,
   `answered_questions` int(11) NOT NULL,
   `last_login` datetime NOT NULL DEFAULT current_timestamp(),
-  `location` varchar(255) DEFAULT NULL
+  `location` varchar(255) DEFAULT NULL,
+  `country_code` varchar(3) DEFAULT NULL,
+  `email_verified` tinyint(1) DEFAULT 0,
+  `verify_token` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `user`
 --
 
-INSERT INTO `user` (`id`, `username`, `password`, `rol`, `authToken`, `name`, `lastname`, `birth_year`, `created_at`, `gender`, `email`, `lat`, `lon`, `profile_picture`, `total_score`, `games_played`, `games_won`, `match_lost`, `difficulty_level`, `answered_questions`, `last_login`, `location`) VALUES
-(1, 'admin', '12345', 'ADMIN', '', 'Admin', 'istrador', '1990-01-01 00:00:00', '2025-11-02 21:29:20', 'Masculino', 'eladmin@gmail.com', 0.0000000, '0.0000000', 'images/usuario.png', 0, 0, 0, 0, NULL, 0, '2025-11-02 21:29:20', NULL),
-(2, 'alexia', 'ead5631214f67ed38456e82b16ee22576a7860282268f629316e9e1bd3bc5640', 'JUGADOR', '535631c6-b9f6-11f0-8306-6db02ed39983', 'Neymar', 'Putellas', '1994-02-04 00:00:00', '2025-11-05 03:20:05', 'Femenino', 'alexia.putellas@example.com', 0.0000000, '0.0000000', 'images/Neymar.jpg', 8707, 231, 180, 50, 'Avanzado', 1100, '2025-11-05 03:20:05', NULL),
-(3, 'leomessi', 'db160e9f98553ab525af6b17a719c6b010241d4d2932132d5c4b4867ab560611', 'JUGADOR', '53562985-b9f6-11f0-8306-6db02ed39983', 'Lionel', 'Messi', '1987-06-24 00:00:00', '2025-11-05 03:20:05', 'Masculino', 'leo.messi@example.com', 0.0000000, '0.0000000', 'images/Messi.jpg', 9800, 250, 200, 50, 'Medio', 1200, '2025-11-05 03:20:05', NULL),
-(4, 'mbappe', '04d96a896a4cd7dbd16fcef1a9ebe912f789f205ce51d750fea6beb614dbbdcd', 'JUGADOR', '535630b0-b9f6-11f0-8306-6db02ed39983', 'Ronaldinho', 'Mbappé', '1998-12-20 00:00:00', '2025-11-05 03:20:05', 'Masculino', 'k.mbappe@example.com', 0.0000000, '0.0000000', 'images/Ronaldinho.jpg', 7500, 190, 140, 50, 'Principiante', 900, '2025-11-05 03:20:05', NULL),
-(5, 'panchufleto', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'JUGADOR', '', 'panchufleto', 'lopez', '1990-01-01 00:00:00', '2025-11-24 01:54:28', 'Otro', 'panchufle@example.com', 0.0000000, '0.0000000', 'images/profile_panchufleto_1764312387.png', 22, 4, 0, 0, 'Medio', 0, '2025-11-24 01:54:28', NULL),
-(6, 'pancho', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'JUGADOR', '', 'panchito', 'Robert', '1900-02-02 00:00:00', '2025-11-24 19:57:53', 'Femenino', 'panchito@gmail.com', 0.0000000, '0.0000000', 'images/usuario.png', 16, 3, 0, 0, 'Medio', 0, '2025-11-24 19:57:53', NULL),
-(7, 'Sebas', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'JUGADOR', '', 'Sebastian', 'Marcheschi', '1997-02-11 00:00:00', '2025-11-25 01:21:52', 'Masculino', 'marcheschi97@hotmail.com', 0.0000000, '0.0000000', 'images/usuario.png', 9, 2, 0, 0, 'Medio', 0, '2025-11-25 01:21:52', NULL),
-(8, 'barto', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'JUGADOR', '', 'bart', 'simpson', '2000-02-02 00:00:00', '2025-11-25 19:32:31', 'Masculino', 'bart@simpson.com', 0.0000000, '0.0000000', 'images/profile_barto_1764312631.png', 37, 7, 0, 0, 'Medio', 0, '2025-11-25 19:32:31', NULL),
-(9, 'homero', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'JUGADOR', '', 'homero', 'simpson', '1980-02-02 00:00:00', '2025-11-25 19:35:27', 'Masculino', 'homero@gmail.com', 0.0000000, '0.0000000', 'images/profile_homero_1764312476.png', 46, 12, 0, 0, 'Principiante', 0, '2025-11-25 19:35:27', NULL),
-(10, 'editor', '12345', 'editor', '', 'Editor', 'User', '1995-01-01 00:00:00', '2025-11-28 05:54:03', 'otro', 'editor@example.com', 0.0000000, '0.0000000', 'images/usuario.png', 0, 0, 0, 0, NULL, 0, '2025-11-28 05:54:03', NULL),
-(11, 'pirulo', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'JUGADOR', '', 'pirulino', 'piru', '2000-12-12 00:00:00', '2025-11-28 08:19:00', 'Femenino', 'piru@gmail.com', 0.0000000, '0.0000000', 'images/profile_pirulo_1764317940.jpg', 0, 0, 0, 0, 'Principiante', 0, '2025-11-28 08:19:00', NULL),
-(12, 'lisa', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'JUGADOR', '', 'lisa', 'simpson', '1990-02-02 00:00:00', '2025-11-29 05:23:20', 'Femenino', 'lisa@gmail.com', 0.0000000, '0.0000000', 'images/profile_lisa_1764390200.png', 18, 3, 0, 0, 'Medio', 0, '2025-11-29 04:23:20', NULL),
-(13, 'Blue', '9e9478f6e9b3b78502d5f9c5ad5b543aeca51beb6a24a21b40347c905fc82f8d', 'JUGADOR', '', 'Blue', 'Mug', '1997-03-20 00:00:00', '2025-11-29 10:45:15', 'Femenino', 'blue.mug@gmail.com', 0.0000000, '0.0000000', 'images/usuario.png', 8, 1, 0, 0, 'Avanzado', 0, '2025-11-29 10:45:15', NULL),
-(14, 'Mulan', '17bf2cd74911111e315cb1827ae6321f8fc0f9f68070a1b78364eadfd0e8707a', 'JUGADOR', '', 'Mulan', 'Hua', '1998-11-29 00:00:00', '2025-11-29 12:40:49', 'Femenino', 'mulan@mail.com', 0.0000000, '0.0000000', 'images/usuario.png', 5, 1, 0, 0, 'Medio', 0, '2025-11-29 12:40:49', NULL),
-(15, 'nagu', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'JUGADOR', '', 'nahu', 'elito', '1995-02-21 00:00:00', '2025-11-29 14:33:16', 'Otro', 'nahu@gmail.com', 0.0000000, '0.0000000', 'images/usuario.png', 19, 3, 0, 0, 'Medio', 0, '2025-11-29 14:33:16', NULL),
-(16, 'Yaina', 'e4f49fbb0fa2636fcab94de364a23991cb8a1d5b59027cd4e29f7e7b23b00d3a', 'JUGADOR', '', 'YANINA', 'Gimenez', '1994-05-07 00:00:00', '2025-11-29 23:04:11', 'Femenino', 'Yaninag07@hotmail.com', 0.0000000, '0.0000000', 'images/usuario.png', 9, 2, 0, 0, 'Medio', 0, '2025-11-29 23:04:11', NULL),
-(17, 'Prueba', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'JUGADOR', '', 'Sebastian', 'Marcheschi', '2025-10-31 00:00:00', '2025-11-30 08:34:55', 'Masculino', 'marcheschi97@hotmail.com', -34.6867073, '-58.5298812', 'images/usuario.png', 0, 0, 0, 0, 'Principiante', 0, '2025-11-30 07:34:54', NULL),
-(18, 'PruebaUbicacion', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'JUGADOR', '', 'Sebastian', 'Marcheschi', '2025-11-13 00:00:00', '2025-11-30 08:36:21', 'Femenino', 'marcheschi97@hotmail.com', -34.6867073, '-58.5298812', 'images/usuario.png', 0, 0, 0, 0, 'Principiante', 0, '2025-11-30 07:36:21', NULL),
-(19, 'PruebaUbicacion2', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'JUGADOR', '', 'Sebastian', 'Marcheschi', '2025-10-31 00:00:00', '2025-11-30 10:07:49', 'Femenino', 'marcheschi97@hotmail.com', -34.6852859, NULL, 'images/usuario.png', 0, 0, 0, 0, 'Principiante', 0, '2025-11-30 09:07:49', '5331, Berón de Astrada, Godoy Cruz, Villa Ansaldi, La Tablada, Partido de La Matanza, Buenos Aires, 1766, Argentina');
+INSERT INTO `user` (`id`, `username`, `password`, `rol`, `authToken`, `name`, `lastname`, `birth_year`, `created_at`, `gender`, `email`, `lat`, `lon`, `profile_picture`, `total_score`, `games_played`, `games_won`, `match_lost`, `difficulty_level`, `answered_questions`, `last_login`, `location`, `country_code`, `email_verified`, `verify_token`) VALUES
+(2, 'alexia', 'ead5631214f67ed38456e82b16ee22576a7860282268f629316e9e1bd3bc5640', 'JUGADOR', '535631c6-b9f6-11f0-8306-6db02ed39983', 'Neymar', 'Putellas', '1994-02-04 00:00:00', '2025-11-05 03:20:05', 'Femenino', 'alexia.putellas@example.com', 0.0000000, '0.0000000', 'images/Neymar.jpg', 8707, 231, 180, 50, 'Avanzado', 1100, '2025-11-05 03:20:05', NULL, NULL, 1, NULL),
+(3, 'leomessi', 'db160e9f98553ab525af6b17a719c6b010241d4d2932132d5c4b4867ab560611', 'JUGADOR', '53562985-b9f6-11f0-8306-6db02ed39983', 'Lionel', 'Messi', '1987-06-24 00:00:00', '2025-11-05 03:20:05', 'Masculino', 'leo.messi@example.com', -34.6095579, '-58.3887904', 'images/Messi.jpg', 9800, 250, 200, 50, 'Medio', 1200, '2025-11-05 03:20:05', 'Buenos Aires, Argentina', 'AR', 1, NULL),
+(4, 'Ronaldinho', '04d96a896a4cd7dbd16fcef1a9ebe912f789f205ce51d750fea6beb614dbbdcd', 'JUGADOR', '535630b0-b9f6-11f0-8306-6db02ed39983', 'Ronaldinho', 'Ronaldinho', '1998-12-20 00:00:00', '2025-11-05 03:20:05', 'Masculino', 'k.mbappe@example.com', 0.0000000, '0.0000000', 'images/Ronaldinho.jpg', 7500, 190, 140, 50, 'Principiante', 900, '2025-11-05 03:20:05', 'Buenos Aires, Argentina', 'AR', 1, NULL),
+(5, 'panchufleto', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'JUGADOR', '', 'panchufleto', 'lopez', '1990-01-01 00:00:00', '2025-11-24 01:54:28', 'Otro', 'panchufle@example.com', 0.0000000, '0.0000000', 'images/profile_panchufleto_1764312387.png', 22, 4, 0, 0, 'Medio', 0, '2025-11-24 01:54:28', NULL, NULL, 1, NULL),
+(6, 'pancho', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'JUGADOR', '', 'panchito', 'Robert', '1900-02-02 00:00:00', '2025-11-24 19:57:53', 'Femenino', 'panchito@gmail.com', 0.0000000, '0.0000000', 'images/usuario.png', 16, 3, 0, 0, 'Medio', 0, '2025-11-24 19:57:53', NULL, NULL, 1, NULL),
+(8, 'barto', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'JUGADOR', '', 'bart', 'simpson', '2000-02-02 00:00:00', '2025-11-25 19:32:31', 'Masculino', 'bart@simpson.com', 0.0000000, '0.0000000', 'images/profile_barto_1764312631.png', 44, 8, 0, 0, 'Medio', 0, '2025-11-25 19:32:31', NULL, NULL, 1, NULL),
+(9, 'homero', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'JUGADOR', '', 'homero', 'simpson', '1980-02-02 00:00:00', '2025-11-25 19:35:27', 'Masculino', 'homero@gmail.com', 0.0000000, '0.0000000', 'images/profile_homero_1764312476.png', 46, 12, 0, 0, 'Principiante', 0, '2025-11-25 19:35:27', NULL, NULL, 1, NULL),
+(11, 'pirulo', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'JUGADOR', '', 'pirulino', 'piru', '2000-12-12 00:00:00', '2025-11-28 08:19:00', 'Femenino', 'piru@gmail.com', 0.0000000, '0.0000000', 'images/profile_pirulo_1764317940.jpg', 0, 0, 0, 0, 'Principiante', 0, '2025-11-28 08:19:00', NULL, NULL, 1, NULL),
+(12, 'lisa', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'JUGADOR', '', 'lisa', 'simpson', '1990-02-02 00:00:00', '2025-11-29 05:23:20', 'Femenino', 'lisa@gmail.com', 0.0000000, '0.0000000', 'images/profile_lisa_1764390200.png', 18, 3, 0, 0, 'Medio', 0, '2025-11-29 04:23:20', NULL, NULL, 1, NULL),
+(13, 'Blue', '9e9478f6e9b3b78502d5f9c5ad5b543aeca51beb6a24a21b40347c905fc82f8d', 'JUGADOR', '', 'Blue', 'Mug', '1997-03-20 00:00:00', '2025-11-29 10:45:15', 'Femenino', 'blue.mug@gmail.com', 0.0000000, '0.0000000', 'images/usuario.png', 8, 1, 0, 0, 'Avanzado', 0, '2025-11-29 10:45:15', NULL, NULL, 1, NULL),
+(14, 'Mulan', '17bf2cd74911111e315cb1827ae6321f8fc0f9f68070a1b78364eadfd0e8707a', 'JUGADOR', '', 'Mulan', 'Hua', '1998-11-29 00:00:00', '2025-11-29 12:40:49', 'Femenino', 'mulan@mail.com', 0.0000000, '0.0000000', 'images/usuario.png', 5, 1, 0, 0, 'Medio', 0, '2025-11-29 12:40:49', NULL, NULL, 1, NULL),
+(15, 'nagu', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'JUGADOR', '', 'nahu', 'elito', '1995-02-21 00:00:00', '2025-11-29 14:33:16', 'Otro', 'nahu@gmail.com', 0.0000000, '0.0000000', 'images/usuario.png', 19, 3, 0, 0, 'Medio', 0, '2025-11-29 14:33:16', NULL, NULL, 1, NULL),
+(16, 'Yaina', 'e4f49fbb0fa2636fcab94de364a23991cb8a1d5b59027cd4e29f7e7b23b00d3a', 'JUGADOR', '', 'YANINA', 'Gimenez', '1994-05-07 00:00:00', '2025-11-29 23:04:11', 'Femenino', 'Yaninag07@hotmail.com', 0.0000000, '0.0000000', 'images/usuario.png', 9, 2, 0, 0, 'Medio', 0, '2025-11-29 23:04:11', NULL, NULL, 1, NULL),
+(44, 'admin', '$2y$10$uAuJbQyTShiRAwgh/G4Qzehwyahmpb0s1QHnmc9jkhzGly8IM2z6K', 'ADMIN', '', 'Admin', 'Admin', '2025-12-16 00:00:00', '2025-11-21 23:04:11', 'Masculino', 'marcheschi97@hotmail.com', -34.6867073, '-58.5298812', 'images/usuario.png', NULL, NULL, NULL, NULL, NULL, 0, '2025-12-01 04:24:30', 'La Tablada, Argentina', 'AR', 1, NULL),
+(45, 'EDITOR', '$2y$10$3Qi5hKAL3Sn/brDto.a.MuLu0u.En115YPk.BehnwetWrdlT01/IW', 'editor', '', 'Editor', 'Editor', '2025-12-16 00:00:00', '2025-11-28 23:04:11', 'Otro', 'luques.cc@gmail.com', -34.6867073, '-58.5298812\n', 'images/profile_EDITOR_1764563567.jpg', NULL, NULL, NULL, NULL, NULL, 0, '2025-12-01 04:27:12', 'La Tablada, Argentina', 'AR', 1, NULL),
+(46, 'pepe', '$2y$10$I5.XbFeJ0ZJgwY2wYqf61OB9TwWpidAzGUTzpKWsVJHBYVvLWu/MS', '', '', 'pepe', 'pompin', '1994-12-12 00:00:00', NULL, 'Masculino', 'pepe@gmail.com', -18.6666670, '-67.666667', 'images/profile_pepe_1764564208.jpg', 32, 4, NULL, NULL, 'Avanzado', 0, '2025-12-01 04:43:25', 'Oruro, Bolivia', 'BO', 1, NULL),
+(48, 'Sebas', '$2y$10$Zk9MfSCl3LK1WK/bYUEbReb.pXaXnlucJrI.a4rJFaGBp190amaVO', 'JUGADOR', '', 'Sebastian', 'Marcheschi', '2025-12-17 00:00:00', '2025-12-01 06:04:13', 'Masculino', 'smarcheschi97@gmail.com', -34.6930639, '-58.5281825', 'images/usuario.png', NULL, NULL, NULL, NULL, 'PRINCIPIANTE', 0, '2025-12-01 05:04:09', 'La Tablada, Argentina', 'AR', 1, NULL);
 
 --
 -- Índices para tablas volcadas
@@ -758,7 +766,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT de la tabla `answer`
 --
 ALTER TABLE `answer`
-  MODIFY `answer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=469;
+  MODIFY `answer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=473;
 
 --
 -- AUTO_INCREMENT de la tabla `category`
@@ -782,19 +790,19 @@ ALTER TABLE `match`
 -- AUTO_INCREMENT de la tabla `question`
 --
 ALTER TABLE `question`
-  MODIFY `question_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
+  MODIFY `question_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
 -- AUTO_INCREMENT de la tabla `report`
 --
 ALTER TABLE `report`
-  MODIFY `report_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `report_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- Restricciones para tablas volcadas
