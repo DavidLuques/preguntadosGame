@@ -133,8 +133,9 @@ class LoginController
             $mail->setFrom('smarcheschi97@gmail.com', 'Preguntados Game');
             $mail->addAddress($email);
 
-            $link = "http://localhost/verify?token=" . urlencode($token);
-
+            $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+            $domainName = $_SERVER['HTTP_HOST'];
+            $link = $protocol . $domainName . "/verify?token=" . urlencode($token); 
             $mail->isHTML(true);
             $mail->Subject = "ACTIVACION DE CUENTA";
             $mail->Body = "
