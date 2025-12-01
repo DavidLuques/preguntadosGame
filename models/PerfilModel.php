@@ -45,7 +45,6 @@ class PerfilModel
         $user = $this->getUserById($id);
         if (!$user) return false;
 
-        // Check hash first
         if (hash('sha256', $password) === $user['password']) {
             return true;
         }

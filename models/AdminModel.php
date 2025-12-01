@@ -13,27 +13,22 @@ class AdminModel
     {
         $stats = [];
 
-        // Total games played
         $sqlGames = "SELECT SUM(games_played) as total_games FROM user WHERE rol = 'JUGADOR'";
         $resultGames = $this->database->query($sqlGames);
         $stats['total_games'] = $resultGames[0]['total_games'] ?? 0;
 
-        // Total score
         $sqlScore = "SELECT SUM(total_score) as total_score FROM user WHERE rol = 'JUGADOR'";
         $resultScore = $this->database->query($sqlScore);
         $stats['total_score'] = $resultScore[0]['total_score'] ?? 0;
 
-        // Total players
         $sqlPlayers = "SELECT COUNT(*) as total_players FROM user WHERE rol = 'JUGADOR'";
         $resultPlayers = $this->database->query($sqlPlayers);
         $stats['total_players'] = $resultPlayers[0]['total_players'] ?? 0;
 
-        // Total questions
         $sqlQuestions = "SELECT COUNT(*) as total_questions FROM question";
         $resultQuestions = $this->database->query($sqlQuestions);
         $stats['total_questions'] = $resultQuestions[0]['total_questions'] ?? 0;
 
-        // Questions by status
         $sqlStatus = "SELECT status, COUNT(*) as count FROM question GROUP BY status";
         $resultStatus = $this->database->query($sqlStatus);
         
@@ -52,7 +47,6 @@ class AdminModel
             }
         }
 
-        // Users by difficulty
         $sqlDifficulty = "SELECT difficulty_level, COUNT(*) as count 
                           FROM user 
                           WHERE rol = 'JUGADOR' 
@@ -71,7 +65,6 @@ class AdminModel
             }
         }
 
-        // Questions by category
         $sqlCategory = "SELECT c.category_name, COUNT(q.question_id) as count 
                         FROM question q 
                         JOIN category c ON q.category_id = c.category_id 
@@ -98,9 +91,6 @@ class AdminModel
     {
         $userId = intval($userId);
         $newRole = $this->database->getConnection()->real_escape_string($newRole);
-        
-        // Prevent changing own role or invalid roles if necessary, 
-        // but for now we trust the controller/admin.
         
         $sql = "UPDATE user SET rol = '$newRole' WHERE id = $userId";
         return $this->database->query($sql);

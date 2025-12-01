@@ -37,7 +37,6 @@ class PerfilController
             $flagUrl = "https://flagsapi.com/" . strtoupper($user["country_code"]) . "/flat/64.png";
         }
 
-        // QR Code
         $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? "https" : "http";
         $host = $_SERVER['HTTP_HOST'];
         $profileUrl = "$protocol://$host/perfil/ver?id=$userId";

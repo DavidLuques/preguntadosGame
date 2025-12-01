@@ -68,7 +68,6 @@ class JugadoresController
             4 => $_POST['answer_4'] ?? ''
         ];
 
-        // Validaciones básicas
         if (empty($questionText) || empty($categoryId) || empty($correctAnswerIndex)) {
             header("Location: /jugadores/sugerirPregunta?error=" . urlencode("Todos los campos son obligatorios"));
             exit();
@@ -81,7 +80,6 @@ class JugadoresController
             }
         }
 
-        // Guardar en BD
         $success = $this->model->crearPreguntaSugerida($questionText, $categoryId, $answers, $correctAnswerIndex);
 
         if ($success) {

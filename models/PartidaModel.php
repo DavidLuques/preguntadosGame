@@ -72,7 +72,6 @@ class PartidaModel
             return false;
         }
 
-        // Agregar claves foráneas solo si la tabla se acaba de crear
         $conn->query("ALTER TABLE `report`
             ADD CONSTRAINT `fk_report_question` FOREIGN KEY (`question_id`) REFERENCES `question` (`question_id`) ON DELETE SET NULL,
             ADD CONSTRAINT `fk_report_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE CASCADE");
@@ -96,14 +95,12 @@ class PartidaModel
             $difficultyLevel = 'Principiante';
         }
         
-        // Construir cláusula NOT IN para excluir preguntas jugadas
         $notInClause = "";
         if (!empty($playedQuestions)) {
             $ids = implode(',', array_map('intval', $playedQuestions));
             $notInClause = "AND question_id NOT IN ($ids)";
         }
         
-        // Función auxiliar para buscar pregunta
         $buscarPregunta = function($nivel) use ($conn, $categoryId, $notInClause) {
             $nivelEscaped = $conn->real_escape_string($nivel);
             $sql = "SELECT * FROM question 
@@ -116,34 +113,25 @@ class PartidaModel
             return ($result && $result->num_rows > 0) ? $result->fetch_assoc() : null;
         };
 
-        // Lógica de selección con fallback
         $pregunta = null;
 
         if ($difficultyLevel === 'Avanzado') {
-            // 1. Intentar Avanzado
             $pregunta = $buscarPregunta('Avanzado');
             if (!$pregunta) {
-                // 2. Fallback a Medio
                 $pregunta = $buscarPregunta('Medio');
             }
             if (!$pregunta) {
-                // 3. Fallback a Principiante
                 $pregunta = $buscarPregunta('Principiante');
             }
         } elseif ($difficultyLevel === 'Medio') {
-            // 1. Intentar Medio
             $pregunta = $buscarPregunta('Medio');
             if (!$pregunta) {
-                // 2. Fallback a Principiante
                 $pregunta = $buscarPregunta('Principiante');
             }
         } else {
-            // Principiante (o cualquier otro valor)
             $pregunta = $buscarPregunta('Principiante');
         }
         
-        // Si aún no hay pregunta (caso extremo: se acabaron todas las de la categoría),
-        // intentar buscar CUALQUIERA de la categoría que no se haya jugado
         if (!$pregunta) {
              $sql = "SELECT * FROM question 
                     WHERE category_id = $categoryId 
@@ -156,7 +144,6 @@ class PartidaModel
             }
         }
 
-        // Si ABSOLUTAMENTE no hay preguntas nuevas, permitir repetir (último recurso)
         if (!$pregunta) {
              $sql = "SELECT * FROM question 
                     WHERE category_id = $categoryId 
@@ -176,11 +163,9 @@ class PartidaModel
         $questionId = intval($questionId);
         $conn = $this->conexion->getConnection();
         
-        // Asegurar que view_count y correct_answer_count existen, inicializarlos si no existen
         $conn->query("UPDATE question SET view_count = COALESCE(view_count, 0) WHERE question_id = $questionId");
         $conn->query("UPDATE question SET correct_answer_count = COALESCE(correct_answer_count, 0) WHERE question_id = $questionId");
         
-        // Incrementar view_count
         $sql = "UPDATE question SET view_count = view_count + 1 WHERE question_id = $questionId";
         $conn->query($sql);
     }
@@ -190,11 +175,9 @@ class PartidaModel
         $questionId = intval($questionId);
         $conn = $this->conexion->getConnection();
         
-        // Asegurar que correct_answer_count existe y actualizarlo
         $sql = "UPDATE question SET correct_answer_count = COALESCE(correct_answer_count, 0) + 1 WHERE question_id = $questionId";
         $conn->query($sql);
         
-        // Actualizar difficulty_id basado en el ratio
         $this->actualizarDificultadPregunta($questionId);
     }
 
@@ -203,7 +186,6 @@ class PartidaModel
         $questionId = intval($questionId);
         $conn = $this->conexion->getConnection();
         
-        // Obtener view_count y correct_answer_count
         $sql = "SELECT view_count, correct_answer_count FROM question WHERE question_id = $questionId";
         $result = $conn->query($sql);
         
@@ -212,16 +194,10 @@ class PartidaModel
             $viewCount = intval($row['view_count'] ?? 0);
             $correctCount = intval($row['correct_answer_count'] ?? 0);
             
-            // Solo actualizar dificultad cuando view_count >= 10
             if ($viewCount >= 10 && $viewCount > 0) {
                 $ratio = ($correctCount / $viewCount) * 100;
                 
-                // Calcular nueva dificultad según los criterios:
-                // Avanzado: < 30% de aciertos (Muy difícil)
-                // Medio: >= 30% y < 70% de aciertos
-                // Principiante: >= 70% de aciertos (Fácil)
-                
-                $newDifficultyLevel = 'Principiante'; // Por defecto
+                $newDifficultyLevel = 'Principiante'; 
                 
                 if ($ratio < 30) {
                     $newDifficultyLevel = 'Avanzado';
@@ -231,7 +207,6 @@ class PartidaModel
                     $newDifficultyLevel = 'Principiante';
                 }
                 
-                // Actualizar difficulty_level
                 $newDifficultyLevelEscaped = $conn->real_escape_string($newDifficultyLevel);
                 $updateSql = "UPDATE question SET difficulty_level = '$newDifficultyLevelEscaped' WHERE question_id = $questionId";
                 $conn->query($updateSql);
@@ -243,7 +218,6 @@ class PartidaModel
     {
         $userId = intval($userId);
         $conn = $this->conexion->getConnection();
-        // Usar COALESCE para manejar el caso donde games_played es NULL
         $sql = "UPDATE user SET games_played = COALESCE(games_played, 0) + 1 WHERE id = $userId";
         $conn->query($sql);
     }
@@ -254,7 +228,6 @@ class PartidaModel
         $puntosObtenidos = intval($puntosObtenidos);
         $conn = $this->conexion->getConnection();
         
-        // Obtener estadísticas actuales
         $sql = "SELECT total_score, games_played FROM user WHERE id = $userId";
         $result = $conn->query($sql);
         
@@ -263,12 +236,9 @@ class PartidaModel
             $totalScore = intval($row['total_score'] ?? 0);
             $gamesPlayed = intval($row['games_played'] ?? 0);
             
-            // Actualizar total_score (games_played YA se incrementó al inicio)
             $newTotalScore = $totalScore + $puntosObtenidos;
-            // $newGamesPlayed = $gamesPlayed + 1; // REMOVED
-            $newGamesPlayed = $gamesPlayed; // Use current value which is already incremented
+            $newGamesPlayed = $gamesPlayed; 
             
-            // Calcular nuevo nivel de dificultad
             $ratio = ($newGamesPlayed > 0) ? ($newTotalScore / ($newGamesPlayed * 10)) * 100 : 0;
             
             $newDifficultyLevel = 'Principiante';
@@ -278,7 +248,6 @@ class PartidaModel
                 $newDifficultyLevel = 'Medio';
             }
             
-            // Actualizar en base de datos (solo score y dificultad)
             $updateSql = "UPDATE user SET total_score = $newTotalScore, difficulty_level = '$newDifficultyLevel' WHERE id = $userId";
             $conn->query($updateSql);
             

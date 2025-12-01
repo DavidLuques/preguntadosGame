@@ -45,9 +45,8 @@ class EditorController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $text = $_POST['question_text'];
             $categoryId = $_POST['category_id'];
-            // $difficulty = $_POST['difficulty']; // Eliminado
-            $answers = $_POST['answers']; // Array of 4 answers
-            $correctIndex = $_POST['correct_answer']; // Index 0-3
+            $answers = $_POST['answers']; 
+            $correctIndex = $_POST['correct_answer']; 
 
             $questionId = $this->model->addQuestion($text, $categoryId);
 
@@ -70,7 +69,6 @@ class EditorController
             $answers = $this->model->getAnswersByQuestionId($id);
             $categories = $this->model->getAllCategories();
             
-            // Mark correct answer
             foreach ($answers as &$answer) {
                 if ($answer['answer_id'] == $question[0]['correct_answer_id']) {
                     $answer['is_correct'] = true;
@@ -94,10 +92,9 @@ class EditorController
             $id = $_POST['question_id'];
             $text = $_POST['question_text'];
             $categoryId = $_POST['category_id'];
-            // $difficulty = $_POST['difficulty']; // Eliminado
-            $answers = $_POST['answers']; // Array of answer texts
-            $answerIds = $_POST['answer_ids']; // Array of answer IDs
-            $correctAnswerId = $_POST['correct_answer']; // ID of correct answer
+            $answers = $_POST['answers']; 
+            $answerIds = $_POST['answer_ids']; 
+            $correctAnswerId = $_POST['correct_answer']; 
 
             $this->model->updateQuestion($id, $text, $categoryId, $correctAnswerId);
 
@@ -180,7 +177,6 @@ class EditorController
         $this->checkEditor();
         $questions = $this->model->getReportedQuestions(3);
         
-        // Process report reasons into arrays
         if ($questions) {
             foreach ($questions as &$question) {
                 if (isset($question['report_reasons'])) {
@@ -227,7 +223,6 @@ class EditorController
         $answers = $this->model->getAnswersByQuestionId($id);
         $categories = $this->model->getAllCategories();
 
-        // Mark correct answer and selected category
         foreach ($answers as &$answer) {
             if ($answer['answer_id'] == $question[0]['correct_answer_id']) {
                 $answer['is_correct'] = true;
@@ -252,15 +247,14 @@ class EditorController
         $this->checkEditor();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $questionId = $_POST['question_id'];
-            $action = $_POST['action']; // 'accept' or 'reject'
+            $action = $_POST['action']; 
             
             if ($action === 'reject') {
                 $this->model->updateQuestionStatus($questionId, 'rechazada');
             } elseif ($action === 'accept') {
-                // Update content first
                 $text = $_POST['question_text'];
                 $categoryId = $_POST['category_id'];
-                $answers = $_POST['answers']; // Array [answer_id => text]
+                $answers = $_POST['answers']; 
                 $correctAnswerId = $_POST['correct_answer'];
 
                 $this->model->updateQuestion($questionId, $text, $categoryId, $correctAnswerId);
@@ -269,7 +263,6 @@ class EditorController
                     $this->model->updateAnswer($ansId, $ansText);
                 }
 
-                // Set status to active
                 $this->model->updateQuestionStatus($questionId, 'activa');
             }
 

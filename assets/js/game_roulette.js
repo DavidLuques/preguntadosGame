@@ -8,7 +8,6 @@ const minSpins = 1;
 const maxDegrees = 360;
 const minDegrees = 1;
 
-// Categorías (orden igual al HTML)
 const categories = [
     { id: 1, name: "Historia" },
     { id: 2, name: "Ciencia" },
@@ -22,7 +21,6 @@ const getRandomNumber = (min, max) => {
 }
 
 spinButton.addEventListener("click", () => {
-    // Deshabilitar botón
     spinButton.disabled = true;
 
     fetch('/partida/girarRuleta')
@@ -46,13 +44,13 @@ spinButton.addEventListener("click", () => {
             const spins = getRandomNumber(minSpins, maxSpins);
             const segmentSize = 360 / categories.length;
 
-            const randomOffset = Math.random() * (segmentSize - 10) + 5; // Margen de 5px
+            const randomOffset = Math.random() * (segmentSize - 10) + 5;
             const targetRotation = 360 - (categoryIndex * segmentSize) - randomOffset;
 
-            const fullSpins = (spins + 2) * 360; // Al menos 2 vueltas
+            const fullSpins = (spins + 2) * 360;
             const totalSpin = fullSpins + targetRotation;
 
-            const animationTime = 4; // 4 segundos fijo
+            const animationTime = 4;
 
             roulette.style.transform = `rotate(${totalSpin}deg)`;
             roulette.style.transitionDuration = `${animationTime}s`;
@@ -61,7 +59,7 @@ spinButton.addEventListener("click", () => {
 
             setTimeout(() => {
                 window.location.href = '/partida/jugarPregunta';
-            }, animationTime * 1000 + 500); // 500ms extra
+            }, animationTime * 1000 + 500);
         })
         .catch(error => {
             console.error('Error:', error);

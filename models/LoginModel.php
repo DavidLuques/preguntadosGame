@@ -98,7 +98,6 @@ class LoginModel
         $lonEsc = $lon ? $conn->real_escape_string($lon) : null;
         $countryEsc = $countryCode ? $conn->real_escape_string($countryCode) : null;
 
-        // Valores por defecto
         $rol = "JUGADOR";
         $difficulty = "Principiante";
         $createdAt = date('Y-m-d H:i:s');

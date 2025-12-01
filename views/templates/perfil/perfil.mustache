@@ -21,7 +21,6 @@
                 {{/error}}
 
                 <div class="row">
-                    <!-- Sidebar: Profile Picture & Stats -->
                     <div class="col-md-4 text-center mb-4 mb-md-0 border-end">
                         <div class="mb-4">
                             <img src="{{#user.profile_picture}}/{{user.profile_picture}}{{/user.profile_picture}}{{^user.profile_picture}}/images/default_profile.png{{/user.profile_picture}}" 
@@ -62,7 +61,6 @@
                         </form>
                     </div>
 
-                    <!-- Main Content: Edit Forms -->
                     <div class="col-md-8 ps-md-5">
                         <ul class="nav nav-tabs mb-4" id="profileTabs" role="tablist">
                             <li class="nav-item" role="presentation">
@@ -74,7 +72,6 @@
                         </ul>
 
                         <div class="tab-content" id="profileTabsContent">
-                            <!-- Personal Info Tab -->
                             <div class="tab-pane fade show active" id="info" role="tabpanel">
                                 <form action="/perfil/updateData" method="POST">
                                     <div class="row g-3">
@@ -122,7 +119,6 @@
                                 <div id="map" style="height:300px;border-radius:10px;"></div>
                             </div>
 
-                            <!-- INPUTS OCULTOS -->
                             <input type="hidden" id="lat" name="lat" value="{{user.lat}}">
                             <input type="hidden" id="lon" name="lon" value="{{user.lon}}">
                             <input type="hidden" id="country_code" name="country_code" value="{{user.country_code}}">
@@ -134,7 +130,6 @@
                                 </form>
                             </div>
 
-                            <!-- Password Tab -->
                             <div class="tab-pane fade" id="password" role="tabpanel">
                                 <form action="/perfil/changePassword" method="POST">
                                     <div class="mb-3">
@@ -168,7 +163,6 @@
     const input = document.getElementById("location");
     const flag = document.getElementById("flag");
 
-    // --- MAPA ---
     const hasLocation = lat !== 0 && lon !== 0;
 
     const map = L.map('map').setView(
@@ -182,12 +176,10 @@
 
     let marker = hasLocation ? L.marker([lat, lon]).addTo(map) : null;
 
-    // --- BANDERA INICIAL ---
     if (countryCode) {
         flag.src = `https://flagsapi.com/${countryCode.toUpperCase()}/flat/64.png`;
     }
 
-    // --- AUTO-COMPLETADO ---
     let timeout = null;
 
     input.addEventListener("input", async () => {
@@ -206,7 +198,6 @@
             const lat = p.geometry.coordinates[1];
             const lon = p.geometry.coordinates[0];
 
-            // país (si existe)
             const code = p.properties.countrycode || "";
 
             document.getElementById("lat").value = lat;

@@ -23,7 +23,6 @@ class MyConexion
             return null;
         }
 
-        // Para consultas SELECT, devolver array asociativo
         if ($result === true) {
             return true;
         }

@@ -37,7 +37,6 @@ class AdminController
 
         require_once __DIR__ . '/../vendor/autoload.php';
 
-        // Prepare HTML content
         $html = '
         <html>
         <head>
@@ -75,17 +74,13 @@ class AdminController
         </body>
         </html>';
 
-        // Instantiate Dompdf
         $dompdf = new \Dompdf\Dompdf();
         $dompdf->loadHtml($html);
 
-        // (Optional) Setup the paper size and orientation
         $dompdf->setPaper('A4', 'portrait');
 
-        // Render the HTML as PDF
         $dompdf->render();
 
-        // Output the generated PDF to Browser
         $dompdf->stream('reporte_estadisticas.pdf', ['Attachment' => true]);
     }
 
@@ -94,11 +89,9 @@ class AdminController
         $this->checkAdmin();
         $users = $this->model->getAllUsers();
         
-        // Prepare data for view (e.g., isEditor flag)
         foreach ($users as &$user) {
             $user['isEditor'] = ($user['rol'] === 'editor');
             $user['isPlayer'] = ($user['rol'] === 'JUGADOR');
-            // Prevent modifying own role or other admins if needed
             $user['canModify'] = ($user['rol'] !== 'ADMIN'); 
         }
 
@@ -112,14 +105,11 @@ class AdminController
             $userId = $_POST['user_id'];
             $newRole = $_POST['new_role'];
 
-            // Basic validation
             if ($newRole !== 'JUGADOR' && $newRole !== 'editor') {
-                // Handle error or ignore
                 header("Location: /admin/users");
                 exit();
             }
 
-            // Prevent changing own role (if user_id matches session)
             if ($userId == $_SESSION['usuario_id']) {
                  header("Location: /admin/users?error=self_modification");
                  exit();

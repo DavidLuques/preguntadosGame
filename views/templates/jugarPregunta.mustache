@@ -55,7 +55,6 @@
                     <small class="text-muted">Seleccioná una respuesta para continuar</small>
                 </div>
 
-                <!-- Report button moved to feedback screen -->
             </div>
         </div>
     </div>
@@ -63,7 +62,6 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Inicializar tiempo restante desde el servidor, o 10 por defecto
         let timeLeft = parseFloat('{{remaining_time}}');
         if (isNaN(timeLeft)) timeLeft = 10;
         
@@ -72,9 +70,8 @@
         const form = document.getElementById('questionForm');
         
         const timerInterval = setInterval(function() {
-            timeLeft -= 1; // Restamos 1 segundo
+            timeLeft -= 1; 
             
-            // Actualizar visualización (redondeamos hacia arriba para mostrar 10, 9, 8...)
             let displayTime = Math.ceil(timeLeft);
             if (displayTime < 0) displayTime = 0;
             
@@ -84,15 +81,13 @@
                 timerBar.style.width = percentage + '%';
             }
             
-            // Tiempo agotado
             if (timeLeft <= 0) {
                 clearInterval(timerInterval);
                 
-                // Crear input hidden para enviar respuesta incorrecta (timeout)
                 const input = document.createElement('input');
                 input.type = 'hidden';
                 input.name = 'answer_id';
-                input.value = '-1'; // Valor inválido para indicar timeout/incorrecto
+                input.value = '-1'; 
                 form.appendChild(input);
                 
                 form.submit();

@@ -4,7 +4,6 @@ include_once(__DIR__ . "/MyConexion.php");
 include_once(__DIR__ . "/Renderer.php");
 include_once(__DIR__ . "/Router.php");
 
-// Controllers
 include_once(__DIR__ . "/../controllers/LoginController.php");
 include_once(__DIR__ . "/../controllers/JugadoresController.php");
 include_once(__DIR__ . "/../controllers/PartidaController.php");
@@ -13,7 +12,6 @@ include_once(__DIR__ . "/../controllers/PerfilController.php");
 include_once(__DIR__ . "/../controllers/AdminController.php");
 include_once(__DIR__ . "/../controllers/VerifyController.php");
 
-// Models
 include_once(__DIR__ . "/../models/LoginModel.php");
 include_once(__DIR__ . "/../models/JugadoresModel.php");
 include_once(__DIR__ . "/../models/PartidaModel.php");

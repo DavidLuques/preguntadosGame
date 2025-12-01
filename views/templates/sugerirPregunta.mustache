@@ -20,13 +20,11 @@
                 {{/error}}
 
                 <form action="/jugadores/procesarSugerencia" method="POST">
-                    <!-- Pregunta -->
                     <div class="mb-3">
                         <label for="question_text" class="form-label fw-semibold">Pregunta</label>
                         <input type="text" class="form-control" id="question_text" name="question_text" required placeholder="Ej: ¿Cuál es la capital de Francia?">
                     </div>
 
-                    <!-- Categoría -->
                     <div class="mb-3">
                         <label for="category_id" class="form-label fw-semibold">Categoría</label>
                         <select class="form-select" id="category_id" name="category_id" required>
@@ -43,7 +41,6 @@
                     <h5 class="mb-3 fw-semibold">Respuestas</h5>
                     <p class="small text-muted mb-3">Ingresá 4 opciones y marcá cuál es la correcta.</p>
 
-                    <!-- Respuestas -->
                     <div class="mb-3">
                         <div class="input-group mb-2">
                             <div class="input-group-text">

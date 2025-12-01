@@ -39,20 +39,15 @@ class PartidaController
             exit();
         }
 
-        // Inicializar partida en sesión
         $_SESSION['partida_activa'] = true;
-        $_SESSION['partida_preguntas_jugadas'] = 0; // Contador de preguntas
+        $_SESSION['partida_preguntas_jugadas'] = 0; 
         $_SESSION['partida_puntos'] = 0;
         $_SESSION['partida_respuestas'] = [];
-        unset($_SESSION['current_question']); // Limpiar pregunta actual
-        unset($_SESSION['question_start_time']); // Limpiar tiempo de inicio
+        unset($_SESSION['current_question']); 
+        unset($_SESSION['question_start_time']); 
 
-        // PENALIZACIÓN POR ABANDONO:
-        // Incrementamos la partida jugada AL INICIO.
-        // Si el usuario abandona, ya cuenta como jugada (y 0 puntos si no termina).
         $this->model->incrementarPartidasJugadas($_SESSION['usuario_id']);
 
-        // Redirigir a la ruleta
         header("Location: /partida/ruleta");
         exit();
     }
@@ -64,19 +59,16 @@ class PartidaController
             exit();
         }
 
-        // Verificar si ya se jugaron 10 preguntas
         if ($_SESSION['partida_preguntas_jugadas'] >= 10) {
             header("Location: /partida/resultados");
             exit();
         }
 
-        // Si ya hay una pregunta seleccionada (por ejemplo, si recarga), redirigir a jugar
         if (isset($_SESSION['current_question'])) {
             header("Location: /partida/jugarPregunta");
             exit();
         }
 
-        // Preparar datos de progreso
         $progreso = [];
         $respuestas = isset($_SESSION['partida_respuestas']) ? $_SESSION['partida_respuestas'] : [];
         
@@ -99,7 +91,7 @@ class PartidaController
             }
         }
 
-        $this->renderer->render("partida", ['progreso' => $progreso]); // Vista de la ruleta
+        $this->renderer->render("partida", ['progreso' => $progreso]); 
     }
 
     public function girarRuleta()
@@ -112,10 +104,6 @@ class PartidaController
         }
 
         if (isset($_SESSION['current_question'])) {
-             // Si ya hay pregunta, devolver la categoría de esa pregunta para que la ruleta gire a ella
-             // O simplemente redirigir (el frontend manejará esto)
-             // Para simplificar, asumimos que si llama a girar es porque no tiene pregunta o quiere una nueva (pero validamos)
-             // En este diseño estricto, si ya tiene pregunta, NO debe girar de nuevo.
              echo json_encode(['error' => 'Ya tienes una pregunta asignada', 'redirect' => '/partida/jugarPregunta']);
              exit();
         }
@@ -123,8 +111,6 @@ class PartidaController
         $userId = intval($_SESSION['usuario_id']);
         $difficultyLevel = $this->model->getDifficultyLevelByUserId($userId);
 
-        // 1. Elegir categoría al azar
-        // IDs: 1:Historia, 2:Ciencia, 3:Deportes, 4:Geografía, 5:Entretenimiento
         $categories = [
             ['id' => 1, 'name' => 'Historia'],
             ['id' => 2, 'name' => 'Ciencia'],
@@ -135,7 +121,6 @@ class PartidaController
         
         $selectedCategory = $categories[array_rand($categories)];
         
-        // Obtener IDs de preguntas ya jugadas en esta partida
         $playedQuestions = [];
         if (isset($_SESSION['partida_respuestas']) && is_array($_SESSION['partida_respuestas'])) {
             foreach ($_SESSION['partida_respuestas'] as $respuesta) {
@@ -145,27 +130,16 @@ class PartidaController
             }
         }
 
-        // 2. Buscar pregunta de esa categoría y dificultad, excluyendo las jugadas
         $pregunta = $this->model->getQuestionByCategoryAndDifficulty($selectedCategory['id'], $difficultyLevel, $playedQuestions);
 
         if (!$pregunta) {
-            // Fallback: buscar cualquier pregunta si no hay de esa categoría (raro)
              echo json_encode(['error' => 'No hay preguntas disponibles para esta categoría']);
              exit();
         }
 
-        // 3. Guardar en sesión
         $_SESSION['current_question'] = $pregunta;
-        // Limpiamos el tiempo de inicio para que se setee al entrar a jugarPregunta
         unset($_SESSION['question_start_time']);
 
-        // 4. Calcular ángulo para el frontend (esto debería coincidir con la lógica visual de JS)
-        // En JS: 5 segmentos. 360 / 5 = 72 grados cada uno.
-        // Orden en JS: Historia, Ciencia, Deportes, Geografía, Entretenimiento
-        // Indices: 0, 1, 2, 3, 4
-        // Ángulo objetivo: (Index * 72) + algo random dentro del segmento?
-        // Mejor devolvemos el ID y que JS calcule el ángulo.
-        
         echo json_encode([
             'success' => true,
             'category_id' => $selectedCategory['id'],
@@ -182,7 +156,6 @@ class PartidaController
         }
 
         if (!isset($_SESSION['current_question'])) {
-            // Si no hay pregunta, volver a la ruleta
             header("Location: /partida/ruleta");
             exit();
         }
@@ -190,25 +163,20 @@ class PartidaController
         $pregunta = $_SESSION['current_question'];
         $questionId = intval($pregunta['question_id']);
 
-        // Incrementar view_count (solo una vez por pregunta jugada? O cada vez que la ve? Mejor aquí)
-        // Ojo: si recarga, se incrementa. Podríamos usar una flag en sesión 'viewed'.
         if (!isset($_SESSION['question_viewed_' . $questionId])) {
             $this->model->incrementarViewCount($questionId);
             $_SESSION['question_viewed_' . $questionId] = true;
         }
 
-        // INICIO TEMPORIZADOR: Guardar tiempo de inicio SI NO EXISTE
         if (!isset($_SESSION['question_start_time'])) {
             $_SESSION['question_start_time'] = microtime(true);
             $remainingTime = 10;
         } else {
-            // Si ya existe, calculamos cuánto queda
             $elapsed = microtime(true) - $_SESSION['question_start_time'];
             $remainingTime = 10 - $elapsed;
             if ($remainingTime < 0) $remainingTime = 0;
         }
 
-        // Obtener respuestas
         $respuestas = $this->model->getAnswersByQuestionId($questionId);
 
         $this->renderer->render("jugarPregunta", [
@@ -216,9 +184,8 @@ class PartidaController
             'respuestas' => $respuestas,
             'pregunta_numero' => $_SESSION['partida_preguntas_jugadas'] + 1,
             'total_preguntas' => 10,
-            // Formatear para asegurar punto decimal y evitar números científicos o muy largos
             'remaining_time' => number_format($remainingTime, 2, '.', ''),
-            'remaining_time_int' => ceil($remainingTime), // Para mostrar en el HTML inicial
+            'remaining_time_int' => ceil($remainingTime), 
             'category_color' => $this->getCategoryColor($pregunta['category_id']),
             'reportSuccess' => isset($_GET['report']) && $_GET['report'] === 'success',
             'reportError' => isset($_GET['reportError']) ? urldecode($_GET['reportError']) : null
@@ -228,12 +195,12 @@ class PartidaController
     private function getCategoryColor($categoryId)
     {
         switch ($categoryId) {
-            case 1: return '#E91E63'; // Historia - Rosa
-            case 2: return '#a67df3ff'; // Ciencia - Violeta
-            case 3: return '#055685ff'; // Deportes - Azul
-            case 4: return '#0dcaf0'; // Geografía - Celeste
-            case 5: return '#19c072ff'; // Entretenimiento - Verde
-            default: return '#6C757D'; // Default - Gris
+            case 1: return '#E91E63'; 
+            case 2: return '#a67df3ff'; 
+            case 3: return '#055685ff'; 
+            case 4: return '#0dcaf0'; 
+            case 5: return '#19c072ff'; 
+            default: return '#6C757D'; 
         }
     }
 
@@ -252,17 +219,14 @@ class PartidaController
         $questionId = isset($_POST['question_id']) ? intval($_POST['question_id']) : 0;
         $answerId = isset($_POST['answer_id']) ? intval($_POST['answer_id']) : 0;
 
-        // Validar que sea la pregunta actual
         if (!isset($_SESSION['current_question']) || $_SESSION['current_question']['question_id'] != $questionId) {
             header("Location: /partida/jugarPregunta");
             exit();
         }
 
-        // VALIDACIÓN DE TIEMPO
         $tiempoAgotado = false;
         if (isset($_SESSION['question_start_time'])) {
             $tiempoTranscurrido = microtime(true) - $_SESSION['question_start_time'];
-            // 10 segundos + 2 segundos de margen por latencia
             if ($tiempoTranscurrido > 12) {
                 $tiempoAgotado = true;
             }
@@ -283,10 +247,8 @@ class PartidaController
             'correcto' => $correcto
         ];
 
-        // Avanzar contador
         $_SESSION['partida_preguntas_jugadas']++;
         
-        // Obtener texto de la respuesta correcta para mostrarlo
         $respuestaCorrectaTexto = "Desconocida";
         $respuestas = $this->model->getAnswersByQuestionId($questionId);
         foreach ($respuestas as $resp) {
@@ -296,7 +258,6 @@ class PartidaController
             }
         }
 
-        // Guardar datos para la pantalla de feedback
         $_SESSION['last_result'] = [
             'esCorrecto' => $correcto,
             'tiempoAgotado' => $tiempoAgotado,
@@ -306,11 +267,9 @@ class PartidaController
             'siguienteUrl' => ($_SESSION['partida_preguntas_jugadas'] >= 10) ? '/partida/resultados' : '/partida/ruleta'
         ];
         
-        // Limpiar pregunta actual
         unset($_SESSION['current_question']);
         unset($_SESSION['question_start_time']);
 
-        // Redirigir a la pantalla de respuesta (feedback)
         header("Location: /partida/respuesta");
         exit();
     }
@@ -323,8 +282,6 @@ class PartidaController
         }
 
         if (!isset($_SESSION['last_result'])) {
-            // Si no hay resultado guardado, probablemente recargó o entró directo.
-            // Redirigir a donde corresponda según el estado del juego.
             if (isset($_SESSION['current_question'])) {
                 header("Location: /partida/jugarPregunta");
             } else {
@@ -335,7 +292,6 @@ class PartidaController
 
         $data = $_SESSION['last_result'];
         
-        // Agregar datos de reporte si existen en GET
         if (isset($_GET['report']) && $_GET['report'] === 'success') {
             $data['reportSuccess'] = true;
         }
@@ -343,7 +299,6 @@ class PartidaController
             $data['reportError'] = urldecode($_GET['reportError']);
         }
         
-        // Asegurar que usuario está disponible para el template
         if (isset($_SESSION['usuario'])) {
             $data['usuario'] = $_SESSION['usuario'];
         }
@@ -359,21 +314,19 @@ class PartidaController
         }
 
         $puntos = intval($_SESSION['partida_puntos']);
-        $totalPreguntas = 10; // Fijo en 10
+        $totalPreguntas = 10; 
 
-        // Actualizar estadísticas del usuario
         if (isset($_SESSION['usuario_id'])) {
             $userId = intval($_SESSION['usuario_id']);
             $estadisticas = $this->model->actualizarEstadisticasUsuario($userId, $puntos);
         }
 
-        // Limpiar sesión de partida
         unset($_SESSION['partida_activa']);
         unset($_SESSION['partida_preguntas_jugadas']);
         unset($_SESSION['partida_puntos']);
         unset($_SESSION['partida_respuestas']);
         unset($_SESSION['current_question']);
-        unset($_SESSION['last_result']); // Limpiar también el último resultado
+        unset($_SESSION['last_result']); 
 
         $this->renderer->render("resultadosPartida", [
             'puntos' => $puntos,
@@ -418,7 +371,6 @@ class PartidaController
         $userId = intval($_SESSION['usuario_id']);
         $resultado = $this->model->guardarReportePregunta($questionId, $userId, $reason);
 
-        // Determinar a dónde redirigir
         if (isset($resultado['success']) && $resultado['success'] === true) {
             if ($fromFeedback) {
                 header("Location: /partida/respuesta?report=success");

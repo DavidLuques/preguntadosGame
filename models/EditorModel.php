@@ -22,7 +22,6 @@ class EditorModel
     public function addQuestion($text, $categoryId)
     {
         $date = date('Y-m-d H:i:s');
-        // Por defecto la dificultad es 'Principiante'
         $difficulty = 'Principiante';
         $sql = "INSERT INTO question (question_text, question_date, category_id, status, difficulty_level, view_count, correct_answer_count) 
                 VALUES ('$text', '$date', '$categoryId', 'activa', '$difficulty', 0, 0)";
@@ -32,16 +31,13 @@ class EditorModel
 
     public function updateQuestion($id, $text, $categoryId, $correctAnswerId)
     {
-        // No actualizamos la dificultad aquí, se calcula automáticamente
         $sql = "UPDATE question SET question_text = '$text', category_id = '$categoryId', correct_answer_id = '$correctAnswerId' WHERE question_id = '$id'";
         $this->database->query($sql);
     }
 
     public function deleteQuestion($id)
     {
-        // First delete answers
         $this->database->query("DELETE FROM answer WHERE question_id = '$id'");
-        // Then delete question
         $this->database->query("DELETE FROM question WHERE question_id = '$id'");
     }
 

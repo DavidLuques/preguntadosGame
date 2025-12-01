@@ -23,7 +23,6 @@ class VerifyModel
 
         $userId = $result['id'];
 
-        // 2. Activar cuenta
         $sqlUpdate = "UPDATE user 
                       SET verify_token = NULL, email_verified = 1 
                       WHERE id = $userId";

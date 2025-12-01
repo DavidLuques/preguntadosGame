@@ -118,7 +118,6 @@ class LoginController
             return;
         }
 
-        // --- ENVIAR EMAIL DE VERIFICACIÓN ---
         $mail = new PHPMailer(true);
 
         try {
@@ -156,10 +155,8 @@ class LoginController
             return;
         }
 
-        // Imagen por defecto
         $profilePicture = 'images/usuario.png';
 
-        // Procesar imagen subida
         if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] === UPLOAD_ERR_OK) {
             $file = $_FILES['profile_picture'];
             $allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
@@ -175,7 +172,6 @@ class LoginController
                 return;
             }
 
-            // Guardar archivo
             $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
             $newFileName = 'profile_' . $username . '_' . time() . '.' . $extension;
             $path = __DIR__ . '/../images/' . $newFileName;
@@ -189,7 +185,6 @@ class LoginController
             }
         }
 
-        // Formato de fecha
         $birthYearFormatted = date('Y-m-d H:i:s', strtotime($birthYear));
 
         $this->model->actualizarDatosExtra(

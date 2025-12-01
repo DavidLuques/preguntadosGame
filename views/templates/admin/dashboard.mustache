@@ -21,7 +21,6 @@
             </div>
 
             <div class="row g-4 mb-4">
-                <!-- Total Games -->
                 <div class="col-12 col-md-6">
                     <div class="app-card p-4 h-100 text-dark border-start border-4 border-primary">
                         <h5 class="text-muted text-uppercase small fw-bold mb-3">Partidas Jugadas</h5>
@@ -33,7 +32,6 @@
                     </div>
                 </div>
 
-                <!-- Total Score -->
                 <div class="col-12 col-md-6">
                     <div class="app-card p-4 h-100 text-dark border-start border-4 border-success">
                         <h5 class="text-muted text-uppercase small fw-bold mb-3">Puntaje Total</h5>
@@ -45,7 +43,6 @@
                     </div>
                 </div>
 
-                <!-- Total Players -->
                 <div class="col-12 col-md-6">
                     <div class="app-card p-4 h-100 text-dark border-start border-4 border-info">
                         <h5 class="text-muted text-uppercase small fw-bold mb-3">Jugadores Registrados</h5>
@@ -57,8 +54,6 @@
                     </div>
                 </div>
 
-                <!-- Total Questions -->
-                <!-- Total Questions -->
                 <div class="col-12 col-md-6 col-lg-3">
                     <div class="app-card p-4 h-100 text-dark border-start border-4 border-warning">
                         <h5 class="text-muted text-uppercase small fw-bold mb-3">Total Preguntas</h5>
@@ -68,7 +63,6 @@
                     </div>
                 </div>
 
-                <!-- Active Questions -->
                 <div class="col-12 col-md-6 col-lg-3">
                     <div class="app-card p-4 h-100 text-dark border-start border-4 border-success">
                         <h5 class="text-muted text-uppercase small fw-bold mb-3">Activas</h5>
@@ -79,7 +73,6 @@
                     </div>
                 </div>
 
-                <!-- Suggested Questions -->
                 <div class="col-12 col-md-6 col-lg-3">
                     <div class="app-card p-4 h-100 text-dark border-start border-4 border-info">
                         <h5 class="text-muted text-uppercase small fw-bold mb-3">Sugeridas</h5>
@@ -90,7 +83,6 @@
                     </div>
                 </div>
 
-                <!-- Rejected Questions -->
                 <div class="col-12 col-md-6 col-lg-3">
                     <div class="app-card p-4 h-100 text-dark border-start border-4 border-danger">
                         <h5 class="text-muted text-uppercase small fw-bold mb-3">Rechazadas</h5>
@@ -157,7 +149,6 @@
     document.addEventListener('DOMContentLoaded', function() {
         const stats = {{{statsJson}}};
 
-        // Questions by Status Chart
         new Chart(document.getElementById('questionsStatusChart'), {
             type: 'doughnut',
             data: {
@@ -170,7 +161,6 @@
             options: { responsive: true }
         });
 
-        // Users by Difficulty Chart
         new Chart(document.getElementById('usersDifficultyChart'), {
             type: 'bar',
             data: {
@@ -188,7 +178,6 @@
             options: { responsive: true }
         });
 
-        // Questions by Category Chart
         const categoryLabels = Object.keys(stats.questions_by_category);
         const categoryData = Object.values(stats.questions_by_category);
 
