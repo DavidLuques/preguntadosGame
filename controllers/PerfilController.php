@@ -43,12 +43,17 @@ class PerfilController
         $profileUrl = "$protocol://$host/perfil/ver?id=$userId";
         $qrCodeUrl = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" . urlencode($profileUrl);
 
+        $successParam = $_GET['success'] ?? null;
+        
         $this->renderer->render("perfil/perfil", [
             "user" => $user,
             "locationString" => $locationString,
             "flagUrl" => $flagUrl,
             "qr_code_url" => $qrCodeUrl,
-            "success" => $_GET['success'] ?? null,
+            "success" => $successParam,
+            "success_data_updated" => $successParam === 'data_updated',
+            "success_password_updated" => $successParam === 'password_updated',
+            "success_picture_updated" => $successParam === 'picture_updated',
             "error" => isset($_GET['error']) ? urldecode($_GET['error']) : null
         ]);
     }

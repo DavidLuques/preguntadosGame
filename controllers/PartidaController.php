@@ -214,9 +214,22 @@ class PartidaController
             // Formatear para asegurar punto decimal y evitar números científicos o muy largos
             'remaining_time' => number_format($remainingTime, 2, '.', ''),
             'remaining_time_int' => ceil($remainingTime), // Para mostrar en el HTML inicial
+            'category_color' => $this->getCategoryColor($pregunta['category_id']),
             'reportSuccess' => isset($_GET['report']) && $_GET['report'] === 'success',
             'reportError' => isset($_GET['reportError']) ? urldecode($_GET['reportError']) : null
         ]);
+    }
+
+    private function getCategoryColor($categoryId)
+    {
+        switch ($categoryId) {
+            case 1: return '#E91E63'; // Historia - Rosa
+            case 2: return '#6f42c1'; // Ciencia - Violeta
+            case 3: return '#0d6efd'; // Deportes - Azul
+            case 4: return '#0dcaf0'; // Geografía - Celeste
+            case 5: return '#198754'; // Entretenimiento - Verde
+            default: return '#6C757D'; // Default - Gris
+        }
     }
 
     public function procesarRespuesta()
