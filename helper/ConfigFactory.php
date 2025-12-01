@@ -3,18 +3,24 @@
 include_once(__DIR__ . "/MyConexion.php");
 include_once(__DIR__ . "/Renderer.php");
 include_once(__DIR__ . "/Router.php");
+
+// Controllers
 include_once(__DIR__ . "/../controllers/LoginController.php");
 include_once(__DIR__ . "/../controllers/JugadoresController.php");
 include_once(__DIR__ . "/../controllers/PartidaController.php");
+include_once(__DIR__ . "/../controllers/EditorController.php");
+include_once(__DIR__ . "/../controllers/PerfilController.php");
+include_once(__DIR__ . "/../controllers/AdminController.php");
+include_once(__DIR__ . "/../controllers/VerifyController.php");
+
+// Models
 include_once(__DIR__ . "/../models/LoginModel.php");
 include_once(__DIR__ . "/../models/JugadoresModel.php");
 include_once(__DIR__ . "/../models/PartidaModel.php");
-include_once(__DIR__ . "/../controllers/EditorController.php");
 include_once(__DIR__ . "/../models/EditorModel.php");
 include_once(__DIR__ . "/../models/PerfilModel.php");
-include_once(__DIR__ . "/../controllers/PerfilController.php");
 include_once(__DIR__ . "/../models/AdminModel.php");
-include_once(__DIR__ . "/../controllers/AdminController.php");
+include_once(__DIR__ . "/../models/VerifyModel.php");
 
 class ConfigFactory
 {
@@ -72,6 +78,12 @@ class ConfigFactory
             $this->renderer
         );
 
+        $this->objetos["VerifyModel"]  = new VerifyModel($this->conexion);
+        $this->objetos["VerifyController"] = new VerifyController(
+            $this->objetos["VerifyModel"],
+            $this->renderer
+        );
+
         $this->objetos["Router"] = new Router(
             $this,
             'JugadoresController',
@@ -81,6 +93,6 @@ class ConfigFactory
 
     public function get($objectName)
     {
-        return $this->objetos[$objectName];
+        return $this->objetos[$objectName] ?? null;
     }
 }

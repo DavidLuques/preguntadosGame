@@ -13,18 +13,19 @@ class LoginModel
     {
         $conn = $this->conexion->getConnection();
         $userEscaped = $conn->real_escape_string($user);
-        $passwordHash = hash('sha256', $password);
 
-        $sql = "SELECT * FROM user WHERE username = '$userEscaped' AND password = '$passwordHash'";
-        $result = $this->conexion->query($sql);
+        $sql = "SELECT * FROM user WHERE username = '$userEscaped' AND email_verified = 1 LIMIT 1";
+        $result = $conn->query($sql);
 
-        // Fallback: Check for plain text password (for dev/legacy users like 'editor')
-        if (empty($result)) {
-            $sqlPlain = "SELECT * FROM user WHERE username = '$userEscaped' AND password = '$password'";
-            $result = $this->conexion->query($sqlPlain);
+        if ($result && $result->num_rows > 0) {
+            $usuario = $result->fetch_assoc();
+
+            if (password_verify($password, $usuario['password'])) {
+                return [$usuario];
+            }
         }
 
-        return $result ?? [];
+        return [];
     }
 
     public function usuarioExiste($username)
@@ -37,52 +38,78 @@ class LoginModel
         return !empty($result);
     }
 
-    public function registrarUsuario($username, $password, $name, $lastname, $birthYear, $gender, $email, $profilePicture, $location, $lat, $lon, $countryCode)
+    public function crearUsuario($username, $email, $password)
     {
         $conn = $this->conexion->getConnection();
 
-        // Escapar datos
         $usernameEscaped = $conn->real_escape_string($username);
-        $passwordHash = hash('sha256', $password);
-        $nameEscaped = $conn->real_escape_string($name);
-        $lastnameEscaped = $lastname ? $conn->real_escape_string($lastname) : null;
-        $birthYearEscaped = $conn->real_escape_string($birthYear);
-        $genderEscaped = $conn->real_escape_string($gender);
         $emailEscaped = $conn->real_escape_string($email);
-        $profilePictureEscaped = $conn->real_escape_string($profilePicture);
-        $locationEscaped = $location ? $conn->real_escape_string($location) : null;
-        $latEscaped = $lat ? $conn->real_escape_string($lat) : null;
-        $lonEscaped = $lon ? $conn->real_escape_string($lon) : null;
-        $countryCodeEscaped = $countryCode ? $conn->real_escape_string($countryCode) : null;
+        $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
-        // Valores por defecto
-        $rol = 'JUGADOR';
-        $authToken = '';
-        $createdAt = date('Y-m-d H:i:s');
-        $totalScore = 0;
-        $gamesPlayed = 0;
-        $gamesWon = 0;
-        $matchLost = 0;
-        $difficultyLevel = 'Principiante'; // Nivel inicial: Fácil
-        $answeredQuestions = 0;
+        $token = bin2hex(random_bytes(32));
 
-        $sql = "INSERT INTO user (username, password, rol, authToken, name, lastname, birth_year, created_at, gender, email, location, lat, lon, country_code, profile_picture, total_score, games_played, games_won, match_lost, difficulty_level, answered_questions)
-            VALUES ('$usernameEscaped', '$passwordHash', '$rol', '$authToken', '$nameEscaped', " .
-            ($lastnameEscaped ? "'$lastnameEscaped'" : "NULL") .
-            ", '$birthYearEscaped', '$createdAt', '$genderEscaped', '$emailEscaped', " .
-            ($locationEscaped ? "'$locationEscaped'" : "NULL") . ", " .
-            ($latEscaped ? "'$latEscaped'" : "NULL") . ", " .
-            ($lonEscaped ? "'$lonEscaped'" : "NULL") . ", " .
-            ($countryCodeEscaped ? "'$countryCodeEscaped'" : "NULL") . ", " .
-            "'$profilePictureEscaped', $totalScore, $gamesPlayed, $gamesWon, $matchLost, '$difficultyLevel', $answeredQuestions)";
+        $sql = "INSERT INTO user (username, email, password, email_verified, verify_token)
+                VALUES ('$usernameEscaped', '$emailEscaped', '$passwordHash', 0, '$token')";
 
-        $result = $conn->query($sql);
+        if ($this->conexion->query($sql)) {
+            return $token;
+        }
 
-        if ($result) {
-            return true;
-        } else {
-            error_log("Error al registrar usuario: " . $conn->error);
+        return false;
+    }
+
+    public function activarCuenta($token)
+    {
+        $conn = $this->conexion->getConnection();
+        $tokenEscaped = $conn->real_escape_string($token);
+
+        $usuario = $this->conexion->query("SELECT id FROM user WHERE verify_token = '$tokenEscaped' AND email_verified = 0");
+
+        if (empty($usuario)) {
             return false;
         }
+
+        $sql = "UPDATE user SET email_verified = 1, verify_token = NULL WHERE verify_token = '$tokenEscaped'";
+        return $this->conexion->query($sql);
+    }
+
+    public function actualizarDatosExtra($username, $name, $lastname, $birthYear, $gender, $profilePicture, $location, $lat, $lon, $countryCode)
+    {
+        $conn = $this->conexion->getConnection();
+
+        $usernameEsc = $conn->real_escape_string($username);
+        $nameEsc = $conn->real_escape_string($name);
+        $lastnameEsc = $lastname ? $conn->real_escape_string($lastname) : null;
+        $birthYearEsc = $conn->real_escape_string($birthYear);
+        $genderEsc = $conn->real_escape_string($gender);
+        $picEsc = $conn->real_escape_string($profilePicture);
+        $locEsc = $location ? $conn->real_escape_string($location) : null;
+        $latEsc = $lat ? $conn->real_escape_string($lat) : null;
+        $lonEsc = $lon ? $conn->real_escape_string($lon) : null;
+        $countryEsc = $countryCode ? $conn->real_escape_string($countryCode) : null;
+
+        $sql = "UPDATE user SET 
+                name = '$nameEsc',
+                lastname = " . ($lastnameEsc ? "'$lastnameEsc'" : "NULL") . ",
+                birth_year = '$birthYearEsc',
+                gender = '$genderEsc',
+                profile_picture = '$picEsc',
+                location = " . ($locEsc ? "'$locEsc'" : "NULL") . ",
+                lat = " . ($latEsc ? "'$latEsc'" : "NULL") . ",
+                lon = " . ($lonEsc ? "'$lonEsc'" : "NULL") . ",
+                country_code = " . ($countryEsc ? "'$countryEsc'" : "NULL") . "
+            WHERE username = '$usernameEsc'";
+
+        return $conn->query($sql);
+    }
+
+    public function emailExiste($email)
+    {
+        $conn = $this->conexion->getConnection();
+        $emailEscaped = $conn->real_escape_string($email);
+        $sql = "SELECT id FROM user WHERE email = '$emailEscaped' LIMIT 1";
+        $result = $this->conexion->query($sql);
+
+        return !empty($result);
     }
 }

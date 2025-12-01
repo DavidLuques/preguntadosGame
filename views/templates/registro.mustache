@@ -7,7 +7,7 @@
             {{#success}}
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{#mensaje}}{{mensaje}}{{/mensaje}}
-                {{^mensaje}}Usuario registrado correctamente.{{/mensaje}}
+                {{^mensaje}}Registrado correctamente. Revisá tu email para activar tu usuario.{{/mensaje}}
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
             {{/success}}
@@ -84,7 +84,6 @@
                             <div id="location_results" class="list-group position-absolute w-100"></div>
                         </div>
 
-                        <!-- Guardamos solo esto -->
                         <input type="hidden" id="lat" name="lat">
                         <input type="hidden" id="lon" name="lon">
                         <input type="hidden" id="country_code" name="country_code">
@@ -115,7 +114,6 @@
 </div>
 
 <script>
-// Validación contraseñas
 document.addEventListener("DOMContentLoaded", () => {
     const pass = document.getElementById("password");
     const pass2 = document.getElementById("password_confirm");
@@ -138,13 +136,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const latInput = document.getElementById("lat");
     const lonInput = document.getElementById("lon");
 
-    // Evita error si algún ID no existe
     if (!locationInput || !resultsBox || !latInput || !lonInput) {
         console.error("Error: IDs no coinciden con el HTML.");
         return;
     }
 
-    // Inicializar mapa Leaflet
     const map = L.map("map").setView([-34.6037, -58.3816], 13);
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
 
@@ -181,7 +177,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 lonInput.value = lon;
                 document.getElementById("country_code").value = countryCode;
 
-                // Actualizar mapa
                 if (marker) map.removeLayer(marker);
 
                 marker = L.marker([lat, lon]).addTo(map);
