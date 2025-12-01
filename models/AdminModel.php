@@ -87,4 +87,22 @@ class AdminModel
 
         return $stats;
     }
+
+    public function getAllUsers()
+    {
+        $sql = "SELECT id, username, email, rol, created_at FROM user ORDER BY created_at DESC";
+        return $this->database->query($sql);
+    }
+
+    public function updateUserRole($userId, $newRole)
+    {
+        $userId = intval($userId);
+        $newRole = $this->database->getConnection()->real_escape_string($newRole);
+        
+        // Prevent changing own role or invalid roles if necessary, 
+        // but for now we trust the controller/admin.
+        
+        $sql = "UPDATE user SET rol = '$newRole' WHERE id = $userId";
+        return $this->database->query($sql);
+    }
 }

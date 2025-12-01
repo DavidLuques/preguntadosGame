@@ -1,0 +1,62 @@
+{{>partials/header}}
+
+<div class="container py-5" style="padding-bottom: 100px !important;">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Gestión de Usuarios</h2>
+        <a href="/admin/dashboard" class="btn btn-secondary">Volver al Dashboard</a>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Email</th>
+                            <th>Rol Actual</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#users}}
+                        <tr>
+                            <td>{{username}}</td>
+                            <td>{{email}}</td>
+                            <td>
+                                <span class="badge {{#isEditor}}bg-warning text-dark{{/isEditor}} {{#isPlayer}}bg-info{{/isPlayer}} {{^isEditor}}{{^isPlayer}}bg-danger{{/isPlayer}}{{/isEditor}}">
+                                    {{rol}}
+                                </span>
+                            </td>
+                            <td>
+                                {{#canModify}}
+                                <form action="/admin/updateRole" method="POST" class="d-inline">
+                                    <input type="hidden" name="user_id" value="{{id}}">
+                                    {{#isPlayer}}
+                                        <input type="hidden" name="new_role" value="editor">
+                                        <button type="submit" class="btn btn-sm btn-outline-warning">
+                                            Hacer Editor
+                                        </button>
+                                    {{/isPlayer}}
+                                    {{#isEditor}}
+                                        <input type="hidden" name="new_role" value="JUGADOR">
+                                        <button type="submit" class="btn btn-sm btn-outline-info">
+                                            Hacer Jugador
+                                        </button>
+                                    {{/isEditor}}
+                                </form>
+                                {{/canModify}}
+                                {{^canModify}}
+                                <span class="text-muted fst-italic">No modificable</span>
+                                {{/canModify}}
+                            </td>
+                        </tr>
+                        {{/users}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{>partials/footer}}
