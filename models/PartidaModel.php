@@ -239,6 +239,15 @@ class PartidaModel
         }
     }
 
+    public function incrementarPartidasJugadas($userId)
+    {
+        $userId = intval($userId);
+        $conn = $this->conexion->getConnection();
+        // Usar COALESCE para manejar el caso donde games_played es NULL
+        $sql = "UPDATE user SET games_played = COALESCE(games_played, 0) + 1 WHERE id = $userId";
+        $conn->query($sql);
+    }
+
     public function actualizarEstadisticasUsuario($userId, $puntosObtenidos)
     {
         $userId = intval($userId);
@@ -254,9 +263,10 @@ class PartidaModel
             $totalScore = intval($row['total_score'] ?? 0);
             $gamesPlayed = intval($row['games_played'] ?? 0);
             
-            // Actualizar total_score y games_played
+            // Actualizar total_score (games_played YA se incrementó al inicio)
             $newTotalScore = $totalScore + $puntosObtenidos;
-            $newGamesPlayed = $gamesPlayed + 1;
+            // $newGamesPlayed = $gamesPlayed + 1; // REMOVED
+            $newGamesPlayed = $gamesPlayed; // Use current value which is already incremented
             
             // Calcular nuevo nivel de dificultad
             $ratio = ($newGamesPlayed > 0) ? ($newTotalScore / ($newGamesPlayed * 10)) * 100 : 0;
@@ -268,8 +278,8 @@ class PartidaModel
                 $newDifficultyLevel = 'Medio';
             }
             
-            // Actualizar en base de datos
-            $updateSql = "UPDATE user SET total_score = $newTotalScore, games_played = $newGamesPlayed, difficulty_level = '$newDifficultyLevel' WHERE id = $userId";
+            // Actualizar en base de datos (solo score y dificultad)
+            $updateSql = "UPDATE user SET total_score = $newTotalScore, difficulty_level = '$newDifficultyLevel' WHERE id = $userId";
             $conn->query($updateSql);
             
             return ['total_score' => $newTotalScore, 'games_played' => $newGamesPlayed, 'difficulty_level' => $newDifficultyLevel];

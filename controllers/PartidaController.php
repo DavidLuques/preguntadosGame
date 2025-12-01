@@ -47,6 +47,11 @@ class PartidaController
         unset($_SESSION['current_question']); // Limpiar pregunta actual
         unset($_SESSION['question_start_time']); // Limpiar tiempo de inicio
 
+        // PENALIZACIÓN POR ABANDONO:
+        // Incrementamos la partida jugada AL INICIO.
+        // Si el usuario abandona, ya cuenta como jugada (y 0 puntos si no termina).
+        $this->model->incrementarPartidasJugadas($_SESSION['usuario_id']);
+
         // Redirigir a la ruleta
         header("Location: /partida/ruleta");
         exit();
